@@ -7,6 +7,7 @@ import CreateIcon from '@mui/icons-material/CreateOutlined';
 import MessageIcon from '@mui/icons-material/SmsOutlined';
 import NotificationIcon from '@mui/icons-material/NotificationsOutlined';
 import Menu from '@mui/icons-material/MenuOutlined';
+import ArrowBottom from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 export const Header: React.FC = () => {
     return (
@@ -37,8 +38,9 @@ export const Header: React.FC = () => {
         <NotificationIcon/>
     </IconButton>
         <Avatar
-        className="ml-15"
+        className={styles.avatar}
         alt="Remy Sharp" src="https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/" />
+        <ArrowBottom />
 </div>
 </Paper>
 )
