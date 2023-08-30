@@ -4,7 +4,8 @@ export const theme = createTheme ({
   overrides: {
     MuiButton: {
         root: {
-            borderRadius: '8px'
+            borderRadius: '8px',
+            textTransform: 'inherit',
         },
         contained: {
             backgroundColor: 'white',

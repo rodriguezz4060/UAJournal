@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font-family:Roboto,'Helvetica Neue', Helvetica, sans-serif;
+  background-color: rgb(242, 242, 242);
 }
 
 a {
@@ -11,6 +12,7 @@ a {
 }
 
 * {
+  -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
   outline: none;
   font-family:Roboto,'Helvetica Neue', Helvetica, sans-serif;
@@ -24,4 +26,14 @@ a {
     color: white;
     background: black;
   }
+}
+
+.content {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wrapper {
+  padding-top: 70px;
 }
