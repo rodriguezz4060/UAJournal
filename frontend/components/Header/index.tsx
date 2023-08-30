@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
         <input placeholder="Поиск" />
 </div>  
 
-    <Button variant="contained">
+    <Button variant="contained" className={styles.penBottom}>
         <CreateIcon />
     </Button>
 </div>
