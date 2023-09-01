@@ -8,6 +8,9 @@ import MessageIcon from '@mui/icons-material/SmsOutlined';
 import NotificationIcon from '@mui/icons-material/NotificationsOutlined';
 import Menu from '@mui/icons-material/MenuOutlined';
 import ArrowBottom from '@mui/icons-material/KeyboardArrowDownOutlined';
+import logo from "/pages/static/img/logo.svg"
+import Image from "next/image";
+
 
 export const Header: React.FC = () => {
     return (
@@ -17,9 +20,7 @@ export const Header: React.FC = () => {
                     <Menu/>
                 </IconButton>
                 <Link href="/">
-                    <img className={styles.logo}
-                         src="https://leonardo.osnova.io/968a91e7-3a3c-5c79-a0cb-2b3df974a697/-/scale_crop/64x64/-/format/webp/"
-                         lazy="loaded"/>
+                    <Image className={styles.logo} src={logo}/>
                 </Link>
                 <div className={styles.searchBlock}>
                     <SearchIcon/>
@@ -40,12 +41,12 @@ export const Header: React.FC = () => {
                 </IconButton>
                 <Link href="/profile/1" className="d-flex align-center">
 
-                        <Avatar
-                            className={styles.avatar}
-                            alt="Remy Sharp"
-                            src="https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/"/>
+                    <Avatar
+                        className={styles.avatar}
+                        alt="Remy Sharp"
+                        src="https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/"/>
 
-                        <ArrowBottom/>
+                    <ArrowBottom/>
 
                 </Link>
             </div>

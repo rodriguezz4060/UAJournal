@@ -1,6 +1,12 @@
 import {createTheme} from "@material-ui/core";
 
 export const theme = createTheme({
+    props: {
+        MuiButtonBase: {
+            disableRipple: true,
+        },
+    },
+
     palette: {
         primary: {
             main: '#4683d9'
@@ -23,17 +29,20 @@ export const theme = createTheme({
                 fontSize: '16',
                 transition: 'none',
                 '&:active': {
-                    boxShadow: '0 0 0 3px rgba(22, 147, 229, 0.12)',
-                    transform: 'translateY(1px)'
-                }
+                    boxShadow:
+                        '0 1px 1px rgb(0 0 0 / 15%), 0 4px 7px rgb(0 0 0 / 0%), 0 -1px 0 rgb(0 0 0 / 5%), -1px 0 0 rgb(0 0 0 / 5%), 1px 0 0 rgb(0 0 0 / 5%) !important',
+                    transform: 'translateY(1px)',
+                },
             },
             contained: {
                 backgroundColor: 'white',
-                boxShadow: 'inset 0 -1px 0 0 rgba(0,0,0,0.06), 0 1px 2px 0 rgba(0,0,0,0.06)',
+                boxShadow:
+                    '0 1px 1px rgb(0 0 0 / 15%), 0 4px 7px rgb(0 0 0 / 5%), 0 -1px 0 rgb(0 0 0 / 5%), -1px 0 0 rgb(0 0 0 / 5%), 1px 0 0 rgb(0 0 0 / 5%)',
                 '&:hover': {
                     backgroundColor: 'white',
-                    boxShadow: 'inset 0 -1px 0 0 rgba(0,0,0,0.06), 0 2px 4px 0 rgba(0,0,0,0.08);',
-                }
+                    boxShadow:
+                        '0 1px 1px rgb(0 0 0 / 18%), 0 4px 7px rgb(0 0 0 / 8%), 0 -1px 0 rgb(0 0 0 / 8%), -1px 0 0 rgb(0 0 0 / 8%), 1px 0 0 rgb(0 0 0 / 15%)',
+                },
             },
             containedPrimary: {
                 backgroundColor: '#4683d9',
