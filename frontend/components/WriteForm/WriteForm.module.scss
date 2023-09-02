@@ -1,12 +1,18 @@
 .titleField {
   width: 100%;
+  margin-bottom: 10px;
 
   &:before,
   &:after {
     display: none !important;
   }
+
   input {
     font-size: 36px !important;
     font-weight: 500 !important;
   }
+}
+
+.editor {
+  font-size: 18px;
 }

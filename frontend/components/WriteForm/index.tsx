@@ -1,22 +1,21 @@
 import React from 'react'
-import { Input } from '@material-ui/core'
+import {Input} from '@material-ui/core'
 import styles from './WriteForm.module.scss'
-import EditorJS from '@editorjs/editorjs'
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import('../Editor'), {ssr: false})
 
 interface WriteFormProps {
-  title?: string
+    title?: string
 }
 
-export const WriteForm: React.FC<WriteFormProps> = ({ title }) => {
-  React.useEffect(() => {
-    const editor = new EditorJS({
-      holder: 'editor',
-    })
-  }, [])
-  return (
-    <div>
-      <Input classes={{ root: styles.titleField }} placeholder='Заголовок' defaultValue={title} />
-      <div id='editor' />
-    </div>
-  )
+export const WriteForm: React.FC<WriteFormProps> = ({title}) => {
+    return (
+        <div>
+            <Input classes={{root: styles.titleField}} placeholder='Заголовок' defaultValue={title}/>
+            <div className={styles.editor}>
+                <Editor/>
+            </div>
+        </div>
+    )
 }
