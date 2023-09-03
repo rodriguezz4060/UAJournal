@@ -4,6 +4,7 @@
 
   button {
     position: relative;
+
     svg,
     img {
       position: absolute;
@@ -17,7 +18,7 @@
 .title {
   font-size: 18px;
   color: black !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 25px !important;
   font-weight: 500 !important;
 }
 
@@ -36,5 +37,21 @@
     img {
       position: static;
     }
+  }
+}
+
+.backTitle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: #4683d9;
+  }
+
+  svg {
+    margin-right: 10px;
+    position: relative;
+    top: -1px;
   }
 }
