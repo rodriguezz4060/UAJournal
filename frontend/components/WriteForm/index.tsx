@@ -1,21 +1,26 @@
 import React from 'react'
-import {Input} from '@material-ui/core'
+import { Button, Input } from '@material-ui/core'
 import styles from './WriteForm.module.scss'
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const Editor = dynamic(() => import('../Editor'), {ssr: false})
+const Editor = dynamic(() => import('../Editor'), { ssr: false })
 
 interface WriteFormProps {
-    title?: string
+  title?: string
 }
 
-export const WriteForm: React.FC<WriteFormProps> = ({title}) => {
-    return (
-        <div>
-            <Input classes={{root: styles.titleField}} placeholder='Заголовок' defaultValue={title}/>
-            <div className={styles.editor}>
-                <Editor/>
-            </div>
-        </div>
-    )
+export const WriteForm: React.FC<WriteFormProps> = ({ title }) => {
+  return (
+    <div>
+      <Input classes={{ root: styles.titleField }} placeholder='Заголовок' defaultValue={title} />
+      <div className={styles.editor}>
+        <Editor />
+      </div>
+      <div>
+        <Button variant='contained' color='primary'>
+          Опубликовать
+        </Button>
+      </div>
+    </div>
+  )
 }

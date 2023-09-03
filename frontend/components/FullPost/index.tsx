@@ -9,7 +9,7 @@ export const FullPost = () => {
   return (
     <div>
       <Paper elevation={0} className={styles.paper}>
-        <div style={{ margin: '0 auto', width: 680 }}>
+        <div className='container'>
           <Typography variant='h4' className={styles.title}>
             Оценки Starfield — 88 баллов из 100 на Metacritic
           </Typography>

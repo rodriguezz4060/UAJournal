@@ -7,11 +7,13 @@ import styles from './Comment.module.scss'
 interface CommentPostProps {
   user: {
     fullname: string
+    avatarUrl: string
   }
   text: string
+  createdAt: string
 }
 
-export const Comment: React.FC<CommentPostProps> = ({ user, text }) => {
+export const Comment: React.FC<CommentPostProps> = ({ user, text, createdAt }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -25,17 +27,11 @@ export const Comment: React.FC<CommentPostProps> = ({ user, text }) => {
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
-        <img
-          src='https://leonardo.osnova.io/0a8758f4-966c-5e4f-bf7d-c798f83ee4a6/-/scale_crop/64x64/-/format/webp/'
-          alt='Avatar'
-        />
-        <b>Bender Rodriguez</b>
-        <span>5 часов</span>
+        <img src={user.avatarUrl} alt='Avatar' />
+        <b>{user.fullname}</b>
+        <span>{createdAt}</span>
       </div>
-      <Typography className={styles.text}>
-        После бг3 на многие игры смешно смотреть, но Старфилд не говно, а вот рот Медисона обмазан
-        сильно
-      </Typography>
+      <Typography className={styles.text}>{text}</Typography>
       <span className={styles.replyBtn}>Ответить</span>
       <IconButton onClick={handleClick}>
         <MoreIcon />
