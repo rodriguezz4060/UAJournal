@@ -1,49 +1,46 @@
-import {Button, TextField} from "@material-ui/core";
-import React from "react";
+import { Button } from '@material-ui/core'
+import React from 'react'
+import { useForm, FormProvider } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { RegisterFormSchema } from '../../../utils/validations'
+import { FormField } from '../../FormField'
 
-interface RegisterFormProps {
-    onOpenRegister: () => void;
-    onOpenLogin: () => void;
+interface LoginFormProps {
+  onOpenRegister: () => void
+  onOpenLogin: () => void
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({onOpenRegister, onOpenLogin}) => {
-    return (
-        <div>
-            <form>
-                <TextField
-                    className='mb-20'
-                    size='small'
-                    label='Имя и Фамилия'
-                    variant='outlined'
-                    fullWidth
-                    required
-                />
-                <TextField
-                    className='mb-20'
-                    size='small'
-                    label='Почта'
-                    variant='outlined'
-                    fullWidth
-                    required
-                />
-                <TextField
-                    className='mb-20'
-                    size='small'
-                    label='Пароль'
-                    variant='outlined'
-                    type='password'
-                    fullWidth
-                    required
-                />
-                <div className="d-flex align-center justify-between">
-                    <Button color='primary' variant='contained'>
-                        Зарегестрироваться
-                    </Button>
-                    <Button onClick={onOpenLogin} color='primary' variant='text' c>
-                        Войти
-                    </Button>
-                </div>
-            </form>
-        </div>
-    )
-};
+export const RegisterForm: React.FC<LoginFormProps> = ({ onOpenRegister, onOpenLogin }) => {
+  const form = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(RegisterFormSchema),
+  })
+
+  const onSubmit = data => console.log(data)
+
+  return (
+    <div>
+      <FormProvider {...form}>
+        <FormField name name='fullname' label='Имя и Фамилия' />
+        <FormField name name='email' label='Почта' />
+        <FormField name name='password' label='Пароль' />
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className='d-flex align-center justify-between'>
+            <Button
+              disabled={!form.formState.isValid}
+              onClick={onOpenRegister}
+              type='submit'
+              color='primary'
+              variant='contained'
+            >
+              Зарегистрироваться
+            </Button>
+            <Button onClick={onOpenLogin} color='primary' variant='text' c>
+              Войти
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
+    </div>
+  )
+}
