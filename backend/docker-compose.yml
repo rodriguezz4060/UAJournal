@@ -12,7 +12,7 @@ services:
       - PG_PASSWORD=postgres
       - PG_DB=uajournal
       - PG_PORT=5432
-      - PG_HOST=db
+      - PG_HOST=92.51.45.69
     depends_on:
       - db
   db:
@@ -27,4 +27,4 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
-  pgdata: {}
+  pgdata: { }
