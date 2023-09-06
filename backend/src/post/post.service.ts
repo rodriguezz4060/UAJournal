@@ -21,7 +21,7 @@ export class PostService {
   }
 
   findOne(id: number) {
-    return;
+    return this.repository.findOneBy({id: id});
   }
 
   update(id: number, dto: UpdatePostDto) {
