@@ -5,6 +5,7 @@ import {AppService} from './app.service';
 import {UserModule} from './user/user.module';
 import {UserEntity} from './user/entities/user.entity';
 import {ConfigModule} from '@nestjs/config';
+import { PostModule } from './post/post.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import {ConfigModule} from '@nestjs/config';
             entities: [UserEntity],
             synchronize: true,
         }),
+        PostModule,
     ],
     controllers: [AppController],
     providers: [AppService],
