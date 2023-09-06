@@ -2,7 +2,7 @@ version: '3.9'
 services:
   nestapp:
     container_name: nestapp
-    image: francescoxx/nestapp:1.0.0
+    image: rodriguezz4060/nestapp:latest
     build: .
     ports:
       - '3000:3000'
