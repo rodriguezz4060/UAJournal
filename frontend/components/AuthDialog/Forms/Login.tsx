@@ -1,33 +1,55 @@
-import { Button, TextField } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import React from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginFormSchema } from '../../../utils/validations'
 import { FormField } from '../../FormField'
+import { LoginDto } from '../../../utils/api/type'
+import { setCookie } from 'nookies'
+import { UserApi } from '../../../utils/api'
+import Alert from '@material-ui/lab/Alert'
 
 interface LoginFormProps {
   onOpenRegister: () => void
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
+  const [errorMessage, setErrorMessage] = React.useState('')
   const form = useForm({
     mode: 'onChange',
     resolver: yupResolver(LoginFormSchema),
   })
 
-  const onSubmit = data => console.log(data)
-
-  console.log(form.formState.errors)
+  const onSubmit = async (dto: LoginDto) => {
+    try {
+      const data = await UserApi.login(dto)
+      setCookie(null, 'authToken', data.token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      })
+      setErrorMessage('')
+    } catch (err) {
+      console.warn('Register error', err)
+      if (err.response) {
+        setErrorMessage(err.response.data.message)
+      }
+    }
+  }
 
   return (
     <div>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField name name='email' label='Почта' />
-          <FormField name name='password' label='Пароль' />
+          <FormField name='email' label='Почта' />
+          <FormField name='password' label='Пароль' />
+          {errorMessage && (
+            <Alert severity='error' className='mb-20'>
+              {errorMessage}
+            </Alert>
+          )}
           <div className='d-flex align-center justify-between'>
             <Button
-              disabled={!form.formState.isValid}
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
               type='submit'
               color='primary'
               variant='contained'
