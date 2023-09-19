@@ -43,3 +43,9 @@ a {
   margin: 0 auto;
   width: 680px;
 }
+
+.next-error,
+H1,
+H2 {
+  color: #000 !important;
+}

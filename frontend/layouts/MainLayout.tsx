@@ -8,6 +8,7 @@ interface MainLayoutProps {
   hideMenu?: boolean
   contentFullWidth?: boolean
   className?: string
+  children: React.ReactNode
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({

@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { ResponseUser } from '../../utils/api/type'
+import { ResponseUser } from '../../utils/api/types'
 import { RootState } from '../store'
 import { HYDRATE } from 'next-redux-wrapper'
 

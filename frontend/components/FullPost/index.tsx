@@ -1,48 +1,30 @@
 import React from 'react'
 import { Button, Paper, Typography } from '@material-ui/core'
 import styles from './FullPost.module.scss'
-import { PostAction } from '../PostActions'
+import { PostActions } from '../PostActions'
 import MessageIcon from '@mui/icons-material/SmsOutlined'
 import UserAddIcon from '@mui/icons-material/PersonAddOutlined'
+import { OutputData } from '@editorjs/editorjs'
 
-export const FullPost = () => {
+interface FullPostProps {
+  title: string
+  blocks: OutputData['blocks']
+}
+
+export const FullPost: React.FC<FullPostProps> = ({ title, blocks }) => {
   return (
     <div>
       <Paper elevation={0} className={styles.paper}>
         <div className='container'>
           <Typography variant='h4' className={styles.title}>
-            Оценки Starfield — 88 баллов из 100 на Metacritic
+            {title}
           </Typography>
-          <div>
-            <Typography>
-              31 августа 2023 года, за несколько часов до открытия раннего доступа к Starfield,
-              ведущие издания опубликовали обзоры игры. На Metacritic средняя оценка
-              научно-фантастической RPG составила 88 баллов из 100 на базе 42 рецензий.
-            </Typography>
-          </div>
-          <div>
-            <Typography>
-              На агрегаторе OpenCritic средний рейтинг составил 87 баллов из 100 на основе 76
-              рецензий. 93% журналистов порекомендовали игру к прохождению.
-            </Typography>
-          </div>
-          <div>
-            <Typography>
-              Журналисты сошлись во мнении, что Starfield — одна из самых масштабных и увлекательных
-              игр за последние годы. В неё можно погрузиться на множество десятков часов, исследуя
-              сотни планет и проходя многочисленные квесты. Делать это по-настоящему увлекательно в
-              том числе за счёт отличной и глубокой системы прокачки навыков.
-            </Typography>
-          </div>
-          <div>
-            <Typography>
-              Журналисты сошлись во мнении, что Starfield — одна из самых масштабных и увлекательных
-              игр за последние годы. В неё можно погрузиться на множество десятков часов, исследуя
-              сотни планет и проходя многочисленные квесты. Делать это по-настоящему увлекательно в
-              том числе за счёт отличной и глубокой системы прокачки навыков.
-            </Typography>
+          <div className={styles.text}>
+            {blocks.map(obj => (
+              <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
+            ))}
             <div style={{ width: 250, marginLeft: -14 }}>
-              <PostAction />
+              <PostActions />
             </div>
             <div className='d-flex justify-between align-center mt-30 mb-30'>
               <div className={styles.userInfo}>

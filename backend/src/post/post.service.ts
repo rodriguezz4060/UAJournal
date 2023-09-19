@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Body, ForbiddenException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './entities/post.entity';
@@ -13,10 +13,6 @@ export class PostService {
     @InjectRepository(PostEntity)
     private repository: Repository<PostEntity>,
   ) {}
-
-  create(dto: CreatePostDto) {
-    return this.repository.save(dto);
-  }
 
   findAll() {
     return this.repository.find({
@@ -42,6 +38,8 @@ export class PostService {
 
   async search(dto: SearchPostDto) {
     const qb = this.repository.createQueryBuilder('p');
+
+    qb.leftJoinAndSelect('p.user', 'user');
 
     qb.limit(dto.limit || 0);
     qb.take(dto.take || 10);
@@ -91,21 +89,46 @@ export class PostService {
     // return;
   }
 
-  async update(id: number, dto: UpdatePostDto) {
+  create(dto: CreatePostDto, userId: number) {
+    const firstParagraph = dto.body.find((obj) => obj.type === 'paragraph')
+      ?.data?.text;
+    return this.repository.save({
+      title: dto.title,
+      body: dto.body,
+      tags: dto.tags,
+      user: { id: userId },
+      description: firstParagraph || '',
+    });
+  }
+
+  async update(id: number, dto: UpdatePostDto, userId: number) {
     const find = await this.repository.findOneBy({ id: id });
 
     if (!find) {
       throw new NotFoundException('Статья не найдена');
     }
 
-    return this.repository.update(id, dto);
+    const firstParagraph = dto.body.find((obj) => obj.type === 'paragraph')
+      ?.data?.text;
+
+    return this.repository.update(id, {
+      title: dto.title,
+      body: dto.body,
+      tags: dto.tags,
+      user: { id: userId },
+      description: firstParagraph || '',
+    });
   }
 
-  async remove(id: number) {
+  async remove(id: number, userId: number) {
     const find = await this.repository.findOneBy({ id: id });
 
     if (!find) {
       throw new NotFoundException('Статья не найдена');
+    }
+
+    if (find.user.id !== userId) {
+      throw new ForbiddenException('Нет доступа к этой статье!');
     }
 
     return this.repository.delete(id);

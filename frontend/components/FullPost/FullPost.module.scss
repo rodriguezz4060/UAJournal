@@ -5,7 +5,7 @@
 
   p {
     margin-bottom: 15px;
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 
@@ -13,6 +13,14 @@
   font-weight: 500 !important;
   margin-bottom: 20px !important;
   font-size: 36px !important;
+}
+
+.text {
+  a {
+    color: #3766a9;
+    border-bottom: 1px solid #bed0ea;
+    cursor: pointer;
+  }
 }
 
 .userInfo {
