@@ -1,3 +1,4 @@
+import { Comment } from './../../components/Comment/index'
 import { OutputData } from '@editorjs/editorjs'
 
 export type LoginDto = {
@@ -14,6 +15,7 @@ export type ResponseUser = {
   email: string
   fullName: string
   id: number
+  commentsCount?: number
   token: string
   updateAt: string
 }
@@ -25,6 +27,15 @@ export type PostItem = {
   tags: null | string
   id: number
   views: number
+  user: ResponseUser
+  createdAt: string
+  updatedAt: string
+}
+
+export type CommentItem = {
+  id: number
+  text: string
+  post: PostItem
   user: ResponseUser
   createdAt: string
   updatedAt: string

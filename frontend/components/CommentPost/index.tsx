@@ -6,7 +6,7 @@ import styles from './CommentPost.module.scss'
 
 interface CommentPostProps {
   user: {
-    fullname: string
+    fullName: string
   }
   text: string
   post: {

@@ -1,19 +1,28 @@
 import React from 'react'
-import { IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
+import { Avatar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
 import MoreIcon from '@mui/icons-material/MoreHorizOutlined'
 
 import styles from './Comment.module.scss'
+import { ResponseUser } from '../../utils/api/types'
+import { Api } from '../../utils/api'
 
 interface CommentPostProps {
-  user: {
-    fullname: string
-    avatarUrl: string
-  }
+  id: number
+  user: ResponseUser
   text: string
   createdAt: string
+  currentUserId: number
+  onRemove: (id: number) => void
 }
 
-export const Comment: React.FC<CommentPostProps> = ({ user, text, createdAt }) => {
+export const Comment: React.FC<CommentPostProps> = ({
+  id,
+  user,
+  text,
+  createdAt,
+  currentUserId,
+  onRemove,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -24,28 +33,46 @@ export const Comment: React.FC<CommentPostProps> = ({ user, text, createdAt }) =
     setAnchorEl(null)
   }
 
+  const handleClickRemove = async () => {
+    if (window.confirm('Удалить комментарий?')) {
+      try {
+        await Api().comment.remove(id)
+        onRemove(id)
+      } catch (err) {
+        console.warn('Error remove comment', err)
+        alert('не удалось удалить комментарий')
+      } finally {
+        handleClose()
+      }
+    }
+  }
+
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
-        <img src={user.avatarUrl} alt='Avatar' />
-        <b>{user.fullname}</b>
+        <Avatar style={{ marginRight: 10 }}>{user.fullName[0]}</Avatar>
+        <b>{user.fullName}</b>
         <span>{createdAt}</span>
       </div>
       <Typography className={styles.text}>{text}</Typography>
-      <span className={styles.replyBtn}>Ответить</span>
-      <IconButton onClick={handleClick}>
-        <MoreIcon />
-      </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        elevation={2}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Удалить</MenuItem>
-        <MenuItem onClick={handleClose}>Редактировать</MenuItem>
-      </Menu>
+      {user.id === currentUserId && (
+        <>
+          <span className={styles.replyBtn}>Ответить</span>
+          <IconButton onClick={handleClick}>
+            <MoreIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            elevation={2}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
+            <MenuItem onClick={handleClose}>Редактировать</MenuItem>
+          </Menu>
+        </>
+      )}
     </div>
   )
 }
