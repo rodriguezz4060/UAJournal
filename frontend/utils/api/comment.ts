@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios'
+import { OutputData } from '@editorjs/editorjs'
 import { CommentItem, PostItem } from './types'
 
 type CreateCommentDto = {
@@ -11,12 +12,10 @@ export const CommentApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get<CommentItem[]>('/comments', { params: { postId } })
     return data
   },
-
   async create(dto: CreateCommentDto) {
     const { data } = await instance.post<CreateCommentDto, { data: CommentItem }>('/comments', dto)
     return data
   },
-
   async remove(id: number) {
     return instance.delete('/comments/' + id)
   },

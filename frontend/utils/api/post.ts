@@ -22,7 +22,7 @@ export const PostApi = (instance: AxiosInstance) => ({
     return data
   },
   async search(query: SearchPostDto) {
-    const { data } = await instance.get<{ items: PostItem[]; total: number }>('/posts/search', {
+    const { data } = await instance.get<{ items: PostItem[]; totla: number }>('/posts/search', {
       params: query,
     })
     return data
@@ -35,7 +35,6 @@ export const PostApi = (instance: AxiosInstance) => ({
     const { data } = await instance.post<CreatePostDto, { data: PostItem }>('/posts', dto)
     return data
   },
-
   async update(id: number, dto: CreatePostDto) {
     const { data } = await instance.patch<CreatePostDto, { data: PostItem }>(`/posts/${id}`, dto)
     return data

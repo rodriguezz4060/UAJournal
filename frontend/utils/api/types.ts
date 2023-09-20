@@ -1,4 +1,3 @@
-import { Comment } from './../../components/Comment/index'
 import { OutputData } from '@editorjs/editorjs'
 
 export type LoginDto = {
@@ -11,13 +10,13 @@ export type CreateUserDto = {
 } & LoginDto
 
 export type ResponseUser = {
-  createAt: string
+  createdAt: string
   email: string
   fullName: string
   id: number
   commentsCount?: number
   token: string
-  updateAt: string
+  updatedAt: string
 }
 
 export type PostItem = {

@@ -1,10 +1,10 @@
 import { MainLayout } from '../../layouts/MainLayout'
 import { FullPost } from '../../components/FullPost'
-import { PostComments } from '../../components/PostComments'
 import React from 'react'
-import { PostItem } from '../../utils/api/types'
+import { PostComments } from '../../components/PostComments'
 import { GetServerSideProps, NextPage } from 'next'
 import { Api } from '../../utils/api'
+import { PostItem } from '../../utils/api/types'
 
 interface FullPostPageProps {
   post: PostItem
@@ -19,7 +19,7 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
   )
 }
 
-export const getServerSideProps: getServerSideProps = async ctx => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   try {
     const id = ctx.params.id
     const post = await Api(ctx).post.getOne(+id)
@@ -30,7 +30,7 @@ export const getServerSideProps: getServerSideProps = async ctx => {
       },
     }
   } catch (err) {
-    console.log('Full post page', err)
+    console.log('Fulll post page', err)
     return {
       props: {},
       redirect: {
