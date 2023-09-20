@@ -38,11 +38,11 @@ export class UserService {
   }
 
   findById(id: number) {
-    return this.repository.findOneBy({ id: id });
+    return this.repository.findOne(id);
   }
 
   findByCond(cond: LoginUserDto) {
-    return this.repository.findOneBy(cond);
+    return this.repository.findOne(cond);
   }
 
   update(id: number, dto: UpdateUserDto) {

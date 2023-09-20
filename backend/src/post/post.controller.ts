@@ -15,6 +15,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { SearchPostDto } from './dto/searchg-post.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../decorators/user.decorator';
+import { UserEntity } from '../user/entities/user.entity';
 
 @Controller('posts')
 export class PostController {

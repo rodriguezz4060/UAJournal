@@ -39,10 +39,14 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ({ ctx, Componen
     store.dispatch(setUserData(userData))
   } catch (err) {
     if (ctx.asPath === '/write') {
-      ctx.res.writeHead(302, {
-        Location: '/403',
-      })
-      ctx.res.end()
+      if (ctx.res) {
+        ctx.res.writeHead(302, {
+          Location: '/403',
+        })
+      }
+      if (ctx.res) {
+        ctx.res.end()
+      }
     }
     console.log(err)
   }

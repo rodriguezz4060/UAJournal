@@ -19,9 +19,7 @@ export class CommentService {
       user: { id: userId },
     });
 
-    return (
-      this.repository.findOneBy({ id: comment.id }), { relations: ['user'] }
-    );
+    return this.repository.findOne({ id: comment.id }, { relations: ['user'] });
   }
 
   async findAll(postId: number) {
@@ -45,7 +43,7 @@ export class CommentService {
   }
 
   findOne(id: number) {
-    return this.repository.findOneBy({ id: id });
+    return this.repository.findOne(id);
   }
 
   update(id: number, dto: UpdateCommentDto) {
