@@ -6,13 +6,15 @@ import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
 
 import styles from './FullPost.module.scss'
 import { OutputData } from '@editorjs/editorjs'
+import { ResponseUser } from '../../utils/api/types'
 
 interface FullPostProps {
   title: string
   blocks: OutputData['blocks']
+  user: ResponseUser
 }
 
-export const FullPost: React.FC<FullPostProps> = ({ title, blocks }) => {
+export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
   return (
     <Paper elevation={0} className={styles.paper}>
       <div className='container'>
@@ -33,8 +35,8 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks }) => {
                 src='https://leonardo.osnova.io/104b03b4-5173-fd9f-2af9-b458dddc4a23/-/scale_crop/108x108/-/format/webp/'
                 alt='Avatar'
               />
-              <b>Donnie Darko</b>
-              <span>+1685</span>
+              <b>{user.fullName}</b>
+              <span>+{user.commentsCount * 2}</span>
             </div>
             <div>
               <Button variant='contained' className='mr-15'>

@@ -8,21 +8,19 @@ import { PostItem } from '../../utils/api/types'
 
 interface FullPostPageProps {
   post: PostItem
-  user: {
-    fullName: string
-  }
+
 }
 
-const FullPostPage: NextPage<FullPostPageProps> = ({ post, user }) => {
+const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
   return (
     <MainLayout className='mb-50' contentFullWidth>
-      <FullPost title={post.title} blocks={post.body} />
+      <FullPost title={post.title} blocks={post.body} user={post.user} />
       <PostComments postId={post.id} />
     </MainLayout>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
+export const getServerSideProps: (ctx) => Promise<{ props: { post: T } } | { redirect: { permanent: boolean; destination: string }; props: {} }> = async ctx => {
   try {
     const id = ctx.params.id
     const post = await Api(ctx).post.getOne(+id)
