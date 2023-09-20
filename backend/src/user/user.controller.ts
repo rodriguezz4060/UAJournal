@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Post,
   Body,
   Patch,
   Param,
@@ -12,7 +13,7 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { SearchUserDto } from './dto/search-user.dto';
+import { SearchUserDto } from './dto/searchg-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -38,11 +39,6 @@ export class UserController {
   @Get('search')
   search(@Query() dto: SearchUserDto) {
     return this.userService.search(dto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
   }
 
   @Get(':id')

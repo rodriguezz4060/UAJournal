@@ -1,4 +1,3 @@
-import { CommentEntity } from 'src/comment/entities/comment.entity';
 import {
   Entity,
   Column,
@@ -7,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { CommentEntity } from '../../comment/entities/comment.entity';
 
 @Entity('users')
 export class UserEntity {

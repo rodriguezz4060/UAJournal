@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios'
-import { OutputData } from '@editorjs/editorjs'
 import { CommentItem, PostItem } from './types'
 
 type CreateCommentDto = {

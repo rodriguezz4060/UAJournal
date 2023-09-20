@@ -2,7 +2,7 @@ import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export interface OutputBlockData {
   id?: string;
-  type: 'patagraph' | string;
+  type: any;
   data: any;
 }
 

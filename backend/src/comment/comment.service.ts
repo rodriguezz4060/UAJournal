@@ -1,9 +1,9 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { CommentEntity } from './entities/comment.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CommentEntity } from './entities/comment.entity';
 
 @Injectable()
 export class CommentService {
@@ -19,14 +19,16 @@ export class CommentService {
       user: { id: userId },
     });
 
-    return this.repository.findOneBy({ id: comment.id });
+    return (
+      this.repository.findOneBy({ id: comment.id }), { relations: ['user'] }
+    );
   }
 
   async findAll(postId: number) {
     const qb = this.repository.createQueryBuilder('c');
 
     if (postId) {
-      qb.where('c.postId= :postId', { postId });
+      qb.where('c.postId = :postId', { postId });
     }
 
     const arr = await qb

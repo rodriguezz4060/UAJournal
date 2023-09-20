@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from '@mui/material/Input'
+import Input from '@material-ui/core/Input'
 import styles from './AddCommentForm.module.scss'
 import { Button } from '@material-ui/core'
 import { Api } from '../../utils/api'
@@ -54,7 +54,7 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, onSucces
           variant='contained'
           color='primary'
         >
-          Отправить
+          Опубликовать
         </Button>
       )}
     </div>

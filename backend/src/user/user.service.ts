@@ -3,10 +3,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
-import { LoginUserDto } from './dto/login-user.dto';
 import { Repository } from 'typeorm';
-import { SearchUserDto } from './dto/search-user.dto';
-import { CommentEntity } from 'src/comment/entities/comment.entity';
+import { LoginUserDto } from './dto/login-user.dto';
+import { SearchUserDto } from './dto/searchg-user.dto';
+import { CommentEntity } from '../comment/entities/comment.entity';
 
 @Injectable()
 export class UserService {
@@ -41,16 +41,12 @@ export class UserService {
     return this.repository.findOneBy({ id: id });
   }
 
-  findByCont(cond: LoginUserDto) {
+  findByCond(cond: LoginUserDto) {
     return this.repository.findOneBy(cond);
   }
 
   update(id: number, dto: UpdateUserDto) {
     return this.repository.update(id, dto);
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
   }
 
   async search(dto: SearchUserDto) {
@@ -68,8 +64,8 @@ export class UserService {
     }
 
     qb.setParameters({
-      fullName: `%${dto.fullName}%`,
       email: `%${dto.email}%`,
+      fullName: `%${dto.fullName}%`,
     });
 
     const [items, total] = await qb.getManyAndCount();

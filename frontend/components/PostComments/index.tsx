@@ -1,33 +1,20 @@
 import React from 'react'
-import styles from './PostComments.module.scss'
-import { Divider, Paper, Typography, Tabs, Tab } from '@material-ui/core'
-import { Comment } from '../Comment/'
+import { Divider, Paper, Tab, Tabs, Typography } from '@material-ui/core'
+import { Comment } from '../Comment'
 import { AddCommentForm } from '../AddCommentForm'
-import { Api } from '../../utils/api'
 import { CommentItem } from '../../utils/api/types'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
 import { useComments } from '../../hooks/useComments'
 
-interface PostCommentsProps {
+interface PostComments {
   postId: number
 }
 
-export const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
+export const PostComments: React.FC<PostComments> = ({ postId }) => {
   const userData = useAppSelector(selectUserData)
   const [activeTab, setActiveTab] = React.useState(0)
   const { comments, setComments } = useComments(postId)
-
-  React.useEffect(() => {
-    ;(async () => {
-      try {
-        const arr = await Api().comment.getAll(postId)
-        setComments(arr)
-      } catch (err) {
-        console.warn('Fetch comments', err)
-      }
-    })()
-  }, [])
 
   const onAddComment = (obj: CommentItem) => {
     setComments(prev => [...prev, obj])
@@ -41,7 +28,7 @@ export const PostComments: React.FC<PostCommentsProps> = ({ postId }) => {
     <Paper elevation={0} className='mt-40 p-30'>
       <div className='container'>
         <Typography variant='h6' className='mb-20'>
-          266 комментариев
+          42 комментария
         </Typography>
         <Tabs
           onChange={(_, newValue) => setActiveTab(newValue)}

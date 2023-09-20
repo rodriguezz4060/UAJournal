@@ -8,9 +8,12 @@ import { PostItem } from '../../utils/api/types'
 
 interface FullPostPageProps {
   post: PostItem
+  user: {
+    fullName: string
+  }
 }
 
-const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
+const FullPostPage: NextPage<FullPostPageProps> = ({ post, user }) => {
   return (
     <MainLayout className='mb-50' contentFullWidth>
       <FullPost title={post.title} blocks={post.body} />

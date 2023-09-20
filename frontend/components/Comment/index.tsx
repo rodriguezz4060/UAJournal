@@ -1,6 +1,6 @@
 import React from 'react'
-import { Avatar, IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
-import MoreIcon from '@mui/icons-material/MoreHorizOutlined'
+import { Typography, IconButton, MenuItem, Menu, Avatar } from '@material-ui/core'
+import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 
 import styles from './Comment.module.scss'
 import { ResponseUser } from '../../utils/api/types'
@@ -40,7 +40,7 @@ export const Comment: React.FC<CommentPostProps> = ({
         onRemove(id)
       } catch (err) {
         console.warn('Error remove comment', err)
-        alert('не удалось удалить комментарий')
+        alert('Не удалось удалить комментарий')
       } finally {
         handleClose()
       }
@@ -64,9 +64,9 @@ export const Comment: React.FC<CommentPostProps> = ({
           <Menu
             anchorEl={anchorEl}
             elevation={2}
-            keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            keepMounted
           >
             <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
             <MenuItem onClick={handleClose}>Редактировать</MenuItem>

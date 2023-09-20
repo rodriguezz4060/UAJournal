@@ -1,11 +1,14 @@
-import { Injectable, Body, ForbiddenException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PostEntity } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { NotFoundException } from '@nestjs/common/exceptions';
-import { SearchPostDto } from './dto/search-post.dto';
+import { PostEntity } from './entities/post.entity';
+import { SearchPostDto } from './dto/searchg-post.dto';
 
 @Injectable()
 export class PostService {
@@ -83,10 +86,6 @@ export class PostService {
       .execute();
 
     return this.repository.findOneBy({ id: id });
-
-    // еще 1 вариант счетчика просмотров
-    // this.repository.increment({ id }, 'views', 1);
-    // return;
   }
 
   create(dto: CreatePostDto, userId: number) {
