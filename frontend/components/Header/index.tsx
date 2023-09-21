@@ -14,7 +14,6 @@ import { AuthDialog } from '../AuthDialog'
 import UserIcon from '@mui/icons-material/AccountCircleOutlined'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
-import { ListItemButton } from '@mui/material'
 import { PostItem } from '../../utils/api/types'
 import { Api } from '../../utils/api'
 

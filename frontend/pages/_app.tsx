@@ -9,6 +9,7 @@ import '../styles/globals.css'
 import 'macro-css'
 import { setUserData } from '../redux/slices/user'
 import { Api } from '../utils/api'
+import NextNProgress from '../components/Progressbar'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -27,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Header />
         <Component {...pageProps} />
+        <NextNProgress />
       </MuiThemeProvider>
     </>
   )
