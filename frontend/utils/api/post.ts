@@ -40,6 +40,7 @@ export const PostApi = (instance: AxiosInstance) => ({
     return data
   },
   async remove(id: number) {
-    return instance.delete('/posts/' + id)
+    const { data } = await instance.delete(`/posts/${id}`)
+    return data
   },
 })

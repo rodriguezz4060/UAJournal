@@ -18,9 +18,7 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
   return (
     <Paper elevation={0} className={styles.paper}>
       <div className='container'>
-        <Typography variant='h4' className={styles.title}>
-          {title}
-        </Typography>
+        <Typography className={styles.title}>{title}</Typography>
         <div className={styles.text}>
           {blocks.map(obj => (
             <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
