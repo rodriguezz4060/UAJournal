@@ -39,4 +39,7 @@ export const PostApi = (instance: AxiosInstance) => ({
     const { data } = await instance.patch<CreatePostDto, { data: PostItem }>(`/posts/${id}`, dto)
     return data
   },
+  async remove(id: number) {
+    return instance.delete('/posts/' + id)
+  },
 })

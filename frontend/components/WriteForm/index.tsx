@@ -29,7 +29,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
       }
       if (!data) {
         const post = await Api().post.create(obj)
-        await router.push(`/write/${post.id}`)
+        await router.push(`/news/${post.id}`)
       } else {
         await Api().post.update(data.id, obj)
       }
