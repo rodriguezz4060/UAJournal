@@ -5,6 +5,8 @@ import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import styles from './Comment.module.scss'
 import { ResponseUser } from '../../utils/api/types'
 import { Api } from '../../utils/api'
+import moment from 'moment'
+import { comments } from '../../data'
 
 interface CommentPostProps {
   id: number
@@ -52,7 +54,9 @@ export const Comment: React.FC<CommentPostProps> = ({
       <div className={styles.userInfo}>
         <Avatar style={{ marginRight: 10 }}>{user.fullName[0]}</Avatar>
         <b>{user.fullName}</b>
-        <span>{createdAt}</span>
+        <span>
+          <span>{moment(createdAt).fromNow()}</span>
+        </span>
       </div>
       <Typography className={styles.text}>{text}</Typography>
       {user.id === currentUserId && (

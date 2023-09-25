@@ -7,6 +7,7 @@ import { PostActions } from '../PostActions'
 import { Api } from '../../utils/api'
 import { ResponseUser } from '../../utils/api/types'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
+import moment from 'moment'
 
 interface PostProps {
   title: string
@@ -15,9 +16,18 @@ interface PostProps {
   imageUrl?: string
   onRemove: (id: number) => void
   user: ResponseUser
+  createdAt: string
 }
 
-export const Post: React.FC<PostProps> = ({ id, title, description, imageUrl, onRemove, user }) => {
+export const Post: React.FC<PostProps> = ({
+  id,
+  title,
+  description,
+  imageUrl,
+  onRemove,
+  user,
+  createdAt,
+}) => {
   const handleRemove = async () => {
     try {
       await Api().post.remove(id)
@@ -44,6 +54,9 @@ export const Post: React.FC<PostProps> = ({ id, title, description, imageUrl, on
           <div className={styles.userInfo}>
             <Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
             <b>{user.fullName}</b>
+          </div>
+          <div>
+            <span>{moment(createdAt).fromNow()}</span>
           </div>
           <div>
             <IconButton onClick={handleClick}>

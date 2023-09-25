@@ -8,8 +8,6 @@ import { useRouter } from 'next/router'
 
 const Editor = dynamic(() => import('../Editor'), { ssr: false })
 
-// const Editor = dynamic(() => import('../Editor').then(m => m.Editor), { ssr: false })
-
 interface WriteFormProps {
   data?: PostItem
 }
@@ -20,12 +18,20 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
   const [title, setTitle] = React.useState(data?.title || '')
   const [blocks, setBlocks] = React.useState(data?.body || [])
 
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      window.scrollTo(0, document.body.scrollHeight)
+    }
+  }
+
   const onAddPost = async () => {
     try {
       setLoading(true)
       const obj = {
         title,
         body: blocks,
+        items: blocks,
       }
       if (!data) {
         const post = await Api().post.create(obj)
@@ -43,24 +49,28 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
 
   return (
     <div>
-      <Input
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        classes={{ root: styles.titleField }}
-        placeholder='Заголовок'
-      />
-      <div className={styles.editor}>
-        <Editor initialBlocks={data?.body} onChange={arr => setBlocks(arr)} />
+      <div className={styles.container}>
+        <Input
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          classes={{ root: styles.titleField }}
+          placeholder='Заголовок'
+        />
+        <div className={styles.editor} onKeyDown={handleEnterKey}>
+          <Editor initialBlocks={data?.body} onChange={arr => setBlocks(arr)} />
+        </div>
       </div>
-      <div>
-        <Button
-          disabled={isLoading || !blocks.length || !title}
-          onClick={onAddPost}
-          variant='contained'
-          color='primary'
-        >
-          {data ? 'Сохранить' : 'Опубликовать'}
-        </Button>
+      <div className={styles.writing__footer}>
+        <div className={styles.buttonContainer}>
+          <Button
+            disabled={isLoading || !blocks.length || !title}
+            onClick={onAddPost}
+            variant='contained'
+            color='primary'
+          >
+            {data ? 'Сохранить' : 'Опубликовать'}
+          </Button>
+        </div>
       </div>
     </div>
   )

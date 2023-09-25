@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import EditorJS, { OutputData } from '@editorjs/editorjs'
-import { useRef } from 'react'
+import Quote from '@editorjs/quote'
+import List from '@editorjs/list'
 
 interface EditorProps {
   onChange: (blocks: OutputData['blocks']) => void
@@ -8,30 +9,52 @@ interface EditorProps {
 }
 
 const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
-  const ref = useRef<null | EditorJS>(null)
+  const editorRef = useRef<EditorJS | null>(null)
+
   React.useEffect(() => {
-    if (!ref.current?.isReady) {
+    if (!editorRef.current?.isReady) {
       const editor = new EditorJS({
         holder: 'editor',
+        minHeight: 0,
+
         data: {
           blocks: initialBlocks,
         },
+        autofocus: true,
         placeholder: 'Введите текст вашей статьи',
         hideToolbar: false,
-        async onChange() {
-          const { blocks } = await editor.save()
-          onChange(blocks)
+        tools: {
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+            config: {
+              defaultStyle: 'unordered',
+            },
+          },
+        },
+        onChange: async () => {
+          if (editorRef.current) {
+            const savedData = await editorRef.current.save()
+            onChange(savedData.blocks)
+          }
         },
       })
-      ref.current = editor
+
+      editorRef.current = editor
     }
+
     return () => {
-      if (ref.current && ref.current.destroy) {
-        ref.current.destroy()
+      if (editorRef.current && editorRef.current.destroy) {
+        editorRef.current.destroy()
       }
     }
   }, [])
-  return <div id={'editor'} ref={ref} />
+
+  return <div id='editor' ref={editorRef} />
 }
 
 export default Editor

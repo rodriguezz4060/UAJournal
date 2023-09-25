@@ -27,6 +27,7 @@ const Home: NextPage<HomeProps> = ({ posts, user }) => {
           title={obj.title}
           description={obj.description}
           user={obj.user}
+          createdAt={obj.createdAt}
           onRemove={handleRemovePost}
         />
       ))}

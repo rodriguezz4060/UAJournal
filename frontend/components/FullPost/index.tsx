@@ -1,5 +1,5 @@
-import { Button, Paper, Typography } from '@material-ui/core'
 import React from 'react'
+import { Button, Paper, Typography } from '@material-ui/core'
 import { PostActions } from '../PostActions'
 import MessageIcon from '@material-ui/icons/TextsmsOutlined'
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
@@ -20,9 +20,23 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
       <div className='container'>
         <Typography className={styles.title}>{title}</Typography>
         <div className={styles.text}>
-          {blocks.map(obj => (
-            <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
-          ))}
+          {blocks.map(obj => {
+            if (obj.type === 'paragraph') {
+              return <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
+            } else if (obj.type === 'quote') {
+              return <blockquote>{obj.data.text}</blockquote>
+            } else if (obj.type === 'list') {
+              return (
+                <ul>
+                  {obj.data.items.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              )
+            } else {
+              return null
+            }
+          })}
 
           <div style={{ width: 250, marginLeft: -14 }}>
             <PostActions />

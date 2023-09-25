@@ -8,7 +8,6 @@ import { PostItem } from '../../utils/api/types'
 
 interface FullPostPageProps {
   post: PostItem
-
 }
 
 const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
@@ -20,9 +19,9 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
   )
 }
 
-export const getServerSideProps: (ctx) => Promise<{ props: { post: T } } | { redirect: { permanent: boolean; destination: string }; props: {} }> = async ctx => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   try {
-    const id = ctx.params.id
+    const id = ctx.params?.id
     const post = await Api(ctx).post.getOne(+id)
 
     return {
