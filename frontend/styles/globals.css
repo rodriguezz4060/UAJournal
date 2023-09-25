@@ -90,3 +90,9 @@ H2 {
   overflow-x: auto;
   resize: vertical;
 }
+.ce-block a {
+  color: #3766a9 !important;
+  border-bottom: 1px solid #bed0ea !important;
+  cursor: text !important;
+  text-decoration: none;
+}
