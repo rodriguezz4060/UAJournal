@@ -27,6 +27,8 @@ export type PostItem = {
   id: number
   views: number
   items: string
+  caption: string
+  code: string
   user: ResponseUser
   createdAt: string
   updatedAt: string

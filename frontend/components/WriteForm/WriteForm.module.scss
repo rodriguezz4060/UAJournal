@@ -50,3 +50,9 @@
   flex-shrink: 0;
   padding-top: 10px;
 }
+
+.ce-paragraph[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: #ff0000 !important;
+  font-style: italic;
+}

@@ -3,6 +3,7 @@ import { Button, Paper, Typography } from '@material-ui/core'
 import { PostActions } from '../PostActions'
 import MessageIcon from '@material-ui/icons/TextsmsOutlined'
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
+import QuoteIcon from '@mui/icons-material/FormatQuote'
 
 import styles from './FullPost.module.scss'
 import { OutputData } from '@editorjs/editorjs'
@@ -24,15 +25,35 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
             if (obj.type === 'paragraph') {
               return <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
             } else if (obj.type === 'quote') {
-              return <blockquote>{obj.data.text}</blockquote>
+              return (
+                <blockquote className={styles.block_quote}>
+                  <div className={styles.quote__content}>
+                    <QuoteIcon />
+                    <div className={styles.quote_text}>{obj.data.text}</div>
+                    <div className={styles.quote_author}>{obj.data.caption}</div>
+                  </div>
+                </blockquote>
+              )
             } else if (obj.type === 'list') {
               return (
-                <ul>
-                  {obj.data.items.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+                <div className={styles.list}>
+                  <ul>
+                    {obj.data.items.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
               )
+            } else if (obj.type === 'incut') {
+              return (
+                <div className={styles.block_incut}>
+                  <div className={styles.content_incut}>
+                    <p>{obj.data.code}</p>
+                  </div>
+                </div>
+              )
+            } else if (obj.type === 'code') {
+              return <div className={styles.block_code}>{obj.data.code}</div>
             } else {
               return null
             }

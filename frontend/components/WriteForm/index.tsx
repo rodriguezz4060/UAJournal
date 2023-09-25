@@ -18,13 +18,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
   const [title, setTitle] = React.useState(data?.title || '')
   const [blocks, setBlocks] = React.useState(data?.body || [])
 
-  const handleEnterKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      window.scrollTo(0, document.body.scrollHeight)
-    }
-  }
-
   const onAddPost = async () => {
     try {
       setLoading(true)
@@ -56,7 +49,7 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
           classes={{ root: styles.titleField }}
           placeholder='Заголовок'
         />
-        <div className={styles.editor} onKeyDown={handleEnterKey}>
+        <div className={styles.editor}>
           <Editor initialBlocks={data?.body} onChange={arr => setBlocks(arr)} />
         </div>
       </div>
