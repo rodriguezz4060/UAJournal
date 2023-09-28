@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Avatar, IconButton, Menu, MenuItem, Paper, Typography } from '@material-ui/core'
-
+import { useRouter } from 'next/router'
 import styles from './Post.module.scss'
 import { PostActions } from '../PostActions'
 import { Api } from '../../utils/api'
@@ -13,7 +13,7 @@ interface PostProps {
   title: string
   id: number
   description: string
-  imageUrl?: string
+  images: string[]
   onRemove: (id: number) => void
   user: ResponseUser
   createdAt: string
@@ -23,7 +23,7 @@ export const Post: React.FC<PostProps> = ({
   id,
   title,
   description,
-  imageUrl,
+  images,
   onRemove,
   user,
   createdAt,
@@ -37,6 +37,7 @@ export const Post: React.FC<PostProps> = ({
     }
   }
 
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -47,18 +48,24 @@ export const Post: React.FC<PostProps> = ({
     setAnchorEl(null)
   }
 
+  const handleEdit = () => {
+    router.push(`/write/${id}`)
+    handleClose()
+  }
+
   return (
-    <Paper elevation={0} className='p-20' classes={{ root: styles.paper }}>
-      <div>
-        <div className='d-flex justify-between align-center'>
+    <Paper elevation={0} classes={{ root: styles.paper }}>
+      <div className={styles.postContent}>
+        <div className={styles.userInfoContent}>
           <div className={styles.userInfo}>
             <Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
             <b>{user.fullName}</b>
+
+            <div>
+              <span>{moment(createdAt).fromNow()}</span>
+            </div>
           </div>
-          <div>
-            <span>{moment(createdAt).fromNow()}</span>
-          </div>
-          <div>
+          <div className={styles.userInfoControl}>
             <IconButton onClick={handleClick}>
               <MoreIcon />
             </IconButton>
@@ -71,7 +78,7 @@ export const Post: React.FC<PostProps> = ({
               keepMounted
             >
               <MenuItem onClick={handleRemove}>Удалить</MenuItem>
-              <MenuItem onClick={handleClose}>Редактировать</MenuItem>
+              <MenuItem onClick={handleEdit}>Редактировать</MenuItem>
             </Menu>
           </div>
         </div>
@@ -80,13 +87,10 @@ export const Post: React.FC<PostProps> = ({
         <Link href={`/news/${id}`}>{title}</Link>
       </Typography>
       <Typography className={styles.content} dangerouslySetInnerHTML={{ __html: description }} />
-      {imageUrl && (
-        <img
-          src='https://leonardo.osnova.io/a21ca5a9-d95b-560d-9a6f-9fa87eff7fcd/-/preview/600/-/format/webp/'
-          height={500}
-          width={600}
-          alt={title}
-        />
+      {images.length > 0 && (
+        <div className={styles.imagePost}>
+          <img src={images[0]} alt='First Image' />
+        </div>
       )}
       <PostActions />
     </Paper>

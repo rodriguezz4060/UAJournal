@@ -29,7 +29,7 @@ export type PostItem = {
   items: string
   caption: string
   code: string
-  image: string | File
+  images?: string[]
   user: ResponseUser
   createdAt: string
   updatedAt: string

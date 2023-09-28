@@ -1,6 +1,8 @@
 .title {
   font-weight: 500 !important;
   font-size: 22px !important;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .paper {
@@ -11,6 +13,8 @@
 .content {
   margin-top: 10px !important;
   margin-bottom: 15px !important;
+  padding-left: 20px;
+  padding-right: 20px;
 
   a {
     color: #3766a9;
@@ -19,10 +23,29 @@
   }
 }
 
+.userInfoContent {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-wrap: nowrap;
+  padding-top: 16px;
+  margin-bottom: 10px;
+  height: 40px;
+}
+
+.userInfoContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userInfoControl {
+  margin-left: auto;
+}
+
 .userInfo {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 
   b {
     font-weight: 500;
@@ -52,4 +75,19 @@
 
 .itemControls {
   display: flex;
+}
+
+.imagePost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.postContent {
+  max-width: 860px;
 }

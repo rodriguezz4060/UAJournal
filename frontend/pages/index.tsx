@@ -26,6 +26,7 @@ const Home: NextPage<HomeProps> = ({ posts, user }) => {
           id={obj.id}
           title={obj.title}
           description={obj.description}
+          images={obj.body.filter(item => item.type === 'image').map(item => item.data.file.url)}
           user={obj.user}
           createdAt={obj.createdAt}
           onRemove={handleRemovePost}
