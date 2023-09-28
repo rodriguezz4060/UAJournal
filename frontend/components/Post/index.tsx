@@ -86,12 +86,12 @@ export const Post: React.FC<PostProps> = ({
       <Typography variant='h5' className={styles.title}>
         <Link href={`/news/${id}`}>{title}</Link>
       </Typography>
-      <Typography className={styles.content} dangerouslySetInnerHTML={{ __html: description }} />
       {images.length > 0 && (
         <div className={styles.imagePost}>
           <img src={images[0]} alt='First Image' />
         </div>
       )}
+      <Typography className={styles.content} dangerouslySetInnerHTML={{ __html: description }} />
       <PostActions />
     </Paper>
   )
