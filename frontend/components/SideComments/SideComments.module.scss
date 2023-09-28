@@ -1,5 +1,5 @@
 .root {
-  width: 320px;
+  width: 265px;
   margin-bottom: 2px;
   position: sticky;
   top: 90px;
@@ -12,6 +12,7 @@
     font-size: 18px;
     margin-bottom: 30px;
     cursor: pointer;
+    font-weight: 500;
 
     svg {
       width: 22px;
@@ -40,10 +41,13 @@
   align-items: center;
 
   img {
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 6px;
     margin-right: 8px;
+  }
+  b {
+    margin-left: 30px;
   }
 }
 
@@ -56,4 +60,17 @@
 .postTitle {
   font-size: 15px;
   font-weight: 500;
+}
+
+.userAvatar {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 30px !important;
+  border-radius: 6px !important;
+  margin-right: 8px !important;
+  overflow: hidden !important;
+  background-size: 100% auto !important;
+  background-repeat: no-repeat !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  position: absolute !important;
 }

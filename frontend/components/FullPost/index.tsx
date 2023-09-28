@@ -54,6 +54,13 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
               )
             } else if (obj.type === 'code') {
               return <div className={styles.block_code}>{obj.data.code}</div>
+            } else if (obj.type === 'image') {
+              return (
+                <div className={styles.image}>
+                  <img src={obj.data.file.url} alt={obj.data.caption} />
+                  <div className={styles.image_caption}>{obj.data.caption}</div>
+                </div>
+              )
             } else {
               return null
             }

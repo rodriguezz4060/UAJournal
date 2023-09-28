@@ -1,6 +1,5 @@
 import React from 'react'
 import ArrowRightIcon from '@material-ui/icons/NavigateNextOutlined'
-import data from '../../data'
 import styles from './SideComments.module.scss'
 import { CommentItem } from './CommentItem'
 import clsx from 'clsx'
