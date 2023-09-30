@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@editorjs/image": "^2.8.1",
+    "@vietlongn/editorjs-video": "^2.6.1",
     "eslint": "8.22.0",
     "eslint-config-next": "11.1.0",
     "typescript": "^4.3.5"

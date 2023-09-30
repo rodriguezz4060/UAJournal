@@ -1,5 +1,5 @@
 import { MainLayout } from '../../layouts/MainLayout'
-import { FullPost } from '../../components/FullPost'
+import { FullPost } from '../../components/FullPost/'
 import React from 'react'
 import { PostComments } from '../../components/PostComments'
 import { GetServerSideProps, NextPage } from 'next'

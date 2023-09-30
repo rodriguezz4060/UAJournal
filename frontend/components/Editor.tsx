@@ -4,7 +4,7 @@ import Quote from '@editorjs/quote'
 import List from '@editorjs/list'
 import IncutTool from './EditorTools/incut'
 import ImageTool from '@editorjs/image'
-import axios from 'axios'
+import VideoTool from '@vietlongn/editorjs-video'
 
 const Paragraph = require('@editorjs/paragraph')
 const CodeTool = require('@editorjs/code')
@@ -66,6 +66,40 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                     }
                   } else {
                     console.error('Ошибка при загрузке изображения')
+                    return {
+                      success: 0,
+                    }
+                  }
+                },
+              },
+            },
+          },
+          video: {
+            class: VideoTool,
+            config: {
+              uploader: {
+                uploadByFile: async file => {
+                  // Отправка файла на сервер
+                  const formData = new FormData()
+                  formData.append('file', file)
+
+                  const response = await fetch('http://localhost:7777/aws', {
+                    method: 'POST',
+                    body: formData,
+                  })
+
+                  if (response.ok) {
+                    // Получение URL загруженного видео
+                    const data = await response.json()
+                    console.log(data) // Вывод ответа сервера в консоль
+                    return {
+                      success: 1,
+                      file: {
+                        url: data.url,
+                      },
+                    }
+                  } else {
+                    console.error('Ошибка при загрузке видео')
                     return {
                       success: 0,
                     }
