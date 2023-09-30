@@ -15,10 +15,20 @@ export const SideComments = () => {
 
   return (
     <div className={clsx(styles.root, !visible && styles.rotated)}>
-      <h3 onClick={toggleVisible}>
-        Комментарии <ArrowRightIcon />
-      </h3>
-      {visible && comments.map(obj => <CommentItem key={obj.id} {...obj} />)}
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <h3 onClick={toggleVisible}>
+            Комментарии <ArrowRightIcon />
+          </h3>
+        </div>
+      </div>
+      <div className={styles.commentContent}>
+        {visible &&
+          comments
+            .slice(-20) // Используйте метод slice с отрицательным значением, чтобы получить последние 20 комментариев
+            .reverse()
+            .map(obj => <CommentItem key={obj.id} {...obj} />)}
+      </div>
     </div>
   )
 }

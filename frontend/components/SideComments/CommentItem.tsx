@@ -12,17 +12,19 @@ interface CommentItemProps {
 
 export const CommentItem: React.FC<CommentItemProps> = ({ user, text, post }) => {
   return (
-    <div className={styles.commentItem}>
-      <div className={styles.userInfo}>
-        <Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
-        <Link href={`/profile/${user.id}`}>
-          <b>{user.fullName}</b>
+    <div className={styles.commentBlock}>
+      <div className={styles.commentItem}>
+        <div className={styles.userInfo}>
+          <Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
+          <Link href={`/profile/${user.id}`}>
+            <b>{user.fullName}</b>
+          </Link>
+        </div>
+        <p className={styles.text}>{text}</p>
+        <Link href={`/news/${post.id}`}>
+          <span className={styles.postTitle}>{post.title}</span>
         </Link>
       </div>
-      <p className={styles.text}>{text}</p>
-      <Link href={`/news/${post.id}`}>
-        <span className={styles.postTitle}>{post.title}</span>
-      </Link>
     </div>
   )
 }

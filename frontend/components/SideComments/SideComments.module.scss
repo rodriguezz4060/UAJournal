@@ -23,13 +23,32 @@
 }
 
 .rotated {
-  width: 100px;
+  width: 73px;
   transform: rotate(-90deg) translate(-50px);
   transform-origin: right;
+  right: 41px;
 
   svg {
     transform: rotate(270deg);
   }
+}
+
+.commentContent {
+  position: sticky;
+  top: 90px;
+  height: calc(100vh - 140px); // Subtract the height of the header from the viewport height
+  overflow-y: auto;
+  z-index: 9999;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.commentContent::-webkit-scrollbar {
+  display: none; /* Скрыть полоску прокрутки для Chrome, Safari и Opera */
+}
+
+.commentBlock {
+  width: 260px;
 }
 
 .commentItem {
@@ -55,6 +74,12 @@
   font-size: 16px;
   margin-top: 8px;
   margin-bottom: 5px;
+  display: block;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 5px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .postTitle {
