@@ -4,16 +4,8 @@ import { PostActions } from '../PostActions'
 import MessageIcon from '@material-ui/icons/TextsmsOutlined'
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
 import QuoteIcon from '@mui/icons-material/FormatQuote'
-
 import styles from './FullPost.module.scss'
-import { OutputData } from '@editorjs/editorjs'
-import { ResponseUser } from '../../utils/api/types'
-
-interface FullPostProps {
-  title: string
-  blocks: OutputData['blocks']
-  user: ResponseUser
-}
+import { FullPostProps } from '.'
 
 export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
   return (
@@ -61,12 +53,11 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                   <div className={styles.image_caption}>{obj.data.caption}</div>
                 </div>
               )
-            } else if (obj.type === 'image' && obj.data.file.url.endsWith('.mp4')) {
+            } else if (obj.type === 'video') {
               return (
                 <div className={styles.video}>
                   <video controls>
                     <source src={obj.data.file.url} type='video/mp4' />
-                    Ваш браузер не поддерживает воспроизведение видео.
                   </video>
                   <div className={styles.video_caption}>{obj.data.caption}</div>
                 </div>

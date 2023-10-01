@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Input } from '@material-ui/core'
 import styles from './WriteForm.module.scss'
 import dynamic from 'next/dynamic'
@@ -17,8 +17,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [title, setTitle] = React.useState(data?.title || '')
   const [blocks, setBlocks] = React.useState(data?.body || [])
-  const [images, setImages] = useState([])
-  const [videos, setVideos] = useState([])
 
   const onAddPost = async () => {
     try {
@@ -31,12 +29,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
       if (!data) {
         const post = await Api().post.create(obj)
         await router.push(`/news/${post.id}`)
-
-        // Обработка загруженных изображений
-        const uploadedImages = blocks
-          .filter(block => block.type === 'image')
-          .map(block => block.data.file.url)
-        setImages(uploadedImages)
       } else {
         await Api().post.update(data.id, obj)
       }
@@ -46,12 +38,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
     } finally {
       setLoading(false)
     }
-
-    // Обработка загруженных видео
-    const uploadedVideos = blocks
-      .filter(block => block.type === 'video')
-      .map(block => block.data.file.url)
-    setVideos(uploadedVideos)
   }
 
   return (
@@ -65,16 +51,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         />
         <div className={styles.editor}>
           <Editor initialBlocks={blocks} onChange={arr => setBlocks(arr)} />
-        </div>
-        <div className={styles.imagesContainer}>
-          {images.map((image, index) => (
-            <img key={index} src={image} alt={`Image ${index + 1}`} />
-          ))}
-        </div>
-        <div className={styles.videosContainer}>
-          {videos.map((video, index) => (
-            <video key={index} src={video} controls />
-          ))}
         </div>
       </div>
       <div className={styles.writing__footer}>

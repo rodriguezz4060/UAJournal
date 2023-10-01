@@ -4,7 +4,7 @@ import Quote from '@editorjs/quote'
 import List from '@editorjs/list'
 import IncutTool from './EditorTools/incut'
 import ImageTool from '@editorjs/image'
-import VideoTool from '@vietlongn/editorjs-video'
+import VideoTool from '@medistream/editorjs-video'
 
 const Paragraph = require('@editorjs/paragraph')
 const CodeTool = require('@editorjs/code')
@@ -97,6 +97,8 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                       file: {
                         url: data.url,
                       },
+                      autoplay: true, // Включение автовоспроизведения
+                      controls: false, // Удаление элементов управления
                     }
                   } else {
                     console.error('Ошибка при загрузке видео')
