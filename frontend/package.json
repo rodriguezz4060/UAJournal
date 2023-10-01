@@ -22,7 +22,7 @@
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@medistream/editorjs-video": "^2.9.4",
-    "@mui/icons-material": "^5.14.7",
+    "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.7",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.5.7",

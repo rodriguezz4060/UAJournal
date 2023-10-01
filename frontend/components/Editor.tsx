@@ -58,12 +58,30 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                   if (response.ok) {
                     // Получение URL загруженного изображения
                     const data = await response.json()
-                    return {
-                      success: 1,
-                      file: {
-                        url: data.url,
-                      },
-                    }
+
+                    // Получение ширины и высоты изображения
+                    const image = new Image()
+                    image.src = data.url
+
+                    return new Promise((resolve, reject) => {
+                      image.onload = () => {
+                        // Отправка данных о загруженном изображении обратно в Editor.js
+                        resolve({
+                          success: 1,
+                          file: {
+                            url: data.url,
+                            width: image.width,
+                            height: image.height,
+                          },
+                        })
+                      }
+                      image.onerror = () => {
+                        console.error('Ошибка при загрузке изображения')
+                        reject({
+                          success: 0,
+                        })
+                      }
+                    })
                   } else {
                     console.error('Ошибка при загрузке изображения')
                     return {

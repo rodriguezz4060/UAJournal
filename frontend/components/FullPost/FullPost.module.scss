@@ -9,6 +9,27 @@
   }
 }
 
+.image {
+  // Стиль для картинок шириной меньше 950px
+  width: 640px;
+}
+
+.stretched_image {
+  // Стиль для картинок шириной больше 1000px
+  width: 100%;
+}
+
+//.image {
+//  width: 640px;
+//  margin-right: 0;
+//  margin-left: 0;
+//}
+//
+//.stretched_image {
+//  max-width: 1000px;
+//  width: auto;
+//}
+
 .title {
   margin-bottom: 20px !important;
   font-size: 22px !important;
@@ -128,8 +149,8 @@
   font-size: 13px;
   line-height: 1.7em;
   font-family: Menlo, Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
-    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
-    'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+  'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+  'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
   margin-bottom: 24px;
 }
 
@@ -138,24 +159,16 @@
   line-height: 26px;
   overflow-wrap: break-word;
   word-wrap: break-word;
+
   ul {
     margin: 12px 0;
     list-style: disc;
     list-style-position: outside;
   }
+
   ui li {
     margin: 10px 0 10px 2em;
     word-wrap: break-word;
   }
 }
 
-.image {
-  width: 100%;
-  margin-left: -14px;
-  img {
-    width: 100%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
