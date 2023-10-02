@@ -72,8 +72,8 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 obj.data.file.width < 640
                   ? styles.small_image
                   : obj.data.file.width < 950
-                  ? styles.image
-                  : styles.stretched_image
+                    ? styles.image
+                    : styles.stretched_image
 
               return (
                 <div className={styles.figure}>
@@ -89,8 +89,8 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 obj.data.file.width < 640
                   ? styles.small_image
                   : obj.data.file.width < 950
-                  ? styles.image
-                  : styles.stretched_image
+                    ? styles.image
+                    : styles.stretched_image
               return (
                 <div className={styles.figure}>
                   <div className={videoClass}>

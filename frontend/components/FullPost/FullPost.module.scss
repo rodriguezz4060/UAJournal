@@ -8,6 +8,7 @@
     font-size: 17px;
   }
 }
+
 .container {
   max-width: 1000px;
 }
@@ -43,6 +44,7 @@
 .image {
   img,
   video {
+    width: 640px;
     max-height: 480px;
     display: flex;
     -ms-flex-align: center;
@@ -192,8 +194,8 @@
   font-size: 13px;
   line-height: 1.7em;
   font-family: Menlo, Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
-    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
-    'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+  'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+  'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
 }
 
 .list {
