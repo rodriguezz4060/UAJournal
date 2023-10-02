@@ -68,21 +68,32 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
               )
             }
             if (obj.type === 'image') {
-              const imageClass = obj.data.file.width < 950 ? styles.image : styles.stretched_image
+              const imageClass =
+                obj.data.file.width < 640
+                  ? styles.small_image
+                  : obj.data.file.width < 950
+                  ? styles.image
+                  : styles.stretched_image
 
               return (
                 <div className={styles.figure}>
                   <div className={imageClass}>
-                    <img src={obj.data.file.url} alt={obj.data.caption} className={imageClass} />
+                    <img src={obj.data.file.url} alt={obj.data.caption} />
                     <div className={styles.image_caption}>{obj.data.caption}</div>
                   </div>
                 </div>
               )
             }
             if (obj.type === 'video') {
+              const videoClass =
+                obj.data.file.width < 640
+                  ? styles.small_image
+                  : obj.data.file.width < 950
+                  ? styles.image
+                  : styles.stretched_image
               return (
                 <div className={styles.figure}>
-                  <div className={styles.video}>
+                  <div className={videoClass}>
                     <video controls>
                       <source src={obj.data.file.url} type='video/mp4' />
                     </video>

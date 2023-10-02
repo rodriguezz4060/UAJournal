@@ -110,14 +110,35 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                     // Получение URL загруженного видео
                     const data = await response.json()
                     console.log(data) // Вывод ответа сервера в консоль
-                    return {
-                      success: 1,
-                      file: {
-                        url: data.url,
-                      },
-                      autoplay: true, // Включение автовоспроизведения
-                      controls: false, // Удаление элементов управления
-                    }
+
+                    // Получение ширины и высоты видео
+                    const video = document.createElement('video')
+                    video.src = data.url
+
+                    return new Promise((resolve, reject) => {
+                      video.onloadedmetadata = () => {
+                        // Отправка данных о загруженном видео в базу данных
+                        // Вместо console.log() используйте код для отправки данных в базу данных
+
+                        // Отправка данных о загруженном видео обратно в Editor.js
+                        resolve({
+                          success: 1,
+                          file: {
+                            url: data.url,
+                            width: video.videoWidth,
+                            height: video.videoHeight,
+                          },
+                          autoplay: true, // Включение автовоспроизведения
+                          controls: false, // Удаление элементов управления
+                        })
+                      }
+                      video.onerror = () => {
+                        console.error('Ошибка при загрузке видео')
+                        reject({
+                          success: 0,
+                        })
+                      }
+                    })
                   } else {
                     console.error('Ошибка при загрузке видео')
                     return {

@@ -16,28 +16,49 @@
   margin-bottom: 24px !important;
 }
 
-.image {
-  // Стиль для картинок шириной меньше 950px
-  width: 640px;
-  max-height: 640px;
-  --offset: 8px
+.image,
+.small_image {
+  --offset: 8px;
+  max-width: 640px !important;
   object-fit: contain;
   --background-color: rgba(0, 0, 0, 0.08);
-  --offset-y: var(--offset, 0);
   background-color: var(--background-color);
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: var(--offset-y) 0;
   margin: 0 auto !important;
+}
+
+.small_image {
+  img,
+  video {
+    max-height: 480px;
+    width: unset;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    --offset-y: var(--offset, 0);
+    padding: var(--offset-y) 0;
+    margin: 0 auto !important;
+  }
+}
+
+.image {
+  img,
+  video {
+    max-height: 480px;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    --offset-y: var(--offset, 0);
+    padding: var(--offset-y) 0;
+    margin: 0 auto !important;
+  }
 }
 
 .stretched_image {
   // Стиль для картинок шириной больше 1000px
-  width: 100%;
-}
-
-.video {
-
+  img,
+  video {
+    width: 100%;
+  }
 }
 
 .title,
@@ -48,7 +69,7 @@
 .block_code,
 .block_incut,
 .list,
-.video {
+.videoContent {
   max-width: 640px !important;
   width: 100% !important;
   margin: 0 auto !important;
@@ -62,7 +83,6 @@
   word-wrap: break-word !important;
   margin-top: 12px !important;
   margin-bottom: 12px !important;
-  
 }
 
 .text {
@@ -154,7 +174,6 @@
   width: 100%;
   max-width: 450px;
   margin: auto;
-
 
   p {
     font-size: 29px;
