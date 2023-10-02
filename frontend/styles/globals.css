@@ -85,7 +85,7 @@ H2 {
   background: #f8f7fa;
   border: 1px solid #f1f1f4;
   box-shadow: none;
-  white-space: pre;
+
   word-wrap: normal;
   overflow-x: auto;
   resize: vertical;
@@ -114,8 +114,30 @@ H2 {
   background-color: #555;
 }
 
-.cdx-settings-button[data-tune='withBorder'],
-.cdx-settings-button[data-tune='withBackground'],
-.cdx-settings-button[data-tune='stretched'] {
+.ce-popover-item[data-item-name='withBorder'],
+.ce-popover-item[data-item-name='withBackground'],
+.ce-popover-item[data-item-name='stretched'] {
   display: none;
+}
+
+.image-tool__image {
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  --background-color: rgba(0, 0, 0, 0.08);
+  position: relative;
+  width: 100%;
+  background-color: var(--background-color);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: var(--offset-y, 0) 0;
+  max-height: 680px;
+}
+
+.image-tool__image-picture {
+  max-height: 680px;
 }

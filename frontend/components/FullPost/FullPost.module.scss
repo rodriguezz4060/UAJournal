@@ -8,10 +8,27 @@
     font-size: 17px;
   }
 }
+.container {
+  max-width: 1000px;
+}
+
+.figure {
+  margin-bottom: 24px !important;
+}
 
 .image {
   // Стиль для картинок шириной меньше 950px
   width: 640px;
+  max-height: 640px;
+  --offset: 8px
+  object-fit: contain;
+  --background-color: rgba(0, 0, 0, 0.08);
+  --offset-y: var(--offset, 0);
+  background-color: var(--background-color);
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: var(--offset-y) 0;
+  margin: 0 auto !important;
 }
 
 .stretched_image {
@@ -19,16 +36,23 @@
   width: 100%;
 }
 
-//.image {
-//  width: 640px;
-//  margin-right: 0;
-//  margin-left: 0;
-//}
-//
-//.stretched_image {
-//  max-width: 1000px;
-//  width: auto;
-//}
+.video {
+
+}
+
+.title,
+.userInfo,
+.PostActions,
+.paragraph,
+.quote__content,
+.block_code,
+.block_incut,
+.list,
+.video {
+  max-width: 640px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
 
 .title {
   margin-bottom: 20px !important;
@@ -38,6 +62,7 @@
   word-wrap: break-word !important;
   margin-top: 12px !important;
   margin-bottom: 12px !important;
+  
 }
 
 .text {
@@ -81,7 +106,6 @@
   column-gap: 10px;
   row-gap: 8px;
   max-width: 540px;
-  margin-bottom: 24px;
 }
 
 .block_quote {
@@ -123,7 +147,6 @@
   flex-direction: column;
   padding: 40px 0;
   background-color: #f5fcff;
-  margin-bottom: 24px;
 }
 
 .content_incut {
@@ -131,6 +154,7 @@
   width: 100%;
   max-width: 450px;
   margin: auto;
+
 
   p {
     font-size: 29px;
@@ -149,9 +173,8 @@
   font-size: 13px;
   line-height: 1.7em;
   font-family: Menlo, Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
-  'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
-  'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
-  margin-bottom: 24px;
+    'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+    'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
 }
 
 .list {
@@ -171,4 +194,3 @@
     word-wrap: break-word;
   }
 }
-

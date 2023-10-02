@@ -10,21 +10,22 @@ import { FullPostProps } from '.'
 export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
   return (
     <Paper elevation={0} className={styles.paper}>
-      <div className='container'>
+      <div className={styles.container}>
         <Typography className={styles.title}>{title}</Typography>
         <div className={styles.text}>
-          {
-            blocks.map((obj) => {
-              if (obj.type === 'paragraph') {
-                return (
-                  <Typography
-                    key={obj.id}
-                    dangerouslySetInnerHTML={{ __html: obj.data.text }}
-                  />
-                )
-              }
-              if (obj.type === 'quote') {
-                return (
+          {blocks.map(obj => {
+            if (obj.type === 'paragraph') {
+              return (
+                <div className={styles.figure}>
+                  <div className={styles.paragraph}>
+                    <Typography key={obj.id} dangerouslySetInnerHTML={{ __html: obj.data.text }} />
+                  </div>
+                </div>
+              )
+            }
+            if (obj.type === 'quote') {
+              return (
+                <div className={styles.figure}>
                   <blockquote className={styles.block_quote}>
                     <div className={styles.quote__content}>
                       <QuoteIcon />
@@ -32,10 +33,12 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                       <div className={styles.quote_author}>{obj.data.caption}</div>
                     </div>
                   </blockquote>
-                )
-              }
-              if (obj.type === 'list') {
-                return (
+                </div>
+              )
+            }
+            if (obj.type === 'list') {
+              return (
+                <div className={styles.figure}>
                   <div className={styles.list}>
                     <ul>
                       {obj.data.items.map((item, index) => (
@@ -43,49 +46,55 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                       ))}
                     </ul>
                   </div>
-                )
-              }
-              if (obj.type === 'incut') {
-                return (
+                </div>
+              )
+            }
+            if (obj.type === 'incut') {
+              return (
+                <div className={styles.figure}>
                   <div className={styles.block_incut}>
                     <div className={styles.content_incut}>
                       <p>{obj.data.code}</p>
                     </div>
                   </div>
-                )
-              }
-              if (obj.type === 'code') {
-                return <div className={styles.block_code}>{obj.data.code}</div>
-              }
-              if (obj.type === 'image') {
-                const imageClass =
-                  obj.data.file.width < 950 ? styles.image : styles.stretched_image
+                </div>
+              )
+            }
+            if (obj.type === 'code') {
+              return (
+                <div className={styles.figure}>
+                  <div className={styles.block_code}>{obj.data.code}</div>
+                </div>
+              )
+            }
+            if (obj.type === 'image') {
+              const imageClass = obj.data.file.width < 950 ? styles.image : styles.stretched_image
 
-                return (
-                  <div>
-                    <img
-                      src={obj.data.file.url}
-                      alt={obj.data.caption}
-                      className={imageClass}
-                    />
+              return (
+                <div className={styles.figure}>
+                  <div className={imageClass}>
+                    <img src={obj.data.file.url} alt={obj.data.caption} className={imageClass} />
                     <div className={styles.image_caption}>{obj.data.caption}</div>
                   </div>
-                )
-              }
-              if (obj.type === 'video') {
-                return (
+                </div>
+              )
+            }
+            if (obj.type === 'video') {
+              return (
+                <div className={styles.figure}>
                   <div className={styles.video}>
                     <video controls>
                       <source src={obj.data.file.url} type='video/mp4' />
                     </video>
                     <div className={styles.video_caption}>{obj.data.caption}</div>
                   </div>
-                )
-              }
-              return null
-            })}
+                </div>
+              )
+            }
+            return null
+          })}
 
-          <div style={{ width: 250, marginLeft: -14 }}>
+          <div className={styles.PostActions}>
             <PostActions />
           </div>
           <div className='d-flex justify-between align-center mt-30 mb-30'>
