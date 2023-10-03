@@ -2,24 +2,35 @@
  * Build styles
  */
 
-import { getLineStartPosition } from './utils/string'
+
 import { IconAlignCenter } from '@codexteam/icons'
 
 /**
- * CodeTool for Editor.js
+ * @class Incut
+ * @classdesc Incut Tool for Editor.js
+ * @property {IncutData} data - Tool`s input and output data
+ * @propert {object} api - Editor.js API instance
  *
- * @author CodeX (team@ifmo.su)
- * @copyright CodeX 2018
- * @license MIT
- * @version 2.0.0
+ * @typedef {object} IncutData
+ * @description Incut Tool`s input and output data
+ * @property {string} text - quote`s text
+ * @property {string} caption - quote`s caption
+ * @property {'center'|'left'} alignment - quote`s alignment
+ *
+ * @typedef {object} IncutConfig
+ * @description Incut Tool`s initial configuration
+ * @property {string} incutPlaceholder - placeholder to show in quote`s text input
+ * @property {string} captionPlaceholder - placeholder to show in quote`s caption input
+ * @property {'center'|'left'} defaultAlignment - alignment to use as default
+ *
+ * @typedef {object} TunesMenuConfig
+ * @property {string} icon - menu item icon
+ * @property {string} label - menu item label
+ * @property {boolean} isActive - true if item should be in active state
+ * @property {boolean} closeOnActivate - if true tunes menu should close once any item is selected
+ * @property {() => void} onActivate - item activation callback
  */
-
-/* global PasteEvent */
-
-/**
- * Code Tool for the Editor.js allows to include code examples in your articles.
- */
-export default class IncutTool {
+export default class Incut {
   /**
    * Notify core that read-only mode is supported
    *
@@ -27,151 +38,6 @@ export default class IncutTool {
    */
   static get isReadOnlySupported() {
     return true
-  }
-
-  /**
-   * Allow to press Enter inside the CodeTool textarea
-   *
-   * @returns {boolean}
-   * @public
-   */
-  static get enableLineBreaks() {
-    return true
-  }
-
-  /**
-   * @typedef {object} CodeData — plugin saved data
-   * @property {string} code - previously saved plugin code
-   */
-
-  /**
-   * Render plugin`s main Element and fill it with saved data
-   *
-   * @param {object} options - tool constricting options
-   * @param {CodeData} options.data — previously saved plugin code
-   * @param {object} options.config - user config for Tool
-   * @param {object} options.api - Editor.js API
-   * @param {boolean} options.readOnly - read only mode flag
-   */
-  constructor({ data, config, api, readOnly }) {
-    this.api = api
-    this.readOnly = readOnly
-
-    this.placeholder = this.api.i18n.t(config.placeholder || IncutTool.DEFAULT_PLACEHOLDER)
-
-    this.CSS = {
-      baseClass: this.api.styles.block,
-      input: this.api.styles.input,
-      wrapper: 'ce-incut',
-      textarea: 'ce-incut__textarea',
-    }
-
-    this.nodes = {
-      holder: null,
-      textarea: null,
-    }
-
-    this.data = {
-      code: data.code || '',
-    }
-
-    this.nodes.holder = this.drawView()
-  }
-
-  /**
-   * Create Tool's view
-   *
-   * @returns {HTMLElement}
-   * @private
-   */
-  drawView() {
-    const wrapper = document.createElement('div'),
-      textarea = document.createElement('textarea')
-
-    wrapper.classList.add(this.CSS.baseClass, this.CSS.wrapper)
-    textarea.classList.add(this.CSS.textarea, this.CSS.input)
-    textarea.textContent = this.data.code
-
-    textarea.placeholder = this.placeholder
-
-    if (this.readOnly) {
-      textarea.disabled = true
-    }
-
-    wrapper.appendChild(textarea)
-
-    /**
-     * Enable keydown handlers
-     */
-    textarea.addEventListener('keydown', event => {
-      switch (event.code) {
-        case 'Tab':
-          this.tabHandler(event)
-          break
-      }
-    })
-
-    this.nodes.textarea = textarea
-
-    return wrapper
-  }
-
-  /**
-   * Return Tool's view
-   *
-   * @returns {HTMLDivElement} this.nodes.holder - Code's wrapper
-   * @public
-   */
-  render() {
-    return this.nodes.holder
-  }
-
-  /**
-   * Extract Tool's data from the view
-   *
-   * @param {HTMLDivElement} codeWrapper - CodeTool's wrapper, containing textarea with code
-   * @returns {CodeData} - saved plugin code
-   * @public
-   */
-  save(codeWrapper) {
-    return {
-      code: codeWrapper.querySelector('textarea').value,
-    }
-  }
-
-  /**
-   * onPaste callback fired from Editor`s core
-   *
-   * @param {PasteEvent} event - event with pasted content
-   */
-  onPaste(event) {
-    const content = event.detail.data
-
-    this.data = {
-      code: content.textContent,
-    }
-  }
-
-  /**
-   * Returns Tool`s data from private property
-   *
-   * @returns {CodeData}
-   */
-  get data() {
-    return this._data
-  }
-
-  /**
-   * Set Tool`s data to private property and update view
-   *
-   * @param {CodeData} data - saved tool data
-   */
-  set data(data) {
-    this._data = data
-
-    if (this.nodes.textarea) {
-      this.nodes.textarea.textContent = data.code
-    }
   }
 
   /**
@@ -189,96 +55,218 @@ export default class IncutTool {
   }
 
   /**
-   * Default placeholder for CodeTool's textarea
+   * Empty Incut is not empty Block
+   *
+   * @public
+   * @returns {boolean}
+   */
+  static get contentless() {
+    return true
+  }
+
+  /**
+   * Allow to press Enter inside the Incut
+   *
+   * @public
+   * @returns {boolean}
+   */
+  static get enableLineBreaks() {
+    return true
+  }
+
+  /**
+   * Default placeholder for Incut text
    *
    * @public
    * @returns {string}
    */
-  static get DEFAULT_PLACEHOLDER() {
-    return 'Enter a code'
+  static get DEFAULT_INCUT_PLACEHOLDER() {
+    return 'Enter a Incut'
   }
 
+
   /**
-   *  Used by Editor.js paste handling API.
-   *  Provides configuration to handle CODE tag.
+   * Allowed Incut alignments
    *
-   * @static
-   * @returns {{tags: string[]}}
+   * @public
+   * @returns {{left: string, center: string}}
    */
-  static get pasteConfig() {
+  static get ALIGNMENTS() {
     return {
-      tags: ['pre'],
+      left: 'left',
+      center: 'center',
     }
   }
 
   /**
-   * Automatic sanitize config
+   * Default Incut alignment
    *
-   * @returns {{code: boolean}}
+   * @public
+   * @returns {string}
+   */
+  static get DEFAULT_ALIGNMENT() {
+    return Incut.ALIGNMENTS.center
+  }
+
+  /**
+   * Allow Incut to be converted to/from other blocks
+   */
+  static get conversionConfig() {
+    return {
+      /**
+       * To create Incut data from string, simple fill 'text' property
+       */
+      import: 'text',
+      /**
+       * To create string from Incut data, concatenate text and caption
+       *
+       * @param {IncutData} incutData
+       * @returns {string}
+       */
+      export: function(incutData) {
+        return incutData.caption ? `${incutData.text} ` : incutData.text
+      },
+    }
+  }
+
+  /**
+   * Tool`s styles
+   *
+   * @returns {{baseClass: string, wrapper: string, quote: string, input: string, string}}
+   */
+  get CSS() {
+    return {
+      baseClass: this.api.styles.block,
+      wrapper: 'cdx-quote',
+      text: 'cdx-quote__text',
+      input: this.api.styles.input,
+    }
+  }
+
+
+  /**
+   * Render plugin`s main Element and fill it with saved data
+   *
+   * @param {{data: IncutData, config: IncutConfig, api: object}}
+   *   data — previously saved data
+   *   config - user config for Tool
+   *   api - Editor.js API
+   *   readOnly - read-only mode flag
+   */
+  constructor({ data, config, api, readOnly }) {
+    const { ALIGNMENTS, DEFAULT_ALIGNMENT } = Incut
+
+    this.api = api
+    this.readOnly = readOnly
+
+    this.incutPlaceholder = config.incutPlaceholder || Incut.DEFAULT_INCUT_PLACEHOLDER
+
+    this.data = {
+      text: data.text || '',
+      alignment: Object.values(ALIGNMENTS).includes(data.alignment) && data.alignment ||
+        config.defaultAlignment ||
+        DEFAULT_ALIGNMENT,
+    }
+  }
+
+  /**
+   * Create Incut Tool container with inputs
+   *
+   * @returns {Element}
+   */
+  render() {
+    const container = this._make('blockincut', [this.CSS.baseClass, this.CSS.wrapper])
+    const incut = this._make('p', [this.CSS.input, this.CSS.text], {
+      contentEditable: !this.readOnly,
+      innerHTML: this.data.text,
+    })
+
+
+    incut.dataset.placeholder = this.incutPlaceholder
+
+    container.appendChild(incut)
+
+    return container
+  }
+
+  /**
+   * Extract incut data from Quote Tool element
+   *
+   * @param {HTMLDivElement} incutElement - element to save
+   * @returns {IncutData}
+   */
+  save(incutElement) {
+    const text = incutElement.querySelector(`.${this.CSS.text}`)
+    const caption = incutElement.querySelector(`.${this.CSS.caption}`)
+
+    return Object.assign(this.data, {
+      text: text.innerHTML,
+    })
+  }
+
+  /**
+   * Sanitizer rules
    */
   static get sanitize() {
     return {
-      code: true, // Allow HTML tags
+      text: {
+        br: true,
+      },
+      alignment: {},
     }
   }
 
   /**
-   * Handles Tab key pressing (adds/removes indentations)
+   * Create wrapper for Tool`s settings buttons:
+   * 1. Left alignment
+   * 2. Center alignment
    *
-   * @private
-   * @param {KeyboardEvent} event - keydown
-   * @returns {void}
+   * @returns {TunesMenuConfig}
+   *
    */
-  tabHandler(event) {
-    /**
-     * Prevent editor.js tab handler
-     */
-    event.stopPropagation()
+  renderSettings() {
+    const capitalize = str => str[0].toUpperCase() + str.substr(1)
 
-    /**
-     * Prevent native tab behaviour
-     */
-    event.preventDefault()
+    return this.settings.map(item => ({
+      icon: item.icon,
+      label: this.api.i18n.t(`Align ${capitalize(item.name)}`),
+      onActivate: () => this._toggleTune(item.name),
+      isActive: this.data.alignment === item.name,
+      closeOnActivate: true,
+    }))
+  };
 
-    const textarea = event.target
-    const isShiftPressed = event.shiftKey
-    const caretPosition = textarea.selectionStart
-    const value = textarea.value
-    const indentation = '  '
+  /**
+   * Toggle quote`s alignment
+   *
+   * @param {string} tune - alignment
+   * @private
+   */
+  _toggleTune(tune) {
+    this.data.alignment = tune
+  }
 
-    let newCaretPosition
+  /**
+   * Helper for making Elements with attributes
+   *
+   * @param  {string} tagName           - new Element tag name
+   * @param  {Array|string} classNames  - list or name of CSS classname(s)
+   * @param  {object} attributes        - any attributes
+   * @returns {Element}
+   */
+  _make(tagName, classNames = null, attributes = {}) {
+    const el = document.createElement(tagName)
 
-    /**
-     * For Tab pressing, just add an indentation to the caret position
-     */
-    if (!isShiftPressed) {
-      newCaretPosition = caretPosition + indentation.length
-
-      textarea.value =
-        value.substring(0, caretPosition) + indentation + value.substring(caretPosition)
-    } else {
-      /**
-       * For Shift+Tab pressing, remove an indentation from the start of line
-       */
-      const currentLineStart = getLineStartPosition(value, caretPosition)
-      const firstLineChars = value.substr(currentLineStart, indentation.length)
-
-      if (firstLineChars !== indentation) {
-        return
-      }
-
-      /**
-       * Trim the first two chars from the start of line
-       */
-      textarea.value =
-        value.substring(0, currentLineStart) +
-        value.substring(currentLineStart + indentation.length)
-      newCaretPosition = caretPosition - indentation.length
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames)
+    } else if (classNames) {
+      el.classList.add(classNames)
     }
 
-    /**
-     * Restore the caret
-     */
-    textarea.setSelectionRange(newCaretPosition, newCaretPosition)
+    for (const attrName in attributes) {
+      el[attrName] = attributes[attrName]
+    }
+
+    return el
   }
 }

@@ -54,7 +54,7 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 <div className={styles.figure}>
                   <div className={styles.block_incut}>
                     <div className={styles.content_incut}>
-                      <p>{obj.data.code}</p>
+                      <p>{obj.data.text}</p>
                     </div>
                   </div>
                 </div>
