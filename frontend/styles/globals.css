@@ -77,18 +77,6 @@ H2 {
 }
 
 .ce-incut__textarea {
-    min-height: 200px;
-    font-family: Menlo, Monaco, Consolas, Courier New, monospace;
-    color: #41314e;
-    line-height: 1.6em;
-    font-size: 12px;
-    background: #f8f7fa;
-    border: 1px solid #f1f1f4;
-    box-shadow: none;
-
-    word-wrap: normal;
-    overflow-x: auto;
-    resize: vertical;
 }
 
 .ce-block a {
@@ -139,7 +127,32 @@ H2 {
     max-height: 680px;
 }
 
-
 .image-tool__image-picture {
     max-height: 680px;
+}
+
+/* редактор */
+.MuiInputBase-input::-webkit-input-placeholder {
+    color: #d1d1d1 !important;
+    opacity: 1 !important;
+}
+
+.image-tool__caption,
+.video-tool__caption,
+.cdx-quote__caption {
+    border: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0px 16px 0 0 !important;
+    background: transparent !important;
+    line-height: 22px !important;
+    font-size: 13px;
+    border: 1px solid #f1f1f4;
+}
+
+.image-tool__caption[data-placeholder]::before,
+.video-tool__caption[data-placeholder]::before,
+.cdx-quote__caption[data-placeholder]::before {
+    color: #d1d1d1 !important;
 }
