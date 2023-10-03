@@ -24,32 +24,29 @@
   --background-color: rgba(0, 0, 0, 0.08);
   background-color: var(--background-color);
   margin: 0 auto !important;
+  img,
+  video {
+    max-height: 480px;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0 auto !important;
+  }
 }
 
 .small_image {
   img,
   video {
-    max-height: 480px;
     width: unset;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
     --offset-y: var(--offset, 0);
     padding: var(--offset-y) 0;
-    margin: 0 auto !important;
   }
 }
 
 .image {
   img,
   video {
-    max-height: 480px;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    --offset-y: var(--offset, 0);
-    padding: var(--offset-y) 0;
-    margin: 0 auto !important;
+    max-width: 640px !important;
   }
 }
 
