@@ -25,6 +25,10 @@ const Home: NextPage<HomeProps> = ({ posts, user }) => {
           key={obj.id}
           id={obj.id}
           title={obj.title}
+          incut={obj.body.filter(item => item.type === 'incut').map(item => item.data.text)}
+          quote={obj.body.filter(item => item.type === 'quote').map(item => item.data.text)}
+          caption={obj.body.filter(item => item.type === 'quote').map(item => item.data.caption)}
+          video={obj.body.filter(item => item.type === 'video').map(item => item.data.file.url)}
           description={obj.description}
           images={obj.body.filter(item => item.type === 'image').map(item => item.data.file.url)}
           user={obj.user}

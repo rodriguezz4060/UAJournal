@@ -2,7 +2,6 @@
  * Build styles
  */
 
-
 import { IconAlignCenter } from '@codexteam/icons'
 
 /**
@@ -84,7 +83,6 @@ export default class Incut {
     return 'Enter a Incut'
   }
 
-
   /**
    * Allowed Incut alignments
    *
@@ -123,7 +121,7 @@ export default class Incut {
        * @param {IncutData} incutData
        * @returns {string}
        */
-      export: function(incutData) {
+      export: function (incutData) {
         return incutData.caption ? `${incutData.text} ` : incutData.text
       },
     }
@@ -142,7 +140,6 @@ export default class Incut {
       input: this.api.styles.input,
     }
   }
-
 
   /**
    * Render plugin`s main Element and fill it with saved data
@@ -163,7 +160,8 @@ export default class Incut {
 
     this.data = {
       text: data.text || '',
-      alignment: Object.values(ALIGNMENTS).includes(data.alignment) && data.alignment ||
+      alignment:
+        (Object.values(ALIGNMENTS).includes(data.alignment) && data.alignment) ||
         config.defaultAlignment ||
         DEFAULT_ALIGNMENT,
     }
@@ -180,7 +178,6 @@ export default class Incut {
       contentEditable: !this.readOnly,
       innerHTML: this.data.text,
     })
-
 
     incut.dataset.placeholder = this.incutPlaceholder
 
@@ -234,7 +231,7 @@ export default class Incut {
       isActive: this.data.alignment === item.name,
       closeOnActivate: true,
     }))
-  };
+  }
 
   /**
    * Toggle quote`s alignment

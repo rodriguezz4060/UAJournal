@@ -82,7 +82,16 @@
   justify-content: center;
   align-items: center;
 
-  img {
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    max-height: 480px;
+    display: flex;
+    align-items: center;
+    --offset-y: var(--offset, 0);
+    padding: var(--offset-y) 0;
+    margin: 0 auto !important;
     max-width: 100%;
     height: auto;
   }
@@ -90,4 +99,23 @@
 
 .postContent {
   max-width: 860px;
+}
+
+.block_incut {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 40px 0;
+  background-color: #f5fcff;
+}
+
+.content_incut {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 32px;
 }

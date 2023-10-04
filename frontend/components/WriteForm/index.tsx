@@ -51,7 +51,6 @@ export const WriteForm: React.FC<WriteFormProps> = ({ data }) => {
         />
         <div className={styles.editor}>
           <Editor initialBlocks={blocks} onChange={arr => setBlocks(arr)} />
-
         </div>
         <div className={styles.codex_editor__bottom}></div>
       </div>

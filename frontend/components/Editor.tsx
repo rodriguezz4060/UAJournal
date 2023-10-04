@@ -5,6 +5,7 @@ import List from '@editorjs/list'
 import IncutTool from './EditorTools/incut'
 import ImageTool from '@editorjs/image'
 import VideoTool from '@medistream/editorjs-video'
+import { IconStar } from '@codexteam/icons'
 
 const Paragraph = require('@editorjs/paragraph')
 const CodeTool = require('@editorjs/code')
@@ -33,6 +34,14 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
             class: IncutTool,
             config: {
               placeholder: 'Текст вырезки',
+              actions: [
+                {
+                  name: 'show_on_homepage',
+                  icon: IconStar,
+                  title: 'Вывести на главную',
+                  toggle: true,
+                },
+              ],
             },
           },
           code: {
@@ -90,6 +99,14 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                   }
                 },
               },
+              actions: [
+                {
+                  name: 'show_on_homepage',
+                  icon: IconStar,
+                  title: 'Вывести на главную',
+                  toggle: true,
+                },
+              ],
             },
           },
           video: {

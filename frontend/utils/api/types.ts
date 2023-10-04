@@ -27,6 +27,8 @@ export type PostItem = {
   id: number
   views: number
   items: string
+  incut: string[]
+  quote: string[]
   caption: string
   code: string
   images?: string[]

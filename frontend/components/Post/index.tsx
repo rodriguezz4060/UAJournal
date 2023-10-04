@@ -3,17 +3,23 @@ import Link from 'next/link'
 import { Avatar, IconButton, Menu, MenuItem, Paper, Typography } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import styles from './Post.module.scss'
+import quotecss from '../FullPost/FullPost.module.scss'
 import { PostActions } from '../PostActions'
 import { Api } from '../../utils/api'
 import { ResponseUser } from '../../utils/api/types'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import moment from 'moment'
+import QuoteIcon from '@mui/icons-material/FormatQuote'
 
 interface PostProps {
   title: string
   id: number
   description: string
+  incut: string[]
+  quote: string[]
+  caption: string[]
   images: string[]
+  video: string[]
   onRemove: (id: number) => void
   user: ResponseUser
   createdAt: string
@@ -24,9 +30,13 @@ export const Post: React.FC<PostProps> = ({
   title,
   description,
   images,
+  video,
   onRemove,
   user,
   createdAt,
+  incut,
+  quote,
+  caption,
 }) => {
   const handleRemove = async () => {
     try {
@@ -90,6 +100,30 @@ export const Post: React.FC<PostProps> = ({
         <div className={styles.imagePost}>
           <img src={images[0]} alt='First Image' />
         </div>
+      )}
+      {video.length > 0 && (
+        <div className={styles.imagePost}>
+          <video controls>
+            <source src={video[0]} type='video/mp4' />
+          </video>
+        </div>
+      )}
+      {incut.length > 0 && (
+        <div className={styles.block_incut}>
+          <div className={styles.content_incut} dangerouslySetInnerHTML={{ __html: incut[0] }} />
+        </div>
+      )}
+      {quote.length > 0 && (
+        <blockquote className={quotecss.block_quote}>
+          <div className={quotecss.quote__content}>
+            <QuoteIcon />
+            <Typography
+              className={quotecss.quote_text}
+              dangerouslySetInnerHTML={{ __html: quote[0] }}
+            />
+            <div className={quotecss.quote_author}>{caption[0]}</div>
+          </div>
+        </blockquote>
       )}
       <Typography className={styles.content} dangerouslySetInnerHTML={{ __html: description }} />
       <PostActions />

@@ -29,7 +29,11 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                   <blockquote className={styles.block_quote}>
                     <div className={styles.quote__content}>
                       <QuoteIcon />
-                      <div className={styles.quote_text}>{obj.data.text}</div>
+                      <Typography
+                        key={obj.id}
+                        className={styles.quote_text}
+                        dangerouslySetInnerHTML={{ __html: obj.data.text }}
+                      />
                       <div className={styles.quote_author}>{obj.data.caption}</div>
                     </div>
                   </blockquote>
@@ -54,7 +58,11 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 <div className={styles.figure}>
                   <div className={styles.block_incut}>
                     <div className={styles.content_incut}>
-                      <p>{obj.data.text}</p>
+                      <Typography
+                        key={obj.id}
+                        className={styles.quote_text}
+                        dangerouslySetInnerHTML={{ __html: obj.data.text }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -72,8 +80,8 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 obj.data.file.width < 640
                   ? styles.small_image
                   : obj.data.file.width < 950
-                    ? styles.image
-                    : styles.stretched_image
+                  ? styles.image
+                  : styles.stretched_image
 
               return (
                 <div className={styles.figure}>
@@ -89,8 +97,8 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                 obj.data.file.width < 640
                   ? styles.small_image
                   : obj.data.file.width < 950
-                    ? styles.image
-                    : styles.stretched_image
+                  ? styles.image
+                  : styles.stretched_image
               return (
                 <div className={styles.figure}>
                   <div className={videoClass}>
