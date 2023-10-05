@@ -6,6 +6,7 @@ import IncutTool from './EditorTools/incut'
 import ImageTool from '@editorjs/image'
 import VideoTool from '@medistream/editorjs-video'
 import { IconStar } from '@codexteam/icons'
+import ShowOnHomepagePlugin from './EditorTools/tunes'
 
 const Paragraph = require('@editorjs/paragraph')
 const CodeTool = require('@editorjs/code')
@@ -34,6 +35,12 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
             class: IncutTool,
             config: {
               placeholder: 'Текст вырезки',
+            },
+          },
+          code: {
+            class: CodeTool,
+            config: {
+              placeholder: 'Код',
               actions: [
                 {
                   name: 'show_on_homepage',
@@ -42,12 +49,6 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                   toggle: true,
                 },
               ],
-            },
-          },
-          code: {
-            class: CodeTool,
-            config: {
-              placeholder: 'Код',
             },
           },
           image: {
@@ -169,10 +170,12 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
           paragraph: {
             class: Paragraph,
             inlineToolbar: true,
+            tunes: ['anyTuneName'],
           },
           quote: {
             class: Quote,
             inlineToolbar: true,
+            tunes: ['anyTuneName'],
           },
           list: {
             class: List,
@@ -180,6 +183,9 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
             config: {
               defaultStyle: 'unordered',
             },
+          },
+          anyTuneName: {
+            class: ShowOnHomepagePlugin,
           },
         },
 

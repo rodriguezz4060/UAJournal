@@ -157,12 +157,21 @@ H2 {
   color: #d1d1d1 !important;
 }
 
-.image-tool--show_on_homepage {
+.show-on-homepage {
   position: relative;
 }
 
-.image-tool--show_on_homepage::before {
+.show-on-homepage::before {
   content: url(../public/star.svg);
   position: absolute;
   left: 0;
+}
+
+.ce-block-settings__item--active {
+  background: #e3eefd;
+  font-weight: 500;
+
+  .ce-popover-item__icon {
+    content: url(../public/star.svg);
+  }
 }

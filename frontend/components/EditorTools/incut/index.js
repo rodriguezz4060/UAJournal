@@ -221,17 +221,6 @@ export default class Incut {
    * @returns {TunesMenuConfig}
    *
    */
-  renderSettings() {
-    const capitalize = str => str[0].toUpperCase() + str.substr(1)
-
-    return this.settings.map(item => ({
-      icon: item.icon,
-      label: this.api.i18n.t(`Align ${capitalize(item.name)}`),
-      onActivate: () => this._toggleTune(item.name),
-      isActive: this.data.alignment === item.name,
-      closeOnActivate: true,
-    }))
-  }
 
   /**
    * Toggle quote`s alignment
