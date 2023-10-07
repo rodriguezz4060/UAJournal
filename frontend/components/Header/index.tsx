@@ -1,13 +1,25 @@
 import React from 'react'
-import { Button, Paper, IconButton, Avatar, List, ListItem } from '@material-ui/core'
+import {
+  Button,
+  Paper,
+  IconButton,
+  Avatar,
+  List,
+  ListItem,
+  Menu,
+  MenuItem,
+  ListSubheader,
+} from '@material-ui/core'
 import styles from './Header.module.scss'
 import SearchIcon from '@mui/icons-material/Search'
 import Link from 'next/link'
 import CreateIcon from '@mui/icons-material/CreateOutlined'
 import MessageIcon from '@mui/icons-material/SmsOutlined'
 import NotificationIcon from '@mui/icons-material/NotificationsOutlined'
-import Menu from '@mui/icons-material/MenuOutlined'
+import SideMenu from '@mui/icons-material/MenuOutlined'
 import ArrowBottom from '@mui/icons-material/KeyboardArrowDownOutlined'
+import LogoutIcon from '@mui/icons-material/Logout'
+import SettingsIcon from '@mui/icons-material/SettingsOutlined'
 import logo from '/pages/static/img/logo.svg'
 import Image from 'next/image'
 import { AuthDialog } from '../AuthDialog'
@@ -47,11 +59,21 @@ export const Header: React.FC = () => {
     }
   }
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className='d-flex align-center'>
         <IconButton>
-          <Menu />
+          <SideMenu />
         </IconButton>
         <Link href='/'>
           <Image className={styles.logo} src={logo} alt='Logo' />
@@ -88,14 +110,77 @@ export const Header: React.FC = () => {
           <NotificationIcon />
         </IconButton>
         {userData ? (
-          <Link href='/profile/1' className='d-flex align-center'>
-            <Avatar
-              className={styles.avatar}
-              alt='Remy Sharp'
-              src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
-            />
-            <ArrowBottom />
-          </Link>
+          <div className='d-flex align-center'>
+            <Link href='/profile/1'>
+              <Avatar
+                className={styles.avatar}
+                alt='Remy Sharp'
+                src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+              />
+            </Link>
+            <div>
+              <Button
+                className={styles.profile_button}
+                aria-controls='menu'
+                aria-haspopup='true'
+                onClick={handleClick}
+              >
+                <ArrowBottom />
+              </Button>
+              <Menu
+                id='menu'
+                className={styles.profile_menu}
+                PaperProps={{
+                  style: {
+                    width: '300px',
+                  },
+                }}
+                disableScrollLock={true}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <ListSubheader className={styles.account_menu_title}>Мой профиль</ListSubheader>
+                <Link
+                  href='/profile/1'
+                  className={styles.account_menu__user_card}
+                  onClick={handleClose}
+                >
+                  <div className={styles.user_card}>
+                    <div>
+                      <Avatar
+                        className={styles.avatar}
+                        alt='Remy Sharp'
+                        src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+                      />
+                    </div>
+                    <span className={styles.user_card__text}>
+                      <p className={styles.user_card__name}>
+                        <span>Bender Rodriguez</span>
+                      </p>
+                      <p className={styles.user_card__sub_label}>Личный блог</p>
+                    </span>
+                  </div>
+                </Link>
+                <div className={styles.account_menu__item}>
+                  <MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
+                </div>
+                <div className={styles.account_menu__item}>
+                  <MenuItem onClick={handleClose}>
+                    <SettingsIcon />
+                    Настройки
+                  </MenuItem>
+                </div>
+                <div className={styles.account_menu__item}>
+                  <MenuItem onClick={handleClose}>
+                    <LogoutIcon />
+                    Выйти
+                  </MenuItem>
+                </div>
+              </Menu>
+            </div>
+          </div>
         ) : (
           <div className={styles.loginButton} onClick={openAuthDialog}>
             <UserIcon />
