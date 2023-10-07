@@ -20,6 +20,15 @@ export const theme = createTheme({
         borderRadius: '8',
       },
     },
+    MuiMenu: {
+      paper: {
+        borderRadius: '8px',
+      },
+    },
+
+    MuiMenuItem: {
+      root: { fontSize: '15px' },
+    },
 
     MuiDialog: {
       paper: {

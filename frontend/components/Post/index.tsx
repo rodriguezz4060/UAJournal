@@ -93,40 +93,49 @@ export const Post: React.FC<PostProps> = ({
           </div>
         </div>
       </div>
-      <Typography variant='h5' className={styles.title}>
-        <Link href={`/news/${id}`}>{title}</Link>
-      </Typography>
-
+      <div className={styles.figure}>
+        <Typography variant='h5' className={styles.title}>
+          <Link href={`/news/${id}`}>{title}</Link>
+        </Typography>
+      </div>
       {images.length > 0 && (
         <div className={styles.imagePost}>
           {images.map((image, index) => (
-            <img key={index} src={image} alt={`Image ${index + 1}`} />
+            <div className={styles.figure}>
+              <img key={index} src={image} alt={`Image ${index + 1}`} />
+            </div>
           ))}
         </div>
       )}
       {video.length > 0 && (
-        <div className={styles.imagePost}>
-          <video controls>
-            <source src={video} type='video/mp4' />
-          </video>
+        <div className={styles.figure}>
+          <div className={styles.imagePost}>
+            <video controls>
+              <source src={video} type='video/mp4' />
+            </video>
+          </div>
         </div>
       )}
       {incut.length > 0 && (
-        <div className={styles.block_incut}>
-          <div className={styles.content_incut} dangerouslySetInnerHTML={{ __html: incut }} />
+        <div className={styles.figure}>
+          <div className={styles.block_incut}>
+            <div className={styles.content_incut} dangerouslySetInnerHTML={{ __html: incut }} />
+          </div>
         </div>
       )}
       {quote.length > 0 && (
-        <blockquote className={quotecss.block_quote}>
-          <div className={quotecss.quote__content}>
-            <QuoteIcon />
-            <Typography
-              className={quotecss.quote_text}
-              dangerouslySetInnerHTML={{ __html: quote }}
-            />
-            <div className={quotecss.quote_author}>{caption}</div>
-          </div>
-        </blockquote>
+        <div className={styles.figure}>
+          <blockquote className={quotecss.block_quote}>
+            <div className={quotecss.quote__content}>
+              <QuoteIcon />
+              <Typography
+                className={quotecss.quote_text}
+                dangerouslySetInnerHTML={{ __html: quote }}
+              />
+              <div className={quotecss.quote_author}>{caption}</div>
+            </div>
+          </blockquote>
+        </div>
       )}
       {description && (
         <Typography className={styles.content}>

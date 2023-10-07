@@ -9,10 +9,10 @@
     display: flex;
     align-items: center;
     margin-top: 0;
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 30px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
 
     svg {
       width: 22px;
@@ -23,10 +23,11 @@
 }
 
 .rotated {
-  width: 73px;
+  width: 70px;
   transform: rotate(-90deg) translate(-50px);
-  transform-origin: right;
-  right: 41px;
+  transform-origin: top right;
+  right: 60px;
+  top: 105px;
 
   svg {
     transform: rotate(270deg);
@@ -34,8 +35,8 @@
 }
 
 .commentContent {
-  position: sticky;
-  top: 90px;
+  position: fixed;
+  top: 140px;
   height: calc(100vh - 140px); // Subtract the height of the header from the viewport height
   overflow-y: auto;
   z-index: 9999;

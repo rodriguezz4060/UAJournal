@@ -40,6 +40,10 @@
 }
 
 .userInfoControl {
+  border-radius: 8px !important;
+}
+
+.userInfoControl {
   margin-left: auto;
 }
 
@@ -118,4 +122,8 @@
   font-size: 22px;
   font-weight: 500;
   line-height: 32px;
+}
+
+.figure {
+  margin-bottom: 10px !important;
 }
