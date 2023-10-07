@@ -33,12 +33,14 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
         tools: {
           incut: {
             class: IncutTool,
+            tunes: ['anyTuneName'],
             config: {
               placeholder: 'Текст вырезки',
             },
           },
           code: {
             class: CodeTool,
+            tunes: ['anyTuneName'],
             config: {
               placeholder: 'Код',
               actions: [
@@ -53,6 +55,7 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
           },
           image: {
             class: ImageTool,
+            tunes: ['anyTuneName'],
             config: {
               uploader: {
                 uploadByFile: async file => {
@@ -100,18 +103,11 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
                   }
                 },
               },
-              actions: [
-                {
-                  name: 'show_on_homepage',
-                  icon: IconStar,
-                  title: 'Вывести на главную',
-                  toggle: true,
-                },
-              ],
             },
           },
           video: {
             class: VideoTool,
+            tunes: ['anyTuneName'],
             config: {
               uploader: {
                 uploadByFile: async file => {
@@ -179,6 +175,7 @@ const Editor: React.FC<EditorProps> = ({ onChange, initialBlocks }) => {
           },
           list: {
             class: List,
+            tunes: ['anyTuneName'],
             inlineToolbar: true,
             config: {
               defaultStyle: 'unordered',

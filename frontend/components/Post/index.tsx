@@ -96,21 +96,24 @@ export const Post: React.FC<PostProps> = ({
       <Typography variant='h5' className={styles.title}>
         <Link href={`/news/${id}`}>{title}</Link>
       </Typography>
+
       {images.length > 0 && (
         <div className={styles.imagePost}>
-          <img src={images[0]} alt='First Image' />
+          {images.map((image, index) => (
+            <img key={index} src={image} alt={`Image ${index + 1}`} />
+          ))}
         </div>
       )}
       {video.length > 0 && (
         <div className={styles.imagePost}>
           <video controls>
-            <source src={video[0]} type='video/mp4' />
+            <source src={video} type='video/mp4' />
           </video>
         </div>
       )}
       {incut.length > 0 && (
         <div className={styles.block_incut}>
-          <div className={styles.content_incut} dangerouslySetInnerHTML={{ __html: incut[0] }} />
+          <div className={styles.content_incut} dangerouslySetInnerHTML={{ __html: incut }} />
         </div>
       )}
       {quote.length > 0 && (
@@ -119,13 +122,19 @@ export const Post: React.FC<PostProps> = ({
             <QuoteIcon />
             <Typography
               className={quotecss.quote_text}
-              dangerouslySetInnerHTML={{ __html: quote[0] }}
+              dangerouslySetInnerHTML={{ __html: quote }}
             />
-            <div className={quotecss.quote_author}>{caption[0]}</div>
+            <div className={quotecss.quote_author}>{caption}</div>
           </div>
         </blockquote>
       )}
-      <Typography className={styles.content} dangerouslySetInnerHTML={{ __html: description }} />
+      {description && (
+        <Typography className={styles.content}>
+          {description.map((paragraph, index) => (
+            <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+          ))}
+        </Typography>
+      )}
       <PostActions />
     </Paper>
   )

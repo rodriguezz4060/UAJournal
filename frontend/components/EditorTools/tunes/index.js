@@ -2,6 +2,7 @@ const { make } = require('./util')
 import { IconStar } from '@codexteam/icons'
 
 class ShowOnHomepagePlugin {
+  static trueCount = 0
   static get isTune() {
     return true
   }
@@ -17,7 +18,7 @@ class ShowOnHomepagePlugin {
       Button: 'ce-popover-item',
       Icon: 'ce-popover-item__icon',
       Text: 'ce-popover-item__title',
-      ActiveButton: 'ce-block-settings__item--active', // Add a new CSS class for the active button
+      ActiveButton: 'ce-block-settings__item--active',
     }
   }
 
@@ -40,16 +41,28 @@ class ShowOnHomepagePlugin {
     buttonText.classList.add(this._CSS.Text)
     button.appendChild(buttonText)
     button.addEventListener('click', () => {
-      this.data.ShowOnHomepage = !this.data.ShowOnHomepage
-      this.wrapper.classList.toggle(this._CSS.ShowOnHomepage, this.data.ShowOnHomepage)
-      button.classList.toggle(this._CSS.ActiveButton) // Toggle the active class for the button
+      if (ShowOnHomepagePlugin.trueCount < 2 || this.data.ShowOnHomepage) {
+        if (this.data.ShowOnHomepage) {
+          ShowOnHomepagePlugin.trueCount--
+        } else {
+          ShowOnHomepagePlugin.trueCount++
+        }
+        this.data.ShowOnHomepage = !this.data.ShowOnHomepage
+        this.wrapper.classList.toggle(this._CSS.ShowOnHomepage, this.data.ShowOnHomepage)
+        button.classList.toggle(this._CSS.ActiveButton)
+      }
     })
-    button.classList.add(this._CSS.Button) // Add the CSS class 'ce-popover-item' to the button
+    button.classList.add(this._CSS.Button)
+    button.classList.toggle(this._CSS.ActiveButton, this.data.ShowOnHomepage)
     wrapper.appendChild(button)
     return wrapper
   }
 
   save() {
+    if (ShowOnHomepagePlugin.trueCount >= 2 && this.data.ShowOnHomepage) {
+      this.data.ShowOnHomepage = false
+      this.wrapper.classList.remove(this._CSS.ShowOnHomepage)
+    }
     return this.data
   }
 }

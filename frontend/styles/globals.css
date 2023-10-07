@@ -164,7 +164,7 @@ H2 {
 .show-on-homepage::before {
   content: url(../public/star.svg);
   position: absolute;
-  left: 0;
+  left: -30px;
 }
 
 .ce-block-settings__item--active {

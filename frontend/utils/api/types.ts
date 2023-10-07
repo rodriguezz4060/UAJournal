@@ -26,6 +26,7 @@ export type PostItem = {
   tags: null | string
   id: number
   views: number
+  tunes: string[]
   items: string
   incut: string[]
   quote: string[]
