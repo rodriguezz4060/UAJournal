@@ -111,7 +111,7 @@ export const Header: React.FC = () => {
         </IconButton>
         {userData ? (
           <div className='d-flex align-center'>
-            <Link href='/profile/1'>
+            <Link href={`/profile/${userData.id}`}>
               <Avatar
                 className={styles.avatar}
                 alt='Remy Sharp'
@@ -143,7 +143,7 @@ export const Header: React.FC = () => {
               >
                 <ListSubheader className={styles.account_menu_title}>Мой профиль</ListSubheader>
                 <Link
-                  href='/profile/1'
+                  href={`/profile/${userData.id}`}
                   className={styles.account_menu__user_card}
                   onClick={handleClose}
                 >
@@ -157,7 +157,7 @@ export const Header: React.FC = () => {
                     </div>
                     <span className={styles.user_card__text}>
                       <p className={styles.user_card__name}>
-                        <span>Bender Rodriguez</span>
+                        <span>{userData.fullName}</span>
                       </p>
                       <p className={styles.user_card__sub_label}>Личный блог</p>
                     </span>
