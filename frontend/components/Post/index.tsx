@@ -86,6 +86,7 @@ export const Post: React.FC<PostProps> = ({
               open={Boolean(anchorEl)}
               onClose={handleClose}
               keepMounted
+              disableScrollLock={true}
             >
               <MenuItem onClick={handleRemove}>Удалить</MenuItem>
               <MenuItem onClick={handleEdit}>Редактировать</MenuItem>
@@ -94,9 +95,9 @@ export const Post: React.FC<PostProps> = ({
         </div>
       </div>
       <div className={styles.figure}>
-        <Typography variant='h5' className={styles.title}>
+        <div className={styles.title}>
           <Link href={`/news/${id}`}>{title}</Link>
-        </Typography>
+        </div>
       </div>
       {images.length > 0 && (
         <div className={styles.imagePost}>
@@ -128,11 +129,11 @@ export const Post: React.FC<PostProps> = ({
           <blockquote className={quotecss.block_quote}>
             <div className={quotecss.quote__content}>
               <QuoteIcon />
-              <Typography
-                className={quotecss.quote_text}
-                dangerouslySetInnerHTML={{ __html: quote }}
+              <div className={quotecss.quote_text} dangerouslySetInnerHTML={{ __html: quote }} />
+              <div
+                className={quotecss.quote_author}
+                dangerouslySetInnerHTML={{ __html: caption }}
               />
-              <div className={quotecss.quote_author}>{caption}</div>
             </div>
           </blockquote>
         </div>

@@ -28,6 +28,8 @@ import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
 import { PostItem } from '../../utils/api/types'
 import { Api } from '../../utils/api'
+import { destroyCookie } from 'nookies'
+import { useRouter } from 'next/router'
 
 interface HeaderProps {
   toggleLeftMenu: () => void
@@ -71,6 +73,18 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const router = useRouter()
+
+  const handleLogout = () => {
+    // Выполните необходимые действия для выхода из сайта, например, очистку сеанса пользователя или удаление токена аутентификации
+
+    // Удалите cookie, содержащую информацию о сеансе пользователя
+    destroyCookie(null, 'rtoken')
+
+    // Перенаправьте пользователя на страницу входа или на другую страницу
+    router.push('/')
   }
 
   return (
@@ -145,43 +159,49 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <ListSubheader className={styles.account_menu_title}>Мой профиль</ListSubheader>
-                <Link
-                  href={`/profile/${userData.id}`}
-                  className={styles.account_menu__user_card}
-                  onClick={handleClose}
-                >
-                  <div className={styles.user_card}>
-                    <div>
-                      <Avatar
-                        className={styles.avatar}
-                        alt='Remy Sharp'
-                        src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
-                      />
+                {anchorEl && (
+                  <>
+                    <ListSubheader className={styles.account_menu_title}>Мой профиль</ListSubheader>
+                    <Link
+                      href={`/profile/${userData.id}`}
+                      className={styles.account_menu__user_card}
+                      onClick={handleClose}
+                    >
+                      <div className={styles.user_card}>
+                        <div>
+                          <Avatar
+                            className={styles.avatar}
+                            alt='Remy Sharp'
+                            src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+                          />
+                        </div>
+                        <span className={styles.user_card__text}>
+                          <p className={styles.user_card__name}>
+                            <span>{userData.fullName}</span>
+                          </p>
+                          <p className={styles.user_card__sub_label}>Личный блог</p>
+                        </span>
+                      </div>
+                    </Link>
+                    <div className={styles.account_menu__item}>
+                      <MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
                     </div>
-                    <span className={styles.user_card__text}>
-                      <p className={styles.user_card__name}>
-                        <span>{userData.fullName}</span>
-                      </p>
-                      <p className={styles.user_card__sub_label}>Личный блог</p>
-                    </span>
-                  </div>
-                </Link>
-                <div className={styles.account_menu__item}>
-                  <MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
-                </div>
-                <div className={styles.account_menu__item}>
-                  <MenuItem onClick={handleClose}>
-                    <SettingsIcon />
-                    Настройки
-                  </MenuItem>
-                </div>
-                <div className={styles.account_menu__item}>
-                  <MenuItem onClick={handleClose}>
-                    <LogoutIcon />
-                    Выйти
-                  </MenuItem>
-                </div>
+                    <div className={styles.account_menu__item}>
+                      <MenuItem onClick={handleClose}>
+                        <SettingsIcon />
+                        Настройки
+                      </MenuItem>
+                    </div>
+                    <div className={styles.account_menu__item}>
+                      <div onClick={handleLogout}>
+                        <MenuItem onClick={handleClose}>
+                          <LogoutIcon />
+                          Выйти
+                        </MenuItem>
+                      </div>
+                    </div>
+                  </>
+                )}
               </Menu>
             </div>
           </div>

@@ -15,7 +15,7 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
   const [formType, setFormType] = React.useState<'main' | 'login' | 'register'>('main')
 
   return (
-    <Dialog open={visible} onClose={onClose} maxWidth='xs' fullWidth>
+    <Dialog open={visible} onClose={onClose} maxWidth='xs' fullWidth disableScrollLock={true}>
       <DialogContent>
         <DialogContentText>
           <div className={styles.content}>

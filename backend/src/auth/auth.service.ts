@@ -12,8 +12,9 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
+    const lowercaseEmail = email.toLowerCase(); // Преобразование email в нижний регистр
     const user = await this.userService.findByCond({
-      email,
+      email: lowercaseEmail,
       password,
     });
     if (user && user.password === password) {
@@ -38,8 +39,9 @@ export class AuthService {
 
   async register(dto: CreateUserDto) {
     try {
+      const lowercaseEmail = dto.email.toLowerCase(); // Преобразование email в нижний регистр
       const { password, ...userData } = await this.userService.create({
-        email: dto.email,
+        email: lowercaseEmail,
         fullName: dto.fullName,
         password: dto.password,
       });
