@@ -19,7 +19,7 @@ a {
 }
 
 .content {
-  max-width: 640px;
+  max-width: 600px;
   width: 100%;
   margin: 0 auto;
 }
@@ -30,7 +30,7 @@ a {
 
 .wrapper {
   display: flex;
-  padding: 0 30px;
+  padding: 0 5px;
   padding-top: 80px;
 }
 

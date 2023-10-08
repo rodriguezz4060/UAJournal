@@ -12,7 +12,7 @@ import styles from './LeftMenu.module.scss'
 import { useRouter } from 'next/router'
 
 const menu = [
-  { text: 'Лента', icon: <FireIcon />, path: '/' },
+  { text: 'Популярное', icon: <FireIcon />, path: '/' },
   { text: 'Сообщения', icon: <MessageIcon />, path: '/messages' },
   { text: 'Рейтинг', icon: <TrendingIcon />, path: '/rating' },
   { text: 'Подписки', icon: <ListIcon />, path: '/follows' },
@@ -20,6 +20,11 @@ const menu = [
 
 export const LeftMenu: React.FC = () => {
   const router = useRouter()
+
+  const isActive = (path: string) => {
+    return router.asPath === path ? styles.activeSvg : styles.inactiveSvg
+  }
+
   return (
     <div className={styles.menu}>
       <ul>
@@ -27,7 +32,7 @@ export const LeftMenu: React.FC = () => {
           <li key={obj.path}>
             <Link href={obj.path}>
               <Button variant={router.asPath === obj.path ? 'contained' : 'text'}>
-                {obj.icon}
+                <div className={isActive(obj.path)}>{obj.icon}</div>
                 {obj.text}
               </Button>
             </Link>

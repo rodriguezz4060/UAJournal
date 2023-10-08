@@ -29,7 +29,11 @@ import { selectUserData } from '../../redux/slices/user'
 import { PostItem } from '../../utils/api/types'
 import { Api } from '../../utils/api'
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  toggleLeftMenu: () => void
+}
+
+export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
   const userData = useAppSelector(selectUserData)
   const [authVisible, setAuthVisible] = React.useState(false)
   const [searchValue, setSearchValue] = React.useState('')
@@ -73,7 +77,7 @@ export const Header: React.FC = () => {
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className='d-flex align-center'>
         <IconButton>
-          <SideMenu />
+          <SideMenu onClick={toggleLeftMenu} />
         </IconButton>
         <Link href='/'>
           <Image className={styles.logo} src={logo} alt='Logo' />

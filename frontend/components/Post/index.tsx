@@ -138,11 +138,11 @@ export const Post: React.FC<PostProps> = ({
         </div>
       )}
       {description && (
-        <Typography className={styles.content}>
+        <div className={styles.content}>
           {description.map((paragraph, index) => (
             <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
           ))}
-        </Typography>
+        </div>
       )}
       <PostActions />
     </Paper>

@@ -17,9 +17,10 @@
         justify-content: flex-start;
         padding: 10px;
         text-transform: inherit;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 400;
         box-shadow: none;
+        padding: 6px 9px;
 
         span[class*='MuiButton-label'] {
           display: flex;
@@ -32,4 +33,14 @@
       }
     }
   }
+}
+
+.activeSvg {
+  color: #1693e5;
+  display: flex;
+}
+
+.inactiveSvg {
+  color: #595959;
+  display: flex;
 }

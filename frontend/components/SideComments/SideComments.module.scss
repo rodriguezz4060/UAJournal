@@ -42,6 +42,9 @@
   z-index: 9999;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  a:hover {
+    color: #3766a9;
+  }
 }
 
 .commentContent::-webkit-scrollbar {
@@ -49,7 +52,7 @@
 }
 
 .commentBlock {
-  width: 260px;
+  width: 240px;
 }
 
 .commentItem {
@@ -66,17 +69,29 @@
     border-radius: 6px;
     margin-right: 8px;
   }
-  b {
-    margin-left: 30px;
+}
+
+.fullName {
+  margin-left: 30px;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+  min-width: 0;
+  white-space: nowrap;
+
+  a:hover {
+    color: #3766a9;
   }
 }
 
 .text {
-  font-size: 16px;
   margin-top: 8px;
   margin-bottom: 5px;
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
   margin-bottom: 5px;
   overflow-wrap: break-word;
@@ -84,8 +99,13 @@
 }
 
 .postTitle {
-  font-size: 15px;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .userAvatar {
