@@ -9,7 +9,7 @@ import { Api } from '../../utils/api'
 import { ResponseUser } from '../../utils/api/types'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import moment from 'moment'
-import QuoteIcon from '@mui/icons-material/FormatQuote'
+import QuoteIcon from '@material-ui/icons/FormatQuote'
 
 interface PostProps {
   title: string

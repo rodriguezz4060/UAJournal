@@ -1,7 +1,7 @@
 import React from 'react'
 import { DialogContent, Dialog, DialogContentText, Typography } from '@material-ui/core'
 import styles from './AuthDialog.module.scss'
-import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined'
+import ArrowBackIcon from '@material-ui/icons/ArrowBackOutlined'
 import { MainForm } from './Forms/Main'
 import { LoginForm } from './Forms/Login'
 import { RegisterForm } from './Forms/Register'

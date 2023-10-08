@@ -4,7 +4,6 @@ import { MuiThemeProvider, CssBaseline } from '@material-ui/core'
 import { theme } from '../theme'
 import { wrapper } from '../redux/store'
 import { AppProps } from 'next/app'
-
 import '../styles/globals.css'
 import 'macro-css'
 import { setUserData } from '../redux/slices/user'

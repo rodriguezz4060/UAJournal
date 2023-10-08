@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core'
 import React from 'react'
 import { setCookie } from 'nookies'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -7,9 +6,10 @@ import { RegisterFormSchema } from '../../../utils/validations'
 import { FormField } from '../../FormField'
 import { CreateUserDto } from '../../../utils/api/types'
 import { UserApi } from '../../../utils/api/user'
-import Alert from '@material-ui/lab/Alert'
 import { useAppDispatch } from '../../../redux/hooks'
 import { setUserData } from '../../../redux/slices/user'
+import { Button } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 
 interface LoginFormProps {
   onOpenRegister: () => void

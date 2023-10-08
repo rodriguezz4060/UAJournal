@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Paper, Typography } from '@material-ui/core'
 import { PostActions } from '../PostActions'
 import MessageIcon from '@material-ui/icons/TextsmsOutlined'
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
-import QuoteIcon from '@mui/icons-material/FormatQuote'
+import QuoteIcon from '@material-ui/icons/FormatQuote'
 import styles from './FullPost.module.scss'
 import { FullPostProps } from '.'
+import { Button, Paper, Typography } from '@material-ui/core'
 
 export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
   return (

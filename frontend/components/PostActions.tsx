@@ -1,9 +1,8 @@
 import React, { CSSProperties } from 'react'
-import { IconButton } from '@mui/material'
-import CommentsIcon from '@mui/icons-material/ModeCommentOutlined'
-import RepostIcon from '@mui/icons-material/RepeatOutlined'
-import FavoriteIcon from '@mui/icons-material/BookmarkBorderOutlined'
-import ShareIcon from '@mui/icons-material/FileUploadOutlined'
+import { IconButton } from '@material-ui/core'
+import CommentsIcon from '@material-ui/icons/ModeCommentOutlined'
+import RepostIcon from '@material-ui/icons/RepeatOutlined'
+import FavoriteIcon from '@material-ui/icons/BookmarkBorderOutlined'
 
 const styles: CSSProperties = {
   display: 'flex',
@@ -31,11 +30,6 @@ export const PostActions: React.FC = () => {
       <li>
         <IconButton>
           <FavoriteIcon />
-        </IconButton>
-      </li>
-      <li>
-        <IconButton>
-          <ShareIcon />
         </IconButton>
       </li>
     </ul>
