@@ -187,10 +187,12 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
                       <MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
                     </div>
                     <div className={styles.account_menu__item}>
-                      <MenuItem onClick={handleClose}>
-                        <SettingsIcon />
-                        Настройки
-                      </MenuItem>
+                      <Link href={`/profile/settings`}>
+                        <MenuItem onClick={handleClose}>
+                          <SettingsIcon />
+                          Настройки
+                        </MenuItem>
+                      </Link>
                     </div>
                     <div className={styles.account_menu__item}>
                       <div onClick={handleLogout}>

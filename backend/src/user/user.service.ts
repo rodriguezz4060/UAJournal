@@ -7,12 +7,14 @@ import { Repository } from 'typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
 import { SearchUserDto } from './dto/searchg-user.dto';
 import { CommentEntity } from '../comment/entities/comment.entity';
+import { AwsService } from 'src/aws/aws.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private repository: Repository<UserEntity>,
+    private awsService: AwsService,
   ) {}
 
   create(dto: CreateUserDto) {
@@ -47,6 +49,24 @@ export class UserService {
 
   update(id: number, dto: UpdateUserDto) {
     return this.repository.update(id, dto);
+  }
+
+  async uploadAvatar(userId: number, file: Express.Multer.File) {
+    try {
+      const result = await this.awsService.uploadAvatar(
+        file.buffer,
+        file.originalname,
+        file.mimetype,
+      );
+
+      // Сохраните ссылку на аватарку в базе данных пользователя
+      await this.repository.update(userId, { avatarUrl: result.url });
+
+      return result.url;
+    } catch (error) {
+      console.error('Ошибка загрузки аватарки:', error);
+      throw new Error('Ошибка загрузки аватарки');
+    }
   }
 
   async search(dto: SearchUserDto) {

@@ -10,12 +10,13 @@ export type CreateUserDto = {
 } & LoginDto
 
 export type ResponseUser = {
-  createdAt: string
+  id: number
+  avatarUrl?: string
   email: string
   fullName: string
-  id: number
   commentsCount?: number
   token: string
+  createdAt: string
   updatedAt: string
 }
 

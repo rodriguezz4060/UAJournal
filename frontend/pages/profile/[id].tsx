@@ -8,9 +8,12 @@ import {
 import { Post } from '../../components/Post'
 import { MainLayout } from '../../layouts/MainLayout'
 import { PostItem, ResponseUser } from '../../utils/api/types'
-import { NextPage } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import { Api } from '../../utils/api'
 import { useState } from 'react'
+import { connect } from 'react-redux'
+import AvatarPopUp from '../../components/Profile/AvatarPopUp'
+import AvatarUploader from '../../components/Profile/AvatarUploader'
 
 interface ProfileProps {
   posts: PostItem[]
@@ -30,10 +33,7 @@ const Profile: NextPage<ProfileProps> = ({ posts, user }) => {
       <Paper className='pl-20 pr-20 pt-20 mb-30' elevation={0}>
         <div className='d-flex justify-between'>
           <div>
-            <Avatar
-              style={{ width: 120, height: 120, borderRadius: 6 }}
-              src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
-            />
+            <AvatarUploader avatarUrl={user.avatarUrl} fullName={user.fullName[0]} />
             <Typography style={{ fontWeight: 'bold' }} className='mt-10' variant='h4'>
               Bender Rodriguez
             </Typography>
@@ -131,10 +131,13 @@ const Profile: NextPage<ProfileProps> = ({ posts, user }) => {
 
 export const getServerSideProps = async ctx => {
   try {
-    const posts = await Api().post.getAll()
+    const api = Api(ctx)
+    const posts = await api.post.getAll()
+    const userData = await api.user.getMe()
     return {
       props: {
         posts,
+        user: userData,
       },
     }
   } catch (err) {
@@ -143,6 +146,7 @@ export const getServerSideProps = async ctx => {
   return {
     props: {
       posts: null,
+      user: null,
     },
   }
 }

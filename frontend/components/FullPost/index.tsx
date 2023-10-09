@@ -34,7 +34,10 @@ export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
                         className={styles.quote_text}
                         dangerouslySetInnerHTML={{ __html: obj.data.text }}
                       />
-                      <div className={styles.quote_author}>{obj.data.caption}</div>
+                      <div
+                        className={styles.quote_author}
+                        dangerouslySetInnerHTML={{ __html: obj.data.caption }}
+                      />
                     </div>
                   </blockquote>
                 </div>

@@ -9,6 +9,7 @@ export class AwsService {
 
   private readonly bucketName: string = 'uajournal-post';
   private readonly bucketNameVideo: string = 'uajournal-post-video';
+  private readonly bucketNameAvatar: string = 'uajournal-user-avatar';
   private readonly s3: S3 = new S3({
     accessKeyId: this.configService.get('ACCESS_ID'),
     secretAccessKey: this.configService.get('AWS_SECRET_KEY'),
@@ -43,6 +44,31 @@ export class AwsService {
       console.log(error);
       // В случае ошибки, возвращаем JSON-ответ с полем "success" равным 0
       throw new Error('Ошибка при загрузке файла');
+    }
+  }
+
+  async uploadAvatar(
+    dataBuffer: Buffer,
+    filename: string,
+    contentType: string,
+  ): Promise<{ success: number; url: string; type: string }> {
+    try {
+      const randomFilename = `${uuidv4()}-${filename}`;
+
+      const uploadResult = await this.s3
+        .upload({
+          Bucket: this.bucketNameAvatar,
+          Body: dataBuffer,
+          Key: randomFilename,
+          ACL: 'public-read',
+          ContentType: contentType,
+        })
+        .promise();
+
+      return { success: 1, url: uploadResult.Location, type: contentType };
+    } catch (error) {
+      console.log(error);
+      throw new Error('Ошибка при загрузке аватарки');
     }
   }
 
