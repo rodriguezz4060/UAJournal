@@ -1,19 +1,12 @@
-import Link from 'next/link'
-import { Paper, Avatar, Typography, Button, Tabs, Tab } from '@material-ui/core'
-import {
-  SettingsOutlined as SettingsIcon,
-  TextsmsOutlined as MessageIcon,
-} from '@material-ui/icons'
-
+import { Paper, Avatar, Tabs, Tab } from '@material-ui/core'
 import { Post } from '../../components/Post'
 import { MainLayout } from '../../layouts/MainLayout'
 import { PostItem, ResponseUser } from '../../utils/api/types'
 import { NextPage, GetServerSideProps } from 'next'
 import { Api } from '../../utils/api'
 import { useState } from 'react'
-import { connect } from 'react-redux'
-import AvatarPopUp from '../../components/Profile/AvatarPopUp'
 import AvatarUploader from '../../components/Profile/AvatarUploader'
+import { UserInfo } from '../../components/Profile/UserInfo'
 
 interface ProfileProps {
   posts: PostItem[]
@@ -29,38 +22,12 @@ const Profile: NextPage<ProfileProps> = ({ posts, user }) => {
   }
 
   return (
-    <MainLayout contentFullWidth hideComments>
+    <MainLayout contentFullWidth>
       <Paper className='pl-20 pr-20 pt-20 mb-30' elevation={0}>
-        <div className='d-flex justify-between'>
-          <div>
-            <AvatarUploader avatarUrl={user.avatarUrl} fullName={user.fullName[0]} />
-            <Typography style={{ fontWeight: 'bold' }} className='mt-10' variant='h4'>
-              Bender Rodriguez
-            </Typography>
-          </div>
-          <div>
-            <Link href='/profile/settings'>
-              <Button
-                style={{ height: 42, minWidth: 45, width: 45, marginRight: 10 }}
-                variant='contained'
-              >
-                <SettingsIcon />
-              </Button>
-            </Link>
-            <Button style={{ height: 42 }} variant='contained' color='primary'>
-              <MessageIcon className='mr-10' />
-              Написать
-            </Button>
-          </div>
+        <div className='justify-between'>
+          <AvatarUploader avatarUrl={user.avatarUrl} fullName={user.fullName[0]} />
         </div>
-        <div className='d-flex mb-10 mt-10'>
-          <Typography style={{ fontWeight: 'bold', color: '#35AB66' }} className='mr-15'>
-            +208
-          </Typography>
-          <Typography>2 подписчика</Typography>
-        </div>
-        <Typography>На проекте с 15 сен 2016</Typography>
-
+        <UserInfo />
         <Tabs className='mt-20' value={0} indicatorColor='primary' textColor='primary'>
           <Tab label='Статьи' />
           <Tab label='Комментарии' />

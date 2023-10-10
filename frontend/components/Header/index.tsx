@@ -147,6 +147,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
               </Button>
               <Menu
                 id='menu'
+                elevation={0}
                 className={styles.profile_menu}
                 PaperProps={{
                   style: {

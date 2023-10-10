@@ -1,3 +1,8 @@
+:root {
+  --wrapper-padding-top: 80px;
+  --max-width-container: 1000px;
+}
+
 html,
 body {
   padding: 0;
@@ -25,13 +30,13 @@ a {
 }
 
 .content--full {
-  max-width: 1000px;
+  max-width: var(--max-width-container);
 }
 
 .wrapper {
   display: flex;
   padding: 0 5px;
-  padding-top: 80px;
+  padding-top: var(--wrapper-padding-top);
 }
 
 .main-layout-white {
