@@ -34,12 +34,12 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
             <SettingsIcon />
           </Button>
         </Link>
-        <Button className={`${styles.button} ${styles.buttonBlue} ${styles.buttonSize_default}`}>
+        <button className={`${styles.button} ${styles.buttonBlue} ${styles.buttonSize_default}`}>
           <div className={styles.button__icon}>
             <MessageIcon className={styles.svgMessage} />
           </div>
           <span className={styles.button__lable}>Написать</span>
-        </Button>
+        </button>
       </div>
       <div>
         <div className='d-flex mb-10 mt-10'>

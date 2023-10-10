@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
   return (
     <Paper classes={{ root: styles.root }} elevation={0}>
       <div className='d-flex align-center'>
-        <IconButton>
+        <IconButton className={styles.sideMenu}>
           <SideMenu onClick={toggleLeftMenu} />
         </IconButton>
         <Link href='/'>

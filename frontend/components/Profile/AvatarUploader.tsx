@@ -107,7 +107,7 @@ const AvatarUploader = ({ avatarUrl, fullName }: AvatarUploaderProps) => {
         {`
           :root {
             --wrapper-padding-top: 40px;
-            --max-width-container: 870px
+            --max-width-container: 900px
           }
         `}
       </style>
