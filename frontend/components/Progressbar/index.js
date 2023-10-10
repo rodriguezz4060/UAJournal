@@ -36,7 +36,7 @@ class NextNProgress extends React.Component {
         }
         #nprogress .bar {
           background: ${color};
-          margin-top: 60px;
+          margin-top: 55px;
           position: fixed;
           z-index: 1031;
           top: 0;
