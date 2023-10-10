@@ -43,33 +43,33 @@ const Profile: NextPage<ProfileProps> = ({ posts, user }) => {
               title={obj.title}
               incut={obj.body
                 .filter(
-                  item => item.type === 'incut' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                  item => item.type === 'incut' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.text)}
               quote={obj.body
                 .filter(
-                  item => item.type === 'quote' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                  item => item.type === 'quote' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.text)}
               caption={obj.body
                 .filter(
-                  item => item.type === 'quote' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                  item => item.type === 'quote' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.caption)}
               video={obj.body
                 .filter(
-                  item => item.type === 'video' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                  item => item.type === 'video' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.file.url)}
               description={obj.body
                 .filter(
                   item =>
-                    item.type === 'paragraph' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                    item.type === 'paragraph' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.text)}
               images={obj.body
                 .filter(
-                  item => item.type === 'image' && item.tunes?.anyTuneName?.ShowOnHomepage === true
+                  item => item.type === 'image' && item.tunes?.anyTuneName?.ShowOnHomepage === true,
                 )
                 .map(item => item.data.file.url)}
               user={obj.user}

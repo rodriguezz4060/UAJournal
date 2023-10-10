@@ -28,9 +28,11 @@ a {
   max-width: var(--max-width-content);
   width: 100%;
   margin: 0 auto;
+}
 
 @media (max-width: 1000px) {
-  --max-width-content: 600px;
+  .content {
+    --max-width-content: 600px;
   }
 }
 
