@@ -167,16 +167,12 @@ const HeaderCover = ({ headerCoverUrl }: HeaderCoverProps) => {
 					<button
 						className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
 						style={{ display: isEditing ? 'none' : '' }}
+						onClick={handleHeaderCoverClick}
 					>
 						<div className={`${styles.button__icon} `}>
 							<SettingsIcon style={{ height: 20, width: 20 }} />
 						</div>
-						<span
-							className={styles.button__lable}
-							onClick={handleHeaderCoverClick}
-						>
-							Настроить
-						</span>
+						<span className={styles.button__lable}>Настроить</span>
 					</button>
 					<button
 						className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
