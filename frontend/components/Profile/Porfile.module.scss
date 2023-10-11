@@ -115,7 +115,7 @@
 }
 
 .header__description,
-.headerCover,
+.header__cover,
 .header__title,
 .header__stats,
 .header__actions {
@@ -128,7 +128,6 @@
 	--island-offset-x: 20px;
 	--offset-x: var(--island-offset-x, 20px);
 	--offset-y: 24px;
-	background-image: url(https://leonardo.osnova.io/fcc24959-48cc-5fa7-bf66-235bafe452e5/-/scale_crop/960/-/format/webp/);
 	background-position: 50% 40%;
 	height: 280px;
 	background-color: #dedede;
@@ -139,6 +138,45 @@
 	margin-left: calc(var(--offset-x) * -1);
 	margin-right: calc(var(--offset-x) * -1);
 	position: relative;
+}
+
+.headerCoverManage {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transform: translate3d(0, 2px, 0);
+	transform: translate3d(0, 2px, 0);
+	-webkit-transition: all 0.1s;
+	transition: all 0.1s;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.headerCoverManage__item {
+	position: relative;
+}
+
+.headerCoverManage__item:not(:last-child) {
+	margin-right: 8px;
+}
+
+.headerCover:hover .headerCoverManage {
+	visibility: visible;
+	opacity: 1;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
 }
 
 .header__title {
@@ -219,10 +257,9 @@
 }
 
 .button {
-	--actions-gap: 8px;
 	--offset: 8px;
 	--min-width: 44px;
-	--height: 40px;
+	--height: 35px;
 	--font-size: 15px;
 	--icon-size: 24px;
 	--border-radius: 8px;
@@ -295,8 +332,9 @@
 	flex-shrink: 0;
 }
 
-.button:not(:last-child) {
-	margin-left: var(--actions-gap);
+.button__icon:not(:only-child) {
+	margin-left: calc(var(--offset) * 1);
+	margin-right: calc(var(--offset) * -0.25);
 }
 
 .svgMessage {

@@ -46,6 +46,13 @@ export class UserController {
     return this.userService.uploadAvatar(req.user.id, file);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Patch('cover')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadHeaderCover(@Request() req, @UploadedFile() file) {
+    return this.userService.uploadHeaderCover(req.user.id, file);
+  }
+
   @Get('search')
   search(@Query() dto: SearchUserDto) {
     return this.userService.search(dto);

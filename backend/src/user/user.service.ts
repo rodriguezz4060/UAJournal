@@ -69,6 +69,24 @@ export class UserService {
     }
   }
 
+  async uploadHeaderCover(userId: number, file: Express.Multer.File) {
+    try {
+      const result = await this.awsService.uploadHeaderCover(
+        file.buffer,
+        file.originalname,
+        file.mimetype,
+      );
+
+      // Сохраните ссылку на обложку в базе данных пользователя
+      await this.repository.update(userId, { headerCoverUrl: result.url });
+
+      return result.url;
+    } catch (error) {
+      console.error('Ошибка загрузки аватарки:', error);
+      throw new Error('Ошибка загрузки аватарки');
+    }
+  }
+
   async search(dto: SearchUserDto) {
     const qb = this.repository.createQueryBuilder('u');
 

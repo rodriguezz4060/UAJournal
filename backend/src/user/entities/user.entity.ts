@@ -31,7 +31,10 @@ export class UserEntity {
   password?: string;
 
   @Column({ nullable: true })
-  avatarUrl?: string; // Добавьте новое поле для хранения ссылки на аватарку
+  avatarUrl?: string;
+
+  @Column({ nullable: true })
+  headerCoverUrl?: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
