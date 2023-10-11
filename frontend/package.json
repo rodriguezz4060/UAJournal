@@ -41,6 +41,7 @@
     "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-draggable": "^4.4.6",
     "react-editor-js": "^2.1.0",
     "react-hook-form": "^7.39.4",
     "react-player": "^2.13.0",

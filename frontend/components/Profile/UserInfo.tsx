@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Link, Typography } from '@material-ui/core'
+import Link from 'next/link'
 import {
 	SettingsOutlined as SettingsIcon,
 	TextsmsOutlined as MessageIcon

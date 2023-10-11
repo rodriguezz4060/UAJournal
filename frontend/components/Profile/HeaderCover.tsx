@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Porfile.module.scss'
 import axios from 'axios'
 import SettingsIcon from '@material-ui/icons/SettingsOutlined'
@@ -52,20 +52,106 @@ const HeaderCover = ({ headerCoverUrl }: HeaderCoverProps) => {
 		document.getElementById('upload-header-cover').click()
 	}
 
+	useEffect(() => {
+		window.addEventListener('mouseup', handleWindowMouseUp)
+		return () => {
+			window.removeEventListener('mouseup', handleWindowMouseUp)
+		}
+	}, [])
+
+	const handleHeaderCoverMouseMove = e => {
+		if (isEditing && isMouseDown) {
+			const headerCover = document.querySelector(`.${styles.headerCover}`)
+			const headerCoverRect = headerCover.getBoundingClientRect()
+			const headerCoverHeight = headerCoverRect.height
+			const offsetY = e.clientY - headerCoverRect.top
+
+			const newPosition = (offsetY / headerCoverHeight) * 100
+
+			headerCover.style.backgroundPositionY = `${newPosition}%`
+		}
+	}
+
+	const handleHeaderCoverMouseLeave = () => {
+		const headerCover = document.querySelector(`.${styles.headerCover}`)
+		headerCover.style.cursor = 'default'
+	}
+
+	const handleHeaderCoverMouseDown = () => {
+		setIsMouseDown(true)
+	}
+
+	const handleWindowMouseUp = () => {
+		setIsMouseDown(false)
+		const headerCover = document.querySelector(`.${styles.headerCover}`)
+		setIsEditing(headerCover.classList.contains(styles.isEditing))
+	}
+
+	const handleHeaderCoverMouseUp = () => {
+		setIsMouseDown(false)
+	}
+
+	const handleHeaderCoverMouseEnter = () => {
+		const headerCover = document.querySelector(`.${styles.headerCover}`)
+		headerCover.style.cursor = 'grab'
+	}
+
+	const handleSaveButtonClick = () => {
+		const headerCover = document.querySelector(`.${styles.headerCover}`)
+		headerCover.classList.remove(styles.isEditing)
+		setIsEditing(false)
+	}
+
+	const handleHeaderCoverClick = () => {
+		const headerCover = document.querySelector(`.${styles.headerCover}`)
+		headerCover.classList.add(styles.isEditing)
+		setIsEditing(true)
+	}
+
+	const [isMouseDown, setIsMouseDown] = useState(false)
+	const [isEditing, setIsEditing] = useState(false)
+
 	return (
 		<div>
 			<div
-				className={`${styles.headerCover} ${styles.header__cover}`}
+				className={`${styles.headerCover} ${styles.header__cover} `}
 				style={{
 					backgroundImage: uploadedCoverUrl
 						? `url(${uploadedCoverUrl})`
 						: 'none'
 				}}
+				onMouseMove={handleHeaderCoverMouseMove}
+				onMouseEnter={handleHeaderCoverMouseEnter}
+				onMouseLeave={handleHeaderCoverMouseLeave}
+				onMouseDown={handleHeaderCoverMouseDown}
+				onMouseUp={handleHeaderCoverMouseUp}
 			>
-				<div className={styles.headerCoverManage}>
+				<div
+					className={`${styles.headerCoverManage} ${
+						isEditing ? styles.isEditing : ''
+					}`}
+				>
 					<div className={styles.headerCoverManage__item}>
+						<button
+							className={`${styles.button} 
+							${styles.buttonDefault} 
+							${styles.buttonSize_default} 
+							${styles.headerCoverManage__item}`}
+							style={{ display: isEditing ? 'none' : '' }}
+						>
+							<div className={`${styles.button__icon} `}>
+								<SettingsIcon style={{ height: 20, width: 20 }} />
+							</div>
+							<span
+								className={styles.button__lable}
+								onClick={handleSaveButtonClick}
+							>
+								Сохранить
+							</span>
+						</button>
 						<label
 							className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default}`}
+							style={{ display: isEditing ? 'none' : '' }}
 						>
 							<div className={styles.button__icon}>
 								<AddPhotoIcon style={{ height: 16, width: 16 }} />
@@ -87,10 +173,17 @@ const HeaderCover = ({ headerCoverUrl }: HeaderCoverProps) => {
 						<div className={`${styles.button__icon} `}>
 							<SettingsIcon style={{ height: 20, width: 20 }} />
 						</div>
-						<span className={styles.button__lable}>Настроить</span>
+						<span
+							className={styles.button__lable}
+							onClick={handleHeaderCoverClick}
+							style={{ display: isEditing ? 'none' : '' }}
+						>
+							Настроить
+						</span>
 					</button>
 					<button
 						className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+						style={{ display: isEditing ? 'none' : '' }}
 					>
 						<div className={`${styles.button__icon} `}>
 							<DeleteIcon style={{ height: 18, width: 18 }} />

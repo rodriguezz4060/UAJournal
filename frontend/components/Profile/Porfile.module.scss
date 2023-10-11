@@ -123,6 +123,22 @@
 	grid-column-start: span 2;
 }
 
+.headerCover.isEditing {
+	cursor: grab;
+	background-position-y: unset;
+}
+
+.isEditing {
+	background-color: rgba(255, 255, 255, 0.3);
+	cursor: move;
+	visibility: visible;
+	opacity: 1;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	-ms-touch-action: none;
+	touch-action: none;
+}
+
 .headerCover {
 	--border-radius: 8px;
 	--island-offset-x: 20px;
@@ -228,7 +244,7 @@
 	cursor: pointer;
 
 	&:hover {
-		color: #cd192e;
+		color: #cd192e !important;
 		text-decoration: none !important;
 	}
 }
