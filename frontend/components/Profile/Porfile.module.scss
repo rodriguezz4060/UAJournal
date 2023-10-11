@@ -118,8 +118,7 @@
 .headerCover,
 .header__title,
 .header__stats,
-.header__actions,
-.header__stats {
+.header__actions {
 	min-width: 0;
 	grid-column-start: span 2;
 }
@@ -187,11 +186,12 @@
 }
 
 .linkInline {
-	color: #3766a9;
+	color: #3766a9 !important;
 	cursor: pointer;
 
 	&:hover {
 		color: #cd192e;
+		text-decoration: none !important;
 	}
 }
 
@@ -322,4 +322,51 @@
 	margin: 0 auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.header__description ~ .header__stats {
+	margin-top: 20px;
+}
+
+.header__stats {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	font-size: 15px;
+}
+
+.header__stat {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.header__stat:not(:last-child) {
+	margin-bottom: 8px;
+}
+
+.headerStat {
+}
+
+.numberChange {
+	color: #2ea83a;
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.headerStat:not(:last-child) {
+	margin-right: 16px;
 }

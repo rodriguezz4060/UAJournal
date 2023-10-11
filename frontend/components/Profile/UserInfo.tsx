@@ -21,9 +21,9 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 					[ Steam: steamcommunity.com/id/BenderRodriguezz/ ]||[ Телеграм канал с
 					мемасами t.me/memes_Rodriguez ]
 					<div className={styles.headerDescription__edit}>
-						<a href='#' className={styles.linkInline}>
+						<Link href='#' className={styles.linkInline}>
 							Изменить описание
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -46,17 +46,20 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 					<span className={styles.button__lable}>Написать</span>
 				</button>
 			</div>
-			<div>
-				<div className='d-flex mb-10 mt-10'>
-					<Typography
-						style={{ fontWeight: 'bold', color: '#35AB66' }}
-						className='mr-15'
-					>
-						+208
-					</Typography>
-					<Typography>2 подписчика</Typography>
+			<div className={styles.header__stats}>
+				<div className={styles.header__stat}>
+					<div className={styles.headerStat}>
+						<div
+							className={`${styles.numberChange} ${styles.numberChange__positive}`}
+						>
+							+208
+						</div>
+					</div>
+					<Link href='/profile/#' className={styles.headerStat}>
+						2 подписчика
+					</Link>
 				</div>
-				<Typography>На проекте с 15 сен 2016</Typography>
+				<div className={styles.header__stat}>На проекте с 15 сен 2016</div>
 			</div>
 		</div>
 	)
