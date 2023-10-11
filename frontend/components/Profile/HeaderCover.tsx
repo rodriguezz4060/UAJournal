@@ -6,187 +6,238 @@ import DeleteIcon from '@material-ui/icons/ClearOutlined'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternateOutlined'
 
 interface HeaderCoverProps {
-	headerCoverUrl: string | null
+  headerCoverUrl: string | null
+  headerCoverPosition: string | null
 }
 
-const HeaderCover = ({ headerCoverUrl }: HeaderCoverProps) => {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null)
-	const [uploadedCoverUrl, setUploadedCoverUrl] = useState<string | null>(
-		headerCoverUrl
-	)
+const HeaderCover = ({ headerCoverUrl, headerCoverPosition }: HeaderCoverProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [uploadedCoverUrl, setUploadedCoverUrl] = useState<string | null>(
+    headerCoverUrl,
+  )
 
-	const handleFileChange = async (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		if (event.target.files && event.target.files.length > 0) {
-			const file = event.target.files[0]
-			setSelectedFile(file)
+  const [backgroundPosition, setBackgroundPosition] = useState<string>(headerCoverPosition || '50% 50%')
 
-			try {
-				const formData = new FormData()
-				formData.append('file', file)
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0]
+      setSelectedFile(file)
 
-				const token = document.cookie.replace(
-					/(?:(?:^|.*;\s*)rtoken\s*=\s*([^;]*).*$)|^.*$/,
-					'$1'
-				)
+      try {
+        const formData = new FormData()
+        formData.append('file', file)
 
-				await axios.patch('http://localhost:7777/users/cover', formData, {
-					headers: {
-						'Content-Type': 'multipart/form-data',
-						Authorization: `Bearer ${token}`
-					}
-				})
+        const token = document.cookie.replace(
+          /(?:(?:^|.*;\s*)rtoken\s*=\s*([^;]*).*$)|^.*$/,
+          '$1',
+        )
 
-				// Обновляем URL аватарки
-				setUploadedCoverUrl(URL.createObjectURL(file))
+        await axios.patch('http://localhost:7777/users/me', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-				console.log('Аватарка успешно загружена')
-			} catch (error) {
-				console.error('Ошибка загрузки аватарки:', error)
-			}
-		}
-	}
+        setPreviousCoverUrl(uploadedCoverUrl)
+        setUploadedCoverUrl(URL.createObjectURL(file))
 
-	const handleUploadClick = () => {
-		document.getElementById('upload-header-cover').click()
-	}
+        console.log('Обложка успешно загружена')
+      } catch (error) {
+        console.error('Ошибка загрузки обложки:', error)
+      }
+    }
+  }
 
-	useEffect(() => {
-		window.addEventListener('mouseup', handleWindowMouseUp)
-		return () => {
-			window.removeEventListener('mouseup', handleWindowMouseUp)
-		}
-	}, [])
+  const handleSaveButtonClick = () => {
+    const token = document.cookie.replace(
+      /(?:(?:^|.*;\s*)rtoken\s*=\s*([^;]*).*$)|^.*$/,
+      '$1',
+    )
 
-	const handleHeaderCoverMouseMove = e => {
-		if (isEditing && isMouseDown) {
-			const headerCover = document.querySelector(`.${styles.headerCover}`)
-			const headerCoverRect = headerCover.getBoundingClientRect()
-			const headerCoverHeight = headerCoverRect.height
-			const offsetY = e.clientY - headerCoverRect.top
+    axios
+      .patch('http://localhost:7777/users/me', {
+        headerCoverPosition: backgroundPosition,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        console.log('Данные о позиции картинки успешно отправлены на сервер')
+        setIsChangesSaved(true)
+        setIsEditing(false) // Закрываем окно редактора после сохранения
+      })
+      .catch(error => {
+        console.error('Ошибка при отправке данных о позиции картинки на сервер:', error)
+      })
+  }
 
-			const newPosition = (offsetY / headerCoverHeight) * 100
+  const handleUploadClick = () => {
+    document.getElementById('upload-header-cover').click()
+  }
 
-			headerCover.style.backgroundPositionY = `${newPosition}%`
-		}
-	}
+  const handleHeaderCoverMouseMove = e => {
+    if (isEditing && isMouseDown) {
+      const headerCover = document.querySelector(`.${styles.headerCover}`)
+      const headerCoverRect = headerCover.getBoundingClientRect()
+      const headerCoverTop = headerCoverRect.top
+      const offsetY = e.clientY - headerCoverTop
 
-	const handleHeaderCoverMouseLeave = () => {
-		const headerCover = document.querySelector(`.${styles.headerCover}`)
-		headerCover.style.cursor = 'default'
-	}
+      const newPosition = Math.floor((offsetY / headerCoverRect.height) * 100)
 
-	const handleHeaderCoverMouseDown = () => {
-		setIsMouseDown(true)
-	}
+      requestAnimationFrame(() => {
+        setBackgroundPosition(`50% ${newPosition}%`)
+      })
+    }
+  }
 
-	const handleWindowMouseUp = () => {
-		setIsMouseDown(false)
-		const headerCover = document.querySelector(`.${styles.headerCover}`)
-		setIsEditing(headerCover.classList.contains(styles.isEditing))
-	}
+  const handleHeaderCoverMouseDown = () => {
+    setIsMouseDown(true)
+  }
 
-	const handleHeaderCoverMouseUp = () => {
-		setIsMouseDown(false)
-	}
 
-	const handleHeaderCoverMouseEnter = () => {
-		const headerCover = document.querySelector(`.${styles.headerCover}`)
-		headerCover.style.cursor = 'grab'
-	}
+  const handleWindowMouseUp = () => {
+    if (isMouseDown) {
+      setIsMouseDown(false)
+    }
+  }
 
-	const handleSaveButtonClick = () => {
-		const headerCover = document.querySelector(`.${styles.headerCover}`)
-		headerCover.classList.remove(styles.isEditing)
-		setIsEditing(false)
-	}
+  const handleHeaderCoverMouseLeave = () => {
+    if (isMouseDown) {
+      setIsMouseDown(false)
+    }
+  }
 
-	const handleHeaderCoverClick = () => {
-		const headerCover = document.querySelector(`.${styles.headerCover}`)
-		headerCover.classList.add(styles.isEditing)
-		setIsEditing(true)
-	}
+  const handleHeaderCoverMouseUp = () => {
+    setIsMouseDown(false)
+  }
 
-	const [isMouseDown, setIsMouseDown] = useState(false)
-	const [isEditing, setIsEditing] = useState(false)
+  const handleHeaderCoverClick = () => {
+    if (!isEditing) {
+      setIsChangesSaved(false)
+    }
+  }
+  const handleSettingsButtonClick = () => {
+    setIsEditing(true)
+  }
 
-	return (
-		<div>
-			<div
-				className={`${styles.headerCover} ${styles.header__cover} `}
-				style={{
-					backgroundImage: uploadedCoverUrl
-						? `url(${uploadedCoverUrl})`
-						: 'none'
-				}}
-				onMouseMove={handleHeaderCoverMouseMove}
-				onMouseEnter={handleHeaderCoverMouseEnter}
-				onMouseLeave={handleHeaderCoverMouseLeave}
-				onMouseDown={handleHeaderCoverMouseDown}
-				onMouseUp={handleHeaderCoverMouseUp}
-			>
-				<div
-					className={`${styles.headerCoverManage} ${
-						isEditing ? styles.isEditing : ''
-					}`}
-				>
-					<div className={styles.headerCoverManage__item}>
-						<button
-							className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
-							style={{ display: isEditing ? '' : 'none' }}
-						>
-							<div className={`${styles.button__icon} `}>
-								<SettingsIcon style={{ height: 20, width: 20 }} />
-							</div>
-							<span
-								className={styles.button__lable}
-								onClick={handleSaveButtonClick}
-							>
-								Сохранить
-							</span>
-						</button>
-						<label
-							className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default}`}
-							style={{ display: isEditing ? 'none' : '' }}
-						>
-							<div className={styles.button__icon}>
-								<AddPhotoIcon style={{ height: 16, width: 16 }} />
-							</div>
-							<span className={styles.button__lable}>
+  const handleCloseClick = () => {
+    setIsEditing(false)
+    setUploadedCoverUrl(previousCoverUrl)
+    setBackgroundPosition(headerCoverPosition || '50% 50%')
+    setIsChangesSaved(true)
+  }
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleHeaderCoverMouseMove)
+    window.addEventListener('mouseup', handleWindowMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', handleHeaderCoverMouseMove)
+      window.removeEventListener('mouseup', handleWindowMouseUp)
+    }
+  }, [])
+
+  const [isMouseDown, setIsMouseDown] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isChangesSaved, setIsChangesSaved] = useState(true)
+  const [previousCoverUrl, setPreviousCoverUrl] = useState<string | null>(headerCoverUrl)
+
+  return (
+    <div>
+      <div
+        className={`${styles.headerCover} ${styles.header__cover} `}
+        style={{
+          backgroundImage: `url(${uploadedCoverUrl})`,
+          backgroundPosition: backgroundPosition,
+        }}
+        onMouseMove={handleHeaderCoverMouseMove}
+        onMouseDown={handleHeaderCoverMouseDown}
+        onMouseLeave={handleHeaderCoverMouseLeave}
+        onMouseUp={handleHeaderCoverMouseUp}
+        onClick={handleHeaderCoverClick}
+      >
+        <div
+          className={`${styles.headerCoverManage} ${
+            isEditing ? styles.isEditing : ''
+          }`}
+        >
+          <div className={styles.headerCoverManage__item}>
+
+            <label
+              className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default}`}
+              style={{ display: isEditing ? 'none' : '' }}
+            >
+              <div className={styles.button__icon}>
+                <AddPhotoIcon style={{ height: 16, width: 16 }} />
+              </div>
+              <span className={styles.button__lable}>
 								<input
-									type='file'
-									id='upload-header-cover'
-									style={{ display: 'none' }}
-									onChange={handleFileChange}
-								/>
+                  type='file'
+                  id='upload-header-cover'
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange}
+                />
 								Сменить обложку
 							</span>
-						</label>
-					</div>
-					<button
-						className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
-						style={{ display: isEditing ? 'none' : '' }}
-						onClick={handleHeaderCoverClick}
-					>
-						<div className={`${styles.button__icon} `}>
-							<SettingsIcon style={{ height: 20, width: 20 }} />
-						</div>
-						<span className={styles.button__lable}>Настроить</span>
-					</button>
-					<button
-						className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
-						style={{ display: isEditing ? 'none' : '' }}
-					>
-						<div className={`${styles.button__icon} `}>
-							<DeleteIcon style={{ height: 18, width: 18 }} />
-						</div>
-						<span className={styles.button__lable}>Удалить</span>
-					</button>
-				</div>
-			</div>
-		</div>
-	)
+            </label>
+          </div>
+          <button
+            className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+            style={{ display: isEditing ? 'none' : '' }}
+            onClick={handleSettingsButtonClick}
+          >
+            <div className={`${styles.button__icon} `}>
+              <SettingsIcon style={{ height: 20, width: 20 }} />
+            </div>
+            <span className={styles.button__lable}>Настроить</span>
+          </button>
+          <button
+            className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+            style={{ display: isEditing ? 'none' : '' }}
+          >
+            <div className={`${styles.button__icon} `}>
+              <DeleteIcon style={{ height: 18, width: 18 }} />
+            </div>
+            <span className={styles.button__lable}>Удалить</span>
+          </button>
+
+          {isEditing && (
+            <>
+              <button
+                className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+                onClick={handleSaveButtonClick}
+              >
+                <div className={`${styles.button__icon} `}>
+                  <SettingsIcon style={{ height: 20, width: 20 }} />
+                </div>
+                <span
+                  className={styles.button__lable}
+                >
+								Сохранить
+							</span>
+              </button>
+              <button
+                className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+                onClick={handleCloseClick}
+              >
+                <div className={`${styles.button__icon} `}>
+                  <SettingsIcon style={{ height: 20, width: 20 }} />
+                </div>
+                <span
+                  className={styles.button__lable}
+                >
+								Закрыть
+							</span>
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default HeaderCover

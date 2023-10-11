@@ -49,8 +49,8 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Patch('cover')
   @UseInterceptors(FileInterceptor('file'))
-  uploadHeaderCover(@Request() req, @UploadedFile() file) {
-    return this.userService.uploadHeaderCover(req.user.id, file);
+  uploadHeaderCover(@Request() req, @UploadedFile() file, @Body('backgroundPosition') backgroundPosition: string) {
+    return this.userService.uploadHeaderCover(req.user.id, file, backgroundPosition);
   }
 
   @Get('search')

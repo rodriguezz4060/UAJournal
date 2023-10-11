@@ -36,6 +36,9 @@ export class UserEntity {
   @Column({ nullable: true })
   headerCoverUrl?: string;
 
+  @Column({ nullable: true })
+  headerCoverPosition?: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

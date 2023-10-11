@@ -69,7 +69,7 @@ export class UserService {
     }
   }
 
-  async uploadHeaderCover(userId: number, file: Express.Multer.File) {
+  async uploadHeaderCover(userId: number, file: Express.Multer.File, backgroundPosition: string) {
     try {
       const result = await this.awsService.uploadHeaderCover(
         file.buffer,
@@ -78,12 +78,12 @@ export class UserService {
       );
 
       // Сохраните ссылку на обложку в базе данных пользователя
-      await this.repository.update(userId, { headerCoverUrl: result.url });
+      await this.repository.update(userId, { headerCoverUrl: result.url, headerCoverPosition: backgroundPosition });
 
       return result.url;
     } catch (error) {
-      console.error('Ошибка загрузки аватарки:', error);
-      throw new Error('Ошибка загрузки аватарки');
+      console.error('Ошибка загрузки обложки:', error);
+      throw new Error('Ошибка загрузки обложки');
     }
   }
 
