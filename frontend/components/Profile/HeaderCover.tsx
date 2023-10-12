@@ -4,6 +4,7 @@ import axios from 'axios'
 import SettingsIcon from '@material-ui/icons/SettingsOutlined'
 import DeleteIcon from '@material-ui/icons/ClearOutlined'
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternateOutlined'
+import SaveIcon from '@material-ui/icons/SaveOutlined'
 
 interface HeaderCoverProps {
 	headerCoverUrl: string | null
@@ -241,7 +242,7 @@ const HeaderCover = ({
 								onClick={handleSaveButtonClick}
 							>
 								<div className={`${styles.button__icon} `}>
-									<SettingsIcon style={{ height: 20, width: 20 }} />
+									<SaveIcon style={{ height: 20, width: 20 }} />
 								</div>
 								<span className={styles.button__lable}>Сохранить</span>
 							</button>
@@ -250,7 +251,7 @@ const HeaderCover = ({
 								onClick={handleCloseClick}
 							>
 								<div className={`${styles.button__icon} `}>
-									<SettingsIcon style={{ height: 20, width: 20 }} />
+									<DeleteIcon style={{ height: 20, width: 20 }} />
 								</div>
 								<span className={styles.button__lable}>Закрыть</span>
 							</button>
