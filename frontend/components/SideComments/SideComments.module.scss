@@ -1,121 +1,120 @@
 .root {
-  width: 265px;
-  margin-bottom: 2px;
-  position: sticky;
-  top: 90px;
-  margin-left: 40px;
+	width: 265px;
+	margin-bottom: 2px;
+	position: sticky;
+	top: 80px;
+	margin-left: 40px;
 
-  h3 {
-    display: flex;
-    align-items: center;
-    margin-top: 0;
-    font-size: 16px;
-    margin-bottom: 30px;
-    cursor: pointer;
-    font-weight: 600;
+	h3 {
+		display: flex;
+		align-items: center;
+		margin-top: 0;
+		font-size: 16px;
+		margin-bottom: 30px;
+		cursor: pointer;
+		font-weight: 600;
 
-    svg {
-      width: 22px;
-      height: 22px;
-      margin-left: 8px;
-    }
-  }
+		svg {
+			width: 22px;
+			height: 22px;
+			margin-left: 8px;
+		}
+	}
 }
 
 .rotated {
-  width: 70px;
-  transform: rotate(-90deg) translate(-50px);
-  right: 60px;
-  top: 105px;
+	width: 70px;
+	transform: rotate(-90deg) translate(-50px);
+	right: 60px;
+	top: 105px;
 
-  svg {
-    transform: rotate(270deg);
-  }
+	svg {
+		transform: rotate(270deg);
+	}
 }
 
 .commentContent {
-  position: fixed;
-  top: 140px;
-  height: calc(100vh - 140px); // Subtract the height of the header from the viewport height
-  overflow-y: auto;
-  z-index: 9999;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  a:hover {
-    color: #3766a9;
-  }
+	position: fixed;
+	height: calc(100vh - 140px);
+	overflow-y: auto;
+	z-index: 9999;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	a:hover {
+		color: #3766a9;
+	}
 }
 
 .commentContent::-webkit-scrollbar {
-  display: none; /* Скрыть полоску прокрутки для Chrome, Safari и Opera */
+	display: none;
 }
 
 .commentBlock {
-  width: 240px;
+	width: 240px;
 }
 
 .commentItem {
-  margin-bottom: 25px;
+	margin-bottom: 25px;
 }
 
 .userInfo {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 
-  img {
-    width: 24px !important;
-    height: 24px !important;
-    border-radius: 6px;
-    margin-right: 8px;
-  }
+	img {
+		width: 24px !important;
+		height: 24px !important;
+		border-radius: 6px;
+		margin-right: 8px;
+	}
 }
 
 .fullName {
-  margin-left: 30px;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  font-weight: 700;
-  font-size: 14px;
-  color: #000;
-  min-width: 0;
-  white-space: nowrap;
+	margin-left: 30px;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	font-weight: 700;
+	font-size: 14px;
+	color: #000;
+	min-width: 0;
+	white-space: nowrap;
 
-  a:hover {
-    color: #3766a9;
-  }
+	a:hover {
+		color: #3766a9;
+	}
 }
 
 .text {
-  margin-top: 8px;
-  margin-bottom: 5px;
-  display: block;
-  font-size: 15px;
-  line-height: 24px;
-  margin-bottom: 5px;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
+	margin-top: 8px;
+	margin-bottom: 5px;
+	display: block;
+	font-size: 15px;
+	line-height: 24px;
+	margin-bottom: 5px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
 }
 
 .postTitle {
-  display: block;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	display: block;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .userAvatar {
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 30px !important;
-  border-radius: 6px !important;
-  margin-right: 8px !important;
-  overflow: hidden !important;
-  background-size: 100% auto !important;
-  background-repeat: no-repeat !important;
-  image-rendering: -webkit-optimize-contrast !important;
-  position: absolute !important;
+	width: 22px !important;
+	height: 22px !important;
+	border-radius: 30px !important;
+	border-radius: 6px !important;
+	margin-right: 8px !important;
+	overflow: hidden !important;
+	background-size: 100% auto !important;
+	background-repeat: no-repeat !important;
+	image-rendering: -webkit-optimize-contrast !important;
+	position: absolute !important;
 }
