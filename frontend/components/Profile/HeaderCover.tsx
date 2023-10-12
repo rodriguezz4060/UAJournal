@@ -216,6 +216,7 @@ const HeaderCover = ({
 						<>
 							<button
 								className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+								onClick={handleSettingsButtonClick}
 							>
 								<div className={`${styles.button__icon} `}>
 									<SettingsIcon style={{ height: 20, width: 20 }} />
