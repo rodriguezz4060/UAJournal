@@ -69,7 +69,11 @@ export class UserService {
     }
   }
 
-  async uploadHeaderCover(userId: number, file: Express.Multer.File, backgroundPosition: string) {
+  async uploadHeaderCover(
+    userId: number,
+    file: Express.Multer.File,
+    backgroundPosition: string,
+  ) {
     try {
       const result = await this.awsService.uploadHeaderCover(
         file.buffer,
@@ -78,12 +82,30 @@ export class UserService {
       );
 
       // Сохраните ссылку на обложку в базе данных пользователя
-      await this.repository.update(userId, { headerCoverUrl: result.url, headerCoverPosition: backgroundPosition });
+      await this.repository.update(userId, {
+        headerCoverUrl: result.url,
+        headerCoverPosition: backgroundPosition,
+      });
 
       return result.url;
     } catch (error) {
       console.error('Ошибка загрузки обложки:', error);
       throw new Error('Ошибка загрузки обложки');
+    }
+  }
+
+  async deleteHeaderCover(userId: number) {
+    try {
+      // Удалите ссылку на обложку из базы данных пользователя
+      await this.repository.update(userId, {
+        headerCoverUrl: null,
+        headerCoverPosition: null,
+      });
+
+      return 'Header cover deleted successfully';
+    } catch (error) {
+      console.error('Ошибка удаления обложки:', error);
+      throw new Error('Ошибка удаления обложки');
     }
   }
 
