@@ -246,7 +246,7 @@ const HeaderCover = ({
 								<span className={styles.button__lable}>Сохранить</span>
 							</button>
 							<button
-								className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item}`}
+								className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default} ${styles.headerCoverManage__item} `}
 								onClick={handleCloseClick}
 							>
 								<div className={`${styles.button__icon} `}>

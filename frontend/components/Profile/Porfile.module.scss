@@ -135,8 +135,8 @@
 .isEditing {
 	background-color: rgba(255, 255, 255, 0.3);
 	cursor: move;
-	visibility: visible;
-	opacity: 1;
+	visibility: visible !important;
+	opacity: 1 !important;
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 	-ms-touch-action: none;
@@ -193,8 +193,6 @@
 .headerCover:hover .headerCoverManage {
 	visibility: visible;
 	opacity: 1;
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
 }
 
 .header__title {
