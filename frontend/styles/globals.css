@@ -188,3 +188,16 @@ H2 {
 		content: url(../public/star.svg);
 	}
 }
+
+form {
+	.MuiOutlinedInput-root {
+		border-radius: 8px;
+		height: 38px;
+	}
+	.MuiInputAdornment-root {
+		font-size: 12px !important;
+	}
+	.MuiOutlinedInput-notchedOutline {
+		border: 1px solid rgb(255, 0, 0);
+	}
+}

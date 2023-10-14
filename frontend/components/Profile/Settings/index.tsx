@@ -70,7 +70,7 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 										<label className={styles.formSection__label}>
 											Отображаемое имя
 										</label>
-										<form>
+										<form className={styles.textFieldStyles}>
 											<TextField
 												size='small'
 												label=''
