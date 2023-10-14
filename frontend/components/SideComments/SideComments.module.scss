@@ -35,11 +35,12 @@
 
 .commentContent {
 	position: fixed;
-	height: calc(100vh - 140px);
+	height: calc(100vh - 100px);
 	overflow-y: auto;
 	z-index: 9999;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
+	top: 120px;
 	a:hover {
 		color: #3766a9;
 	}

@@ -2,7 +2,13 @@ import styles from './Settings.module.scss'
 import Link from 'next/link'
 import { MainLayout } from '../../../layouts/MainLayout'
 import ArrowBackIcon from '@material-ui/icons/ArrowBackIosOutlined'
-import { TextField } from '@material-ui/core'
+import {
+	Box,
+	InputAdornment,
+	Paper,
+	TextField,
+	Typography
+} from '@material-ui/core'
 import { useState } from 'react'
 
 interface SettingsMainProps {
@@ -13,8 +19,20 @@ interface SettingsMainProps {
 const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 	const [userName, setUserName] = useState(fullName)
 
+	const [error, setError] = useState('')
+
 	const handleUserNameChange = event => {
-		setUserName(event.target.value) // Обновление значения имени пользователя
+		const value = event.target.value
+		if (value.length <= 30) {
+			setUserName(value)
+			if (/[<>{}"№'`^*[\]@]/.test(value)) {
+				setError('Неподходящая длина или формат никнейма')
+			} else {
+				setError('')
+			}
+		} else {
+			setError('Неподходящая длина или формат никнейма')
+		}
 	}
 
 	return (
@@ -23,7 +41,9 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 				{`
           :root {
             --wrapper-padding-top: 70px;
-            --max-width-container: 900px
+			.content {
+				--max-width-content: 960px;
+			}
           }
         `}
 			</style>
@@ -50,16 +70,61 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 										<label className={styles.formSection__label}>
 											Отображаемое имя
 										</label>
-										<TextField
-											size='small'
-											label=''
-											variant='outlined'
-											fullWidth
-											required
-											InputLabelProps={{ shrink: false }}
-											value={userName} // Используйте состояние userName вместо fullName
-											onChange={handleUserNameChange} // Обработчик изменения значения имени пользователя
-										/>
+										<form>
+											<TextField
+												size='small'
+												label=''
+												variant='outlined'
+												fullWidth
+												required
+												InputLabelProps={{ shrink: false }}
+												error={!!error}
+												helperText={error}
+												InputProps={{
+													endAdornment: (
+														<InputAdornment position='end'>
+															{30 - userName.length}
+														</InputAdornment>
+													)
+												}}
+												value={userName} // Используйте состояние userName вместо fullName
+												onChange={handleUserNameChange} // Обработчик изменения значения имени пользователя
+											/>
+										</form>
+									</div>
+									<div className={styles.formSection}>
+										<label className={styles.formSection__label}>
+											Описание к блогу
+										</label>
+										<form>
+											<TextField
+												size='small'
+												label=''
+												variant='outlined'
+												fullWidth
+												required
+												InputLabelProps={{ shrink: false }}
+												value={userName} // Используйте состояние userName вместо fullName
+												onChange={handleUserNameChange} // Обработчик изменения значения имени пользователя
+											/>
+										</form>
+									</div>
+									<div className={styles.formSection}>
+										<label className={styles.formSection__label}>
+											Лента по умолчанию
+										</label>
+										<form>
+											<TextField
+												size='small'
+												label=''
+												variant='outlined'
+												fullWidth
+												required
+												InputLabelProps={{ shrink: false }}
+												value={userName} // Используйте состояние userName вместо fullName
+												onChange={handleUserNameChange} // Обработчик изменения значения имени пользователя
+											/>
+										</form>
 									</div>
 								</div>
 							</div>

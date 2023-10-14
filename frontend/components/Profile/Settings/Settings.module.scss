@@ -75,7 +75,6 @@
 }
 
 .userSettings__container {
-	padding-top: 24px;
 }
 
 .userProfile {
@@ -92,6 +91,29 @@
 	line-height: 26px;
 }
 
+.formcss {
+	border-radius: 14px !important;
+
+	fieldset {
+		top: -5px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0;
+		padding: 0 8px;
+		overflow: hidden;
+		position: absolute;
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 8px;
+		pointer-events: none;
+		legend {
+			padding-inline-start: 0px;
+			padding-inline-end: 0px;
+		}
+	}
+}
+
 .userSettings__sidebar {
 }
 .userSettings__sidebar {
@@ -102,4 +124,8 @@
 	display: flex;
 	-ms-flex-direction: column;
 	flex-direction: column;
+}
+
+.formSection {
+	margin-top: 24px;
 }
