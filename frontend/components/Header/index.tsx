@@ -98,8 +98,11 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
 	return (
 		<Paper classes={{ root: styles.root }} elevation={0}>
 			<div className='d-flex align-center'>
-				<IconButton className={styles.sideMenu} onClick={handleToggleMenu}>
-					<SideMenu />
+				<IconButton
+					className={`${styles.sideMenu} ${styles.profile_button}`}
+					onClick={handleToggleMenu}
+				>
+					<SideMenu style={{ width: 24, height: 24 }} />
 				</IconButton>
 				<Link href='/'>
 					<Image className={styles.logo} src={logo} alt='Logo' />
@@ -155,7 +158,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
 								aria-haspopup='true'
 								onClick={handleClick}
 							>
-								<ArrowBottom />
+								<ArrowBottom style={{ width: 20, height: 20 }} />
 							</Button>
 							<Menu
 								id='menu'
