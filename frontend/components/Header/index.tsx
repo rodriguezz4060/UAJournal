@@ -33,15 +33,14 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { toggleMenu } from '../../redux/slices/menuSlice'
 
-interface HeaderProps {
-	toggleLeftMenu: () => void
-}
+interface HeaderProps {}
 
-export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
+export const Header: React.FC<HeaderProps> = ({}) => {
 	const userData = useAppSelector(selectUserData)
 	const [authVisible, setAuthVisible] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
-	const [posts, setPosts] = React.useState<PostItem>([])
+	const [posts, setPosts] = React.useState<PostItem[]>([])
+	const [anchorEl, setAnchorEl] = React.useState(null)
 
 	const dispatch = useDispatch()
 
@@ -64,17 +63,19 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
 	}, [authVisible, userData])
 
 	const handleChangeInput = async e => {
-		setSearchValue(e.target.value)
+		const inputValue = e.target.value
+		setSearchValue(inputValue)
 		try {
-			const { items } = await Api().post.search({ title: e.target.value })
-			setPosts(items)
+			if (inputValue) {
+				const { items } = await Api().post.search({ title: inputValue })
+				setPosts(items)
+			} else {
+				setPosts([])
+			}
 		} catch (e) {
 			console.warn(e)
 		}
 	}
-
-	const [anchorEl, setAnchorEl] = React.useState(null)
-
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
@@ -86,12 +87,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
 	const router = useRouter()
 
 	const handleLogout = () => {
-		// Выполните необходимые действия для выхода из сайта, например, очистку сеанса пользователя или удаление токена аутентификации
-
-		// Удалите cookie, содержащую информацию о сеансе пользователя
 		destroyCookie(null, 'rtoken')
-
-		// Перенаправьте пользователя на страницу входа или на другую страницу
 		router.push('/')
 	}
 
