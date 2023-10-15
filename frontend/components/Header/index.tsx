@@ -1,14 +1,14 @@
 import React from 'react'
 import {
-  Button,
-  Paper,
-  IconButton,
-  Avatar,
-  List,
-  ListItem,
-  Menu,
-  MenuItem,
-  ListSubheader,
+	Button,
+	Paper,
+	IconButton,
+	Avatar,
+	List,
+	ListItem,
+	Menu,
+	MenuItem,
+	ListSubheader
 } from '@material-ui/core'
 import styles from './Header.module.scss'
 import SearchIcon from '@material-ui/icons/Search'
@@ -30,192 +30,212 @@ import { PostItem } from '../../utils/api/types'
 import { Api } from '../../utils/api'
 import { destroyCookie } from 'nookies'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { toggleMenu } from '../../redux/slices/menuSlice'
 
 interface HeaderProps {
-  toggleLeftMenu: () => void
+	toggleLeftMenu: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({ toggleLeftMenu }) => {
-  const userData = useAppSelector(selectUserData)
-  const [authVisible, setAuthVisible] = React.useState(false)
-  const [searchValue, setSearchValue] = React.useState('')
-  const [posts, setPosts] = React.useState<PostItem>([])
+	const userData = useAppSelector(selectUserData)
+	const [authVisible, setAuthVisible] = React.useState(false)
+	const [searchValue, setSearchValue] = React.useState('')
+	const [posts, setPosts] = React.useState<PostItem>([])
 
-  const openAuthDialog = () => {
-    setAuthVisible(true)
-  }
+	const dispatch = useDispatch()
 
-  const closeAuthDialog = () => {
-    setAuthVisible(false)
-  }
+	const handleToggleMenu = () => {
+		dispatch(toggleMenu())
+	}
 
-  React.useEffect(() => {
-    if (authVisible && userData) {
-      setAuthVisible(false)
-    }
-  }, [authVisible, userData])
+	const openAuthDialog = () => {
+		setAuthVisible(true)
+	}
 
-  const handleChangeInput = async e => {
-    setSearchValue(e.target.value)
-    try {
-      const { items } = await Api().post.search({ title: e.target.value })
-      setPosts(items)
-    } catch (e) {
-      console.warn(e)
-    }
-  }
+	const closeAuthDialog = () => {
+		setAuthVisible(false)
+	}
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
+	React.useEffect(() => {
+		if (authVisible && userData) {
+			setAuthVisible(false)
+		}
+	}, [authVisible, userData])
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
+	const handleChangeInput = async e => {
+		setSearchValue(e.target.value)
+		try {
+			const { items } = await Api().post.search({ title: e.target.value })
+			setPosts(items)
+		} catch (e) {
+			console.warn(e)
+		}
+	}
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+	const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const router = useRouter()
+	const handleClick = event => {
+		setAnchorEl(event.currentTarget)
+	}
 
-  const handleLogout = () => {
-    // Выполните необходимые действия для выхода из сайта, например, очистку сеанса пользователя или удаление токена аутентификации
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
 
-    // Удалите cookie, содержащую информацию о сеансе пользователя
-    destroyCookie(null, 'rtoken')
+	const router = useRouter()
 
-    // Перенаправьте пользователя на страницу входа или на другую страницу
-    router.push('/')
-  }
+	const handleLogout = () => {
+		// Выполните необходимые действия для выхода из сайта, например, очистку сеанса пользователя или удаление токена аутентификации
 
-  return (
-    <Paper classes={{ root: styles.root }} elevation={0}>
-      <div className='d-flex align-center'>
-        <IconButton className={styles.sideMenu} onClick={toggleLeftMenu}>
-          <SideMenu />
-        </IconButton>
-        <Link href='/'>
-          <Image className={styles.logo} src={logo} alt='Logo' />
-        </Link>
+		// Удалите cookie, содержащую информацию о сеансе пользователя
+		destroyCookie(null, 'rtoken')
 
-        <div className={styles.searchBlock}>
-          <SearchIcon />
-          <input value={searchValue} onChange={handleChangeInput} placeholder='Поиск' />
-          {posts.length > 0 && (
-            <Paper className={styles.searchBlockPopup}>
-              <List>
-                {posts.map(obj => (
-                  <Link key={obj.id} href={`/news/${obj.id}`}>
-                    <ListItem button>{obj.title}</ListItem>
-                  </Link>
-                ))}
-              </List>
-            </Paper>
-          )}
-        </div>
+		// Перенаправьте пользователя на страницу входа или на другую страницу
+		router.push('/')
+	}
 
-        <Link href={'/write'}>
-          <Button variant='contained' className={styles.penBottom}>
-            <CreateIcon /> Написать
-          </Button>
-        </Link>
-      </div>
+	return (
+		<Paper classes={{ root: styles.root }} elevation={0}>
+			<div className='d-flex align-center'>
+				<IconButton className={styles.sideMenu} onClick={handleToggleMenu}>
+					<SideMenu />
+				</IconButton>
+				<Link href='/'>
+					<Image className={styles.logo} src={logo} alt='Logo' />
+				</Link>
 
-      <div className='d-flex align-center'>
-        <IconButton>
-          <MessageIcon />
-        </IconButton>
-        <IconButton>
-          <NotificationIcon />
-        </IconButton>
-        {userData ? (
-          <div className='d-flex align-center'>
-            <Link href={`/profile/${userData.id}`}>
-              <Avatar
-                className={styles.avatar}
-                alt='Remy Sharp'
-                src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
-              />
-            </Link>
-            <div>
-              <Button
-                className={styles.profile_button}
-                aria-controls='menu'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                <ArrowBottom />
-              </Button>
-              <Menu
-                id='menu'
-                elevation={0}
-                className={styles.profile_menu}
-                PaperProps={{
-                  style: {
-                    width: '300px',
-                  },
-                }}
-                disableScrollLock={true}
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                {anchorEl && (
-                  <>
-                    <ListSubheader className={styles.account_menu_title}>Мой профиль</ListSubheader>
-                    <Link
-                      href={`/profile/${userData.id}`}
-                      className={styles.account_menu__user_card}
-                      onClick={handleClose}
-                    >
-                      <div className={styles.user_card}>
-                        <div>
-                          <Avatar
-                            className={styles.avatar}
-                            alt='Remy Sharp'
-                            src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
-                          />
-                        </div>
-                        <span className={styles.user_card__text}>
-                          <p className={styles.user_card__name}>
-                            <span>{userData.fullName}</span>
-                          </p>
-                          <p className={styles.user_card__sub_label}>Личный блог</p>
-                        </span>
-                      </div>
-                    </Link>
-                    <div className={styles.account_menu__item}>
-                      <MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
-                    </div>
-                    <div className={styles.account_menu__item}>
-                      <Link href={`/profile/settings`}>
-                        <MenuItem onClick={handleClose}>
-                          <SettingsIcon />
-                          Настройки
-                        </MenuItem>
-                      </Link>
-                    </div>
-                    <div className={styles.account_menu__item}>
-                      <div onClick={handleLogout}>
-                        <MenuItem onClick={handleClose}>
-                          <LogoutIcon />
-                          Выйти
-                        </MenuItem>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </Menu>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.loginButton} onClick={openAuthDialog}>
-            <UserIcon />
-            Войти
-          </div>
-        )}
-      </div>
-      <AuthDialog onClick={closeAuthDialog} onClose={closeAuthDialog} visible={authVisible} />
-    </Paper>
-  )
+				<div className={styles.searchBlock}>
+					<SearchIcon />
+					<input
+						value={searchValue}
+						onChange={handleChangeInput}
+						placeholder='Поиск'
+					/>
+					{posts.length > 0 && (
+						<Paper className={styles.searchBlockPopup}>
+							<List>
+								{posts.map(obj => (
+									<Link key={obj.id} href={`/news/${obj.id}`}>
+										<ListItem button>{obj.title}</ListItem>
+									</Link>
+								))}
+							</List>
+						</Paper>
+					)}
+				</div>
+
+				<Link href={'/write'}>
+					<Button variant='contained' className={styles.penBottom}>
+						<CreateIcon /> Написать
+					</Button>
+				</Link>
+			</div>
+
+			<div className='d-flex align-center'>
+				<IconButton>
+					<MessageIcon />
+				</IconButton>
+				<IconButton>
+					<NotificationIcon />
+				</IconButton>
+				{userData ? (
+					<div className='d-flex align-center'>
+						<Link href={`/profile/${userData.id}`}>
+							<Avatar
+								className={styles.avatar}
+								alt='Remy Sharp'
+								src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+							/>
+						</Link>
+						<div>
+							<Button
+								className={styles.profile_button}
+								aria-controls='menu'
+								aria-haspopup='true'
+								onClick={handleClick}
+							>
+								<ArrowBottom />
+							</Button>
+							<Menu
+								id='menu'
+								elevation={0}
+								className={styles.profile_menu}
+								PaperProps={{
+									style: {
+										width: '300px'
+									}
+								}}
+								disableScrollLock={true}
+								anchorEl={anchorEl}
+								keepMounted
+								open={Boolean(anchorEl)}
+								onClose={handleClose}
+							>
+								{anchorEl && (
+									<>
+										<ListSubheader className={styles.account_menu_title}>
+											Мой профиль
+										</ListSubheader>
+										<Link
+											href={`/profile/${userData.id}`}
+											className={styles.account_menu__user_card}
+											onClick={handleClose}
+										>
+											<div className={styles.user_card}>
+												<div>
+													<Avatar
+														className={styles.avatar}
+														alt='Remy Sharp'
+														src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+													/>
+												</div>
+												<span className={styles.user_card__text}>
+													<p className={styles.user_card__name}>
+														<span>{userData.fullName}</span>
+													</p>
+													<p className={styles.user_card__sub_label}>
+														Личный блог
+													</p>
+												</span>
+											</div>
+										</Link>
+										<div className={styles.account_menu__item}>
+											<MenuItem onClick={handleClose}>Menu Item 1</MenuItem>
+										</div>
+										<div className={styles.account_menu__item}>
+											<Link href={`/profile/settings`}>
+												<MenuItem onClick={handleClose}>
+													<SettingsIcon />
+													Настройки
+												</MenuItem>
+											</Link>
+										</div>
+										<div className={styles.account_menu__item}>
+											<div onClick={handleLogout}>
+												<MenuItem onClick={handleClose}>
+													<LogoutIcon />
+													Выйти
+												</MenuItem>
+											</div>
+										</div>
+									</>
+								)}
+							</Menu>
+						</div>
+					</div>
+				) : (
+					<div className={styles.loginButton} onClick={openAuthDialog}>
+						<UserIcon />
+						Войти
+					</div>
+				)}
+			</div>
+			<AuthDialog
+				onClick={closeAuthDialog}
+				onClose={closeAuthDialog}
+				visible={authVisible}
+			/>
+		</Paper>
+	)
 }
