@@ -114,3 +114,70 @@
 .textarea:hover .arrowIco {
 	color: black;
 }
+
+.island__header {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: baseline;
+	align-items: baseline;
+	margin-top: -3px;
+	margin-bottom: 6px;
+}
+
+.island__title {
+	font-size: 16px;
+	line-height: 1.5em;
+	font-weight: 500;
+}
+
+.listTabs {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.listTab__active {
+	font-weight: 500;
+	background-color: #eff5fe;
+	pointer-events: none;
+}
+
+.listTab {
+	--island-offset-x: 20px;
+	--offset-x: var(--island-offset-x, 20px);
+	display: -ms-flexbox;
+	display: flex;
+	padding: 0 var(--offset-x);
+	margin-left: calc(var(--offset-x) * -1);
+	margin-right: calc(var(--offset-x) * -1);
+	cursor: pointer;
+}
+
+.listTab__icon {
+	width: 36px;
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	color: rgba(0, 0, 0, 0.65);
+	padding-bottom: 3px;
+}
+
+.listTab__label {
+	display: -ms-flexbox;
+	display: flex;
+	padding: 12px 0 13px;
+	-ms-flex: 1;
+	flex: 1;
+	min-width: 0;
+}
+
+.listTtab__labelText span {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
