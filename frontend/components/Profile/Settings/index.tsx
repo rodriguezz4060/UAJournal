@@ -2,13 +2,12 @@ import styles from './Settings.module.scss'
 import Link from 'next/link'
 import { MainLayout } from '../../../layouts/MainLayout'
 import ArrowBackIcon from '@material-ui/icons/ArrowBackIosOutlined'
-import ProfileIcon from '@material-ui/icons/PersonOutline'
 import { useState } from 'react'
 import React from 'react'
-
 import Profile from './Profile'
 import SettingsMenu from './SettingsMenu'
 import General from './General'
+import SaveButton from './SaveButton'
 
 interface SettingsMainProps {
 	id: string
@@ -55,6 +54,7 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 								<div className={styles.userProfile}>
 									{activeTab === 'profile' && <Profile fullName={fullName} />}
 									{activeTab === 'general' && <General />}
+									<SaveButton />
 								</div>
 							</div>
 						</div>

@@ -189,3 +189,34 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.settingsFooter {
+	margin-top: 8px;
+	margin-left: -20px;
+	margin-right: -20px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.scrollFooter {
+	position: -webkit-sticky;
+	position: sticky;
+	z-index: 4;
+	bottom: 0;
+	padding: 20px;
+	border-top: 1px solid transparent;
+}
+
+.islandBg {
+	background-color: #fff;
+}
+
+.button__label {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 var(--offset);
+	margin: 0 auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

@@ -1,4 +1,5 @@
-import styles from './Settings.module.scss'
+import React from 'react'
+import { useState } from 'react'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import {
@@ -14,9 +15,8 @@ import {
 	Theme,
 	createStyles
 } from '@material-ui/core'
-import { useState } from 'react'
-import React from 'react'
 import avatarStyles from '../Porfile.module.scss'
+import styles from './Settings.module.scss'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -97,7 +97,7 @@ const Profile: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 	}, [open])
 
 	return (
-		<div>
+		<>
 			<div className={styles.formSection}>
 				<label className={styles.formSection__label}>Отображаемое имя</label>
 				<form className={styles.textFieldStyles}>
@@ -253,7 +253,7 @@ const Profile: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 					</Popper>
 				</form>
 			</div>
-		</div>
+		</>
 	)
 }
 
