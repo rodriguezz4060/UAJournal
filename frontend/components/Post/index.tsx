@@ -10,6 +10,8 @@ import { ResponseUser } from '../../utils/api/types'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import moment from 'moment'
 import QuoteIcon from '@material-ui/icons/FormatQuote'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUserData } from '../../redux/slices/user'
 
 interface PostProps {
   title: string
@@ -26,19 +28,20 @@ interface PostProps {
 }
 
 export const Post: React.FC<PostProps> = ({
-  id,
-  title,
-  description,
-  images,
-  video,
-  onRemove,
-  user,
-  createdAt,
-  incut,
-  quote,
-  caption,
-}) => {
+                                            id,
+                                            title,
+                                            description,
+                                            images,
+                                            video,
+                                            onRemove,
+                                            user,
+                                            createdAt,
+                                            incut,
+                                            quote,
+                                            caption,
+                                          }) => {
   const handleRemove = async () => {
+    const userData = useAppSelector(selectUserData)
     try {
       await Api().post.remove(id)
       onRemove(id) // Remove the post from the UI
@@ -68,7 +71,9 @@ export const Post: React.FC<PostProps> = ({
       <div className={styles.postContent}>
         <div className={styles.userInfoContent}>
           <div className={styles.userInfo}>
-            <Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
+            <Avatar className={styles.userAvatar}
+                    src={user.avatarUrl ? user.avatarUrl : user.fullName[0]}
+            />
             <b>{user.fullName}</b>
 
             <div>
