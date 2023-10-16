@@ -31,11 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SettingsMainProps {
 	fullName: string
+	description: string
 }
 
-const Profile: React.FC<SettingsMainProps> = ({ id, fullName }) => {
+const Profile: React.FC<SettingsMainProps> = ({ fullName, description }) => {
 	const [userName, setUserName] = useState(fullName)
-	const [description, setDescription] = useState('')
+	const [userdescription, setUserDescription] = useState(description)
 	const [selectedOption, setSelectedOption] = useState('Популярное')
 	const [error, setError] = useState('')
 	const [focused, setFocused] = useState(false)
@@ -60,7 +61,7 @@ const Profile: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 
 	const handleChange = e => {
 		const inputValue = e.target.value
-		setDescription(inputValue)
+		setUserDescription(inputValue)
 	}
 
 	const handleToggle = () => {
@@ -137,13 +138,13 @@ const Profile: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 							placeholder: 'Пара слов о себе',
 							inputProps: { maxLength: 160 },
 							endAdornment:
-								description.length <= 150 ? null : (
+								userdescription.length <= 150 ? null : (
 									<InputAdornment position='end'>
-										{160 - description.length}
+										{160 - userdescription.length}
 									</InputAdornment>
 								)
 						}}
-						value={description}
+						value={userdescription}
 						onChange={handleChange}
 					/>
 				</form>

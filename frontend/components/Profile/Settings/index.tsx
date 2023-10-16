@@ -12,9 +12,14 @@ import SaveButton from './SaveButton'
 interface SettingsMainProps {
 	id: string
 	fullName: string
+	description: string
 }
 
-const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
+const SettingsMain: React.FC<SettingsMainProps> = ({
+	id,
+	fullName,
+	description
+}) => {
 	const [activeTab, setActiveTab] = useState('profile')
 
 	const handleTabChange = tab => {
@@ -52,7 +57,9 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 							</Link>
 							<div className={styles.userSettings__container}>
 								<div className={styles.userProfile}>
-									{activeTab === 'profile' && <Profile fullName={fullName} />}
+									{activeTab === 'profile' && (
+										<Profile fullName={fullName} description={description} />
+									)}
 									{activeTab === 'general' && <General />}
 									<SaveButton />
 								</div>

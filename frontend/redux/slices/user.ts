@@ -4,29 +4,29 @@ import { RootState } from '../store'
 import { HYDRATE } from 'next-redux-wrapper'
 
 export interface UserState {
-  data?: ResponseUser | null
+	data?: ResponseUser | null
 }
 
 const initialState: UserState = {
-  data: null,
+	data: null
 }
 
 export const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    setUserData: (state, action: PayloadAction<ResponseUser>) => {
-      state.data = action.payload
-    },
-  },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.user,
-      }
-    },
-  },
+	name: 'user',
+	initialState,
+	reducers: {
+		setUserData: (state, action: PayloadAction<ResponseUser>) => {
+			state.data = action.payload
+		}
+	},
+	extraReducers: {
+		[HYDRATE]: (state, action) => {
+			return {
+				...state,
+				...action.payload.user
+			}
+		}
+	}
 })
 
 export const { setUserData } = userSlice.actions

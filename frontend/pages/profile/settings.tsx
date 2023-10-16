@@ -8,7 +8,13 @@ interface SettingsProps {
 }
 
 const Settings: NextPage<SettingsProps> = ({ user }) => {
-	return <SettingsMain id={user.id} fullName={user.fullName} />
+	return (
+		<SettingsMain
+			id={user.id}
+			fullName={user.fullName}
+			description={user.description}
+		/>
+	)
 }
 
 export const getServerSideProps = async ctx => {
