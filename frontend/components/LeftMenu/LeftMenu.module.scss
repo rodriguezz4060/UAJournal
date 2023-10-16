@@ -1,46 +1,46 @@
 .menu {
-  width: 200px;
-  position: sticky;
-  top: 80px;
+	width: 200px;
+	position: sticky;
+	top: 80px;
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
 
-    li {
-      margin-bottom: 4px;
+		li {
+			margin-bottom: 4px;
 
-      button {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        padding: 10px;
-        text-transform: inherit;
-        font-size: 15px;
-        font-weight: 400;
-        box-shadow: none;
-        padding: 6px 9px;
+			button {
+				width: 100%;
+				display: flex;
+				justify-content: flex-start;
+				padding: 10px;
+				text-transform: inherit;
+				font-size: 16px;
+				font-weight: 400;
+				box-shadow: none;
+				padding: 6px 9px;
 
-        span[class*='MuiButton-label'] {
-          display: flex;
-          align-items: center;
-        }
+				span[class*='MuiButton-label'] {
+					display: flex;
+					align-items: center;
+				}
 
-        svg {
-          margin-right: 10px;
-        }
-      }
-    }
-  }
+				svg {
+					margin-right: 10px;
+				}
+			}
+		}
+	}
 }
 
 .activeSvg {
-  color: #1693e5;
-  display: flex;
+	color: #1693e5;
+	display: flex;
 }
 
 .inactiveSvg {
-  color: #595959;
-  display: flex;
+	color: #595959;
+	display: flex;
 }

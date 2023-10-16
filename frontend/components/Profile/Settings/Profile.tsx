@@ -1,8 +1,6 @@
 import styles from './Settings.module.scss'
-import Link from 'next/link'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import ProfileIcon from '@material-ui/icons/PersonOutline'
 import {
 	InputAdornment,
 	MenuItem,
@@ -32,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface SettingsMainProps {
-	id: string
 	fullName: string
 }
 

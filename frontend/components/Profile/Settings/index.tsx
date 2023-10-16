@@ -7,6 +7,8 @@ import { useState } from 'react'
 import React from 'react'
 
 import Profile from './Profile'
+import SettingsMenu from './SettingsMenu'
+import General from './General'
 
 interface SettingsMainProps {
 	id: string
@@ -14,6 +16,12 @@ interface SettingsMainProps {
 }
 
 const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
+	const [activeTab, setActiveTab] = useState('profile')
+
+	const handleTabChange = tab => {
+		setActiveTab(tab)
+	}
+
 	return (
 		<div>
 			<style>
@@ -45,7 +53,8 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 							</Link>
 							<div className={styles.userSettings__container}>
 								<div className={styles.userProfile}>
-									<Profile fullName={fullName} />
+									{activeTab === 'profile' && <Profile fullName={fullName} />}
+									{activeTab === 'general' && <General />}
 								</div>
 							</div>
 						</div>
@@ -57,19 +66,10 @@ const SettingsMain: React.FC<SettingsMainProps> = ({ id, fullName }) => {
 							<div
 								className={`${styles.islandBg} ${styles.island} ${styles.islandRound} ${styles.sidebarNavigation__desktop}`}
 							>
-								<div className={styles.island__header}>
-									<span className={styles.island__title}>Настройки</span>
-								</div>
-								<div
-									className={`${styles.listTab} ${styles.listTab__active} ${styles.routerLinkActive}`}
-								>
-									<span className={styles.listTab__icon}>
-										<ProfileIcon style={{ width: 28, height: 28 }} />
-									</span>
-									<div className={styles.listTab__label}>
-										<span className={styles.listTtab__labelText}>Профиль</span>
-									</div>
-								</div>
+								<SettingsMenu
+									activeTab={activeTab}
+									onTabChange={handleTabChange}
+								/>
 							</div>
 						</div>
 					</div>

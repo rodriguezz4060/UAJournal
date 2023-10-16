@@ -154,6 +154,10 @@
 	cursor: pointer;
 }
 
+.listTab:hover {
+	background-color: rgba(239, 245, 254, 0.5);
+}
+
 .listTab__icon {
 	width: 36px;
 	-ms-flex-negative: 0;
@@ -164,6 +168,10 @@
 	align-items: center;
 	color: rgba(0, 0, 0, 0.65);
 	padding-bottom: 3px;
+}
+
+.listTab__active .listTab__icon {
+	color: #000;
 }
 
 .listTab__label {
