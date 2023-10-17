@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './SideComments.module.scss'
 import Link from 'next/link'
 import { PostItem, ResponseUser } from '../../utils/api/types'
 import { Avatar } from '@material-ui/core'
-import { selectUserData } from '../../redux/slices/user'
-import { useAppSelector } from '../../redux/hooks'
 
 interface CommentItemProps {
 	user: ResponseUser
@@ -17,19 +15,13 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	text,
 	post
 }) => {
-	const userData = useAppSelector(selectUserData)
-
 	return (
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
 				<div className={styles.userInfo}>
-					<Avatar
-						className={styles.userAvatar}
-						src={userData.avatarUrl ? userData.avatarUrl : userData.fullName[0]}
-						key={userData.avatarUrl}
-					/>
+					<Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
 					<Link className={styles.fullName} href={`/profile/${user.id}`}>
-						<span>{userData.fullName}</span>
+						<span>{user.fullName}</span>
 					</Link>
 				</div>
 				<p className={styles.text}>{text}</p>
