@@ -1,16 +1,12 @@
 import { useState } from 'react'
-import {
-	TextField,
-	Button,
-	InputAdornment,
-	IconButton
-} from '@material-ui/core'
+import { TextField, InputAdornment, IconButton } from '@material-ui/core'
 import axios from 'axios'
 import { parseCookies } from 'nookies'
-import styles from './Settings.module.scss'
 import { useAppSelector } from '../../../redux/hooks'
 import { selectUserData, setUserData } from '../../../redux/slices/user'
 import { useDispatch } from 'react-redux'
+import avatarStyles from '../Porfile.module.scss'
+import styles from './Settings.module.scss'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import React from 'react'
@@ -131,9 +127,16 @@ const General: React.FC<GeneralProps> = ({}) => {
 					/>
 				</form>
 			</div>
-			<Button variant='contained' color='primary' onClick={handleSubmit}>
-				Сохранить изменения
-			</Button>
+			<div
+				className={`${styles.scrollFooter} ${styles.settingsFooter} ${styles.islandBg}`}
+			>
+				<button
+					onClick={handleSubmit}
+					className={`${styles.userPlus__saveButton} ${avatarStyles.button} ${avatarStyles.buttonBlue} ${avatarStyles.buttonSizeDefault}`}
+				>
+					<span className={styles.button__label}>Сохранить</span>
+				</button>
+			</div>
 		</>
 	)
 }

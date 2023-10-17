@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -13,8 +13,7 @@ import {
 	Popper,
 	makeStyles,
 	Theme,
-	createStyles,
-	Button
+	createStyles
 } from '@material-ui/core'
 import avatarStyles from '../Porfile.module.scss'
 import styles from './Settings.module.scss'
@@ -35,10 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 )
 
-interface SettingsMainProps {
-	fullName: string
-	description: string
-}
+interface SettingsMainProps {}
 
 const Profile: React.FC<SettingsMainProps> = ({}) => {
 	const [error, setError] = useState('')
@@ -149,9 +145,6 @@ const Profile: React.FC<SettingsMainProps> = ({}) => {
 
 	return (
 		<>
-			<Button variant='contained' color='primary' onClick={handleSubmit}>
-				Сохранить изменения
-			</Button>
 			<div className={styles.formSection}>
 				<label className={styles.formSection__label}>Отображаемое имя</label>
 				<form className={styles.textFieldStyles}>
@@ -265,7 +258,7 @@ const Profile: React.FC<SettingsMainProps> = ({}) => {
 						role={undefined}
 						transition
 						disablePortal
-						style={{ width: anchorRef.current?.clientWidth }}
+						style={{ width: anchorRef.current?.clientWidth, zIndex: 6 }}
 					>
 						{({ TransitionProps }) => (
 							<Grow {...TransitionProps}>
@@ -312,6 +305,16 @@ const Profile: React.FC<SettingsMainProps> = ({}) => {
 						)}
 					</Popper>
 				</form>
+			</div>
+			<div
+				className={`${styles.scrollFooter} ${styles.settingsFooter} ${styles.islandBg}`}
+			>
+				<button
+					onClick={handleSubmit}
+					className={`${styles.userPlus__saveButton} ${avatarStyles.button} ${avatarStyles.buttonBlue} ${avatarStyles.buttonSizeDefault}`}
+				>
+					<span className={styles.button__label}>Сохранить</span>
+				</button>
 			</div>
 		</>
 	)

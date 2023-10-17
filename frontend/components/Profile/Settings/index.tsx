@@ -8,22 +8,59 @@ import Profile from './Profile'
 import SettingsMenu from './SettingsMenu'
 import General from './General'
 import SaveButton from './SaveButton'
+import { parseCookies } from 'nookies'
+import { useAppSelector } from '../../../redux/hooks'
+import { selectUserData, setUserData } from '../../../redux/slices/user'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 interface SettingsMainProps {
 	id: string
-	fullName: string
-	description: string
 }
 
-const SettingsMain: React.FC<SettingsMainProps> = ({
-	id,
-	fullName,
-	description
-}) => {
+const SettingsMain: React.FC<SettingsMainProps> = ({ id }) => {
 	const [activeTab, setActiveTab] = useState('profile')
 
 	const handleTabChange = tab => {
 		setActiveTab(tab)
+	}
+	const [error, setError] = useState('')
+	const userData = useAppSelector(selectUserData)
+	const [fullName, setFullName] = useState(userData.fullName)
+	const [description, setDescription] = useState(userData.description)
+	const [feed, setFeed] = useState(userData.feed)
+	const dispatch = useDispatch()
+
+	const handleSubmit = async () => {
+		try {
+			const cookies = parseCookies()
+			const token = cookies.rtoken
+			const formData = {
+				fullName: fullName,
+				description: description,
+				feed: feed
+			}
+
+			const response = await axios.patch(
+				'http://localhost:7777/users/me',
+				formData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				}
+			)
+			if (response.data && response.data.fullName) {
+				setFullName(response.data.fullName)
+				setDescription(response.data.description)
+				setFeed(response.data.feed)
+				setError('')
+				dispatch(setUserData(response.data)) // Обновление состояния userData
+			}
+		} catch (error) {
+			setError('Ошибка при сохранении данных')
+			console.error(error)
+		}
 	}
 
 	return (
@@ -57,11 +94,8 @@ const SettingsMain: React.FC<SettingsMainProps> = ({
 							</Link>
 							<div className={styles.userSettings__container}>
 								<div className={styles.userProfile}>
-									{activeTab === 'profile' && (
-										<Profile fullName={fullName} description={description} />
-									)}
+									{activeTab === 'profile' && <Profile />}
 									{activeTab === 'general' && <General />}
-									<SaveButton />
 								</div>
 							</div>
 						</div>
