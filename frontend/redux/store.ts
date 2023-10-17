@@ -3,14 +3,12 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import { userReducer } from './slices/user'
 import { menuReducer } from './slices/menuSlice'
-import profileReducer from './slices/profileReducer'
 
 export function makeStore() {
 	return configureStore({
 		reducer: {
 			user: userReducer,
-			menu: menuReducer,
-			profile: profileReducer
+			menu: menuReducer
 		}
 	})
 }

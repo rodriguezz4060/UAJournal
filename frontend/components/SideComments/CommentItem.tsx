@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './SideComments.module.scss'
 import Link from 'next/link'
 import { PostItem, ResponseUser } from '../../utils/api/types'
@@ -19,8 +19,6 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 }) => {
 	const userData = useAppSelector(selectUserData)
 
-	React.useEffect(() => {}, [userData])
-
 	return (
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
@@ -28,6 +26,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 					<Avatar
 						className={styles.userAvatar}
 						src={userData.avatarUrl ? userData.avatarUrl : userData.fullName[0]}
+						key={userData.avatarUrl}
 					/>
 					<Link className={styles.fullName} href={`/profile/${user.id}`}>
 						<span>{userData.fullName}</span>
