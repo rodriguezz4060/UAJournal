@@ -5,10 +5,14 @@ import {
 	TextsmsOutlined as MessageIcon
 } from '@material-ui/icons'
 import styles from './Porfile.module.scss'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUserData } from '../../redux/slices/user'
 
 interface UserInfoProps {}
 
 export const UserInfo: React.FC<UserInfoProps> = () => {
+	const userData = useAppSelector(selectUserData)
+
 	return (
 		<div className={styles.headerWithActions}>
 			<div className={styles.header__title}>
@@ -18,8 +22,7 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 			</div>
 			<div className={styles.header__description}>
 				<div className={styles.headerDescription}>
-					[ Steam: steamcommunity.com/id/BenderRodriguezz/ ]||[ Телеграм канал с
-					мемасами t.me/memes_Rodriguez ]
+					{userData?.description}
 					<div className={styles.headerDescription__edit}>
 						<Link href='#' className={styles.linkInline}>
 							Изменить описание
