@@ -8,7 +8,6 @@ import 'macro-css'
 import { setUserData } from '../redux/slices/user'
 import { Api } from '../utils/api'
 import NextNProgress from '../components/Progressbar'
-import MyDocument from '../_document'
 
 function App({ Component, pageProps }: AppProps) {
 	return (

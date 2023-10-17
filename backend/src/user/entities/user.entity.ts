@@ -1,50 +1,53 @@
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from 'typeorm';
-import { CommentEntity } from '../../comment/entities/comment.entity';
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	OneToMany
+} from 'typeorm'
+import { CommentEntity } from '../../comment/entities/comment.entity'
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number
 
-  @Column()
-  fullName: string;
+	@Column()
+	fullName: string
 
-  @Column({
-    unique: true,
-  })
-  email: string;
+	@Column({
+		unique: true
+	})
+	email: string
 
-  @OneToMany(() => CommentEntity, (comment) => comment.user, {
-    eager: false,
-    nullable: true,
-  })
-  comments: CommentEntity[];
+	@OneToMany(() => CommentEntity, comment => comment.user, {
+		eager: false,
+		nullable: true
+	})
+	comments: CommentEntity[]
 
-  @Column({ nullable: true })
-  password?: string;
+	@Column({ nullable: true })
+	password?: string
 
-  @Column({ nullable: true })
-  description?: string;
+	@Column({ nullable: true, default: 'popular' })
+	feed?: string
 
-  @Column({ nullable: true })
-  avatarUrl?: string;
+	@Column({ nullable: true })
+	description?: string
 
-  @Column({ nullable: true })
-  headerCoverUrl?: string;
+	@Column({ nullable: true })
+	avatarUrl?: string
 
-  @Column({ nullable: true })
-  headerCoverPosition?: string;
+	@Column({ nullable: true })
+	headerCoverUrl?: string
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
+	@Column({ nullable: true })
+	headerCoverPosition?: string
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
+	@CreateDateColumn({ type: 'timestamp' })
+	createdAt: Date
+
+	@UpdateDateColumn({ type: 'timestamp' })
+	updatedAt: Date
 }
