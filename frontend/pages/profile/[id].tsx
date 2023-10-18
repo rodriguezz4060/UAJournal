@@ -122,6 +122,7 @@ export const getServerSideProps = async ctx => {
 		const api = Api(ctx)
 		const posts = await api.post.getAll()
 		const userData = await api.user.getMe()
+
 		return {
 			props: {
 				posts,
