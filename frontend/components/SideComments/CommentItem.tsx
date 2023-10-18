@@ -19,10 +19,16 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
 				<div className={styles.userInfo}>
-					<Avatar
-						className={styles.userAvatar}
-						src={user.avatarUrl ? user.avatarUrl : user.fullName[0]}
-					/>
+					{user.avatarUrl !== 'NULL' ? (
+						<div
+							className={styles.userAvatar}
+							style={{
+								backgroundImage: `url(${user.avatarUrl})`
+							}}
+						></div>
+					) : (
+						<Avatar className={styles.userAvatar} src={user.fullName[0]} />
+					)}
 					<Link className={styles.fullName} href={`/profile/${user.id}`}>
 						<span>{user.fullName}</span>
 					</Link>
