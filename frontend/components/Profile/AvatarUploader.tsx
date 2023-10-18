@@ -17,7 +17,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import PhotoIcon from '@material-ui/icons/InsertPhotoOutlined'
 import HeaderCover from './HeaderCover'
 import { useAppSelector } from '../../redux/hooks'
-import { selectUserData } from '../../redux/slices/user'
+import { selectUserData, setUserData } from '../../redux/slices/user'
 import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -90,29 +90,27 @@ const AvatarUploader = ({
 		if (event.target.files && event.target.files.length > 0) {
 			const file = event.target.files[0]
 			setSelectedFile(file)
-
 			try {
 				const formData = new FormData()
 				formData.append('file', file)
-
 				const token = document.cookie.replace(
 					/(?:(?:^|.*;\s*)rtoken\s*=\s*([^;]*).*$)|^.*$/,
 					'$1'
 				)
-
 				await axios.patch('http://localhost:7777/users/avatar', formData, {
 					headers: {
 						'Content-Type': 'multipart/form-data',
 						Authorization: `Bearer ${token}`
 					}
 				})
-
-				// Update the avatar URL
-				setUploadedAvatarUrl(URL.createObjectURL(file))
-
-				console.log('Аватарка успешно загружена')
-				const updatedUserData = { ...userData, avatarUrl: uploadedAvatarUrl }
-				dispatch(setUserData(updatedUserData))
+				const fileReader = new FileReader()
+				fileReader.onload = () => {
+					const uploadedAvatarUrl = fileReader.result as string
+					console.log('Аватарка успешно загружена')
+					const updatedUserData = { ...userData, avatarUrl: uploadedAvatarUrl }
+					dispatch(setUserData(updatedUserData))
+				}
+				fileReader.readAsDataURL(file)
 			} catch (error) {
 				console.error('Ошибка загрузки аватарки:', error)
 			}
@@ -157,7 +155,7 @@ const AvatarUploader = ({
 							>
 								<Avatar
 									style={{ width: 120, height: 120, borderRadius: 6 }}
-									src={uploadedAvatarUrl ? uploadedAvatarUrl : fullName[0]}
+									src={userData?.avatarUrl ? userData?.avatarUrl : fullName[0]}
 									aria-controls='avatar-menu'
 									aria-haspopup='true'
 								/>

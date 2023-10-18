@@ -19,7 +19,10 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
 				<div className={styles.userInfo}>
-					<Avatar className={styles.userAvatar}>{user.fullName[0]}</Avatar>
+					<Avatar
+						className={styles.userAvatar}
+						src={user.avatarUrl ? user.avatarUrl : user.fullName[0]}
+					/>
 					<Link className={styles.fullName} href={`/profile/${user.id}`}>
 						<span>{user.fullName}</span>
 					</Link>

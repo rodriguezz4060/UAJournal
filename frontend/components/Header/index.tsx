@@ -41,8 +41,15 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 	const [searchValue, setSearchValue] = React.useState('')
 	const [posts, setPosts] = React.useState<PostItem[]>([])
 	const [anchorEl, setAnchorEl] = React.useState(null)
+	const [avatarUrl, setAvatarUrl] = React.useState(userData?.avatarUrl || '')
 
 	const dispatch = useDispatch()
+
+	React.useEffect(() => {
+		if (userData && userData.avatarUrl) {
+			setAvatarUrl(userData.avatarUrl)
+		}
+	}, [userData])
 
 	const handleToggleMenu = () => {
 		dispatch(toggleMenu())
@@ -186,8 +193,11 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 												<div>
 													<Avatar
 														className={styles.avatar}
-														alt='Remy Sharp'
-														src='https://leonardo.osnova.io/84acaa93-a48a-5e08-ba4f-79be1c92a724/-/scale_crop/108x108/-/format/webp/'
+														src={
+															userData.avatarUrl
+																? userData.avatarUrl
+																: userData.fullName[0]
+														}
 													/>
 												</div>
 												<span className={styles.user_card__text}>
