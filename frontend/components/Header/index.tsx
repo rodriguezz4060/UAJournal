@@ -148,12 +148,14 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 				{userData ? (
 					<div className='d-flex align-center'>
 						<Link href={`/profile/${userData.id}`}>
-							<Avatar
-								className={styles.avatar}
-								src={
-									userData.avatarUrl ? userData.avatarUrl : userData.fullName[0]
-								}
-							/>
+							{userData.avatarUrl !== 'NULL' ? (
+								<div
+									className={styles.avatar}
+									style={{ backgroundImage: `url(${userData.avatarUrl})` }}
+								></div>
+							) : (
+								<Avatar className={styles.avatar} />
+							)}
 						</Link>
 						<div>
 							<Button
@@ -191,14 +193,16 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 										>
 											<div className={styles.user_card}>
 												<div>
-													<Avatar
-														className={styles.avatar}
-														src={
-															userData.avatarUrl
-																? userData.avatarUrl
-																: userData.fullName[0]
-														}
-													/>
+													{userData.avatarUrl !== 'NULL' ? (
+														<div
+															className={styles.avatar}
+															style={{
+																backgroundImage: `url(${userData.avatarUrl})`
+															}}
+														></div>
+													) : (
+														<Avatar className={styles.avatar} />
+													)}
 												</div>
 												<span className={styles.user_card__text}>
 													<p className={styles.user_card__name}>
