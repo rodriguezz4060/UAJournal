@@ -6,13 +6,15 @@ import { Api } from '../../utils/api'
 import { Avatar, Paper, Tab, Tabs } from '@material-ui/core'
 import AvatarUploader from '../../components/Profile/AvatarUploader'
 import { UserInfo } from '../../components/Profile/UserInfo'
-import { PostItem, ResponseUser } from '../../utils/api/types'
+import { CommentItem, PostItem, ResponseUser } from '../../utils/api/types'
 import { NextPage } from 'next'
 import { UsersProfileInfo } from '../../components/Profile/UsersProfile/UsersProfileInfo'
 import UsersProfileAvatar from '../../components/Profile/UsersProfile/UsersProfileAvatar'
 import { useState } from 'react'
 import { Post } from '../../components/Post'
 import { UsersProfilePost } from '../../components/Profile/UsersProfile/UsersProfilePost'
+import { useUserComments } from '../../hooks/useUserComments'
+import { Comment } from '../../components/Comment'
 
 interface ProfilePage {
 	posts: PostItem[]
@@ -22,17 +24,24 @@ interface ProfilePage {
 const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 	const router = useRouter()
 	const { id } = router.query
-	const [postList, setPostList] = useState(posts)
-	const userData = useSelector(selectUserData)
+	const [selectedTab, setSelectedTab] = useState(0)
 
+	const userData = useSelector(selectUserData)
 	const userPosts = posts.filter(post => post.user.id === user.id)
+	const [postList, setPostList] = useState(posts)
 
 	const isOwnProfile = userData && id && Number(id) === userData.id
+
+	const { userComments } = useUserComments(Number(id))
 
 	const handleRemovePost = (id: number) => {
 		const updatedList = postList.filter(post => post.id !== id)
 		setPostList(updatedList)
 	}
+
+	const filteredComments = userComments.filter(
+		comment => comment.user.id === user.id
+	)
 
 	return (
 		<div>
@@ -49,9 +58,10 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 							<UserInfo />
 							<Tabs
 								className='mt-20'
-								value={0}
+								value={selectedTab}
 								indicatorColor='primary'
 								textColor='primary'
+								onChange={(_, newValue) => setSelectedTab(newValue)}
 							>
 								<Tab label='Статьи' />
 								<Tab label='Комментарии' />
@@ -59,61 +69,86 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 							</Tabs>
 						</Paper>
 						<div className='d-flex align-start'>
-							<div className='mr-20 flex'>
-								{userPosts.map(obj => (
-									<Post
-										key={obj.id}
-										id={obj.id}
-										title={obj.title}
-										incut={obj.body
-											.filter(
-												item =>
-													item.type === 'incut' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										quote={obj.body
-											.filter(
-												item =>
-													item.type === 'quote' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										caption={obj.body
-											.filter(
-												item =>
-													item.type === 'quote' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.caption)}
-										video={obj.body
-											.filter(
-												item =>
-													item.type === 'video' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.file.url)}
-										description={obj.body
-											.filter(
-												item =>
-													item.type === 'paragraph' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										images={obj.body
-											.filter(
-												item =>
-													item.type === 'image' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.file.url)}
-										user={obj.user}
-										createdAt={obj.createdAt}
-									/>
-								))}
+							{selectedTab === 0 && (
+								<div className='mr-20 flex'>
+									{userPosts.map(obj => (
+										<Post
+											key={obj.id}
+											id={obj.id}
+											title={obj.title}
+											incut={obj.body
+												.filter(
+													item =>
+														item.type === 'incut' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											quote={obj.body
+												.filter(
+													item =>
+														item.type === 'quote' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											caption={obj.body
+												.filter(
+													item =>
+														item.type === 'quote' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.caption)}
+											video={obj.body
+												.filter(
+													item =>
+														item.type === 'video' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.file.url)}
+											description={obj.body
+												.filter(
+													item =>
+														item.type === 'paragraph' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											images={obj.body
+												.filter(
+													item =>
+														item.type === 'image' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.file.url)}
+											user={obj.user}
+											createdAt={obj.createdAt}
+										/>
+									))}
+								</div>
+							)}
+							<div>
+								<div className='d-flex align-start'>
+									{selectedTab === 1 && (
+										<div className='mr-20 flex'>
+											{filteredComments.map(comment => (
+												<Paper
+													className='pl-20 pr-20 pt-20 mb-30 br-10'
+													elevation={0}
+													style={{ borderRadius: 10 }}
+												>
+													<Comment
+														id={comment.id}
+														user={user}
+														text={comment.text}
+														createdAt={comment.createdAt}
+														currentUserId={comment.user.id}
+													/>
+												</Paper>
+											))}
+										</div>
+									)}
+								</div>
 							</div>
 							<Paper
-								style={{ width: 300 }}
+								style={{ width: 300, borderRadius: 10 }}
 								className='p-20 mb-20'
 								elevation={0}
 							>
@@ -138,9 +173,10 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 							<UsersProfileInfo user={user} />
 							<Tabs
 								className='mt-20'
-								value={0}
+								value={selectedTab}
 								indicatorColor='primary'
 								textColor='primary'
+								onChange={(_, newValue) => setSelectedTab(newValue)}
 							>
 								<Tab label='Статьи' />
 								<Tab label='Комментарии' />
@@ -148,62 +184,87 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 							</Tabs>
 						</Paper>
 						<div className='d-flex align-start'>
-							<div className='mr-20 flex'>
-								{userPosts.map(obj => (
-									<UsersProfilePost
-										key={obj.id}
-										id={obj.id}
-										title={obj.title}
-										incut={obj.body
-											.filter(
-												item =>
-													item.type === 'incut' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										quote={obj.body
-											.filter(
-												item =>
-													item.type === 'quote' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										caption={obj.body
-											.filter(
-												item =>
-													item.type === 'quote' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.caption)}
-										video={obj.body
-											.filter(
-												item =>
-													item.type === 'video' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.file.url)}
-										description={obj.body
-											.filter(
-												item =>
-													item.type === 'paragraph' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.text)}
-										images={obj.body
-											.filter(
-												item =>
-													item.type === 'image' &&
-													item.tunes?.anyTuneName?.ShowOnHomepage === true
-											)
-											.map(item => item.data.file.url)}
-										user={obj.user}
-										createdAt={obj.createdAt}
-										onRemove={handleRemovePost}
-									/>
-								))}
+							{selectedTab === 0 && (
+								<div className='mr-20 flex'>
+									{userPosts.map(obj => (
+										<UsersProfilePost
+											key={obj.id}
+											id={obj.id}
+											title={obj.title}
+											incut={obj.body
+												.filter(
+													item =>
+														item.type === 'incut' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											quote={obj.body
+												.filter(
+													item =>
+														item.type === 'quote' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											caption={obj.body
+												.filter(
+													item =>
+														item.type === 'quote' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.caption)}
+											video={obj.body
+												.filter(
+													item =>
+														item.type === 'video' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.file.url)}
+											description={obj.body
+												.filter(
+													item =>
+														item.type === 'paragraph' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.text)}
+											images={obj.body
+												.filter(
+													item =>
+														item.type === 'image' &&
+														item.tunes?.anyTuneName?.ShowOnHomepage === true
+												)
+												.map(item => item.data.file.url)}
+											user={obj.user}
+											createdAt={obj.createdAt}
+											onRemove={handleRemovePost}
+										/>
+									))}
+								</div>
+							)}
+							<div>
+								<div className='d-flex align-start'>
+									{selectedTab === 1 && (
+										<div className='mr-20 flex'>
+											{filteredComments.map(comment => (
+												<Paper
+													className='pl-20 pr-20 pt-20 mb-30 br-10'
+													elevation={0}
+													style={{ borderRadius: 10 }}
+												>
+													<Comment
+														id={comment.id}
+														user={user}
+														text={comment.text}
+														createdAt={comment.createdAt}
+														currentUserId={comment.user.id}
+													/>
+												</Paper>
+											))}
+										</div>
+									)}
+								</div>
 							</div>
 							<Paper
-								style={{ width: 300 }}
+								style={{ width: 300, borderRadius: 10 }}
 								className='p-20 mb-20'
 								elevation={0}
 							>
@@ -232,12 +293,15 @@ export const getServerSideProps = async ctx => {
 		const api = Api(ctx)
 		const { id } = ctx.query
 		const userData = await api.user.getUserById(id)
+
 		const posts = await api.post.getAll()
+		const userComments = await api.comment.getCommentsByUserId(id)
 
 		return {
 			props: {
 				posts,
-				user: userData
+				user: userData,
+				userComments
 			}
 		}
 	} catch (err) {
@@ -246,7 +310,8 @@ export const getServerSideProps = async ctx => {
 	return {
 		props: {
 			posts: null,
-			user: null
+			user: null,
+			userComments: null
 		}
 	}
 }

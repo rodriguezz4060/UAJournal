@@ -16,11 +16,11 @@ export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 		<div className={styles.headerWithActions}>
 			<div className={styles.header__title}>
 				<div className={styles.headerTitle}>
-					<div className={styles.headerTitle_main}>{user.fullName}</div>
+					<div className={styles.headerTitle_main}>{user?.fullName}</div>
 				</div>
 			</div>
 			<div className={styles.header__description}>
-				<div className={styles.headerDescription}>{user.description}</div>
+				<div className={styles.headerDescription}>{user?.description}</div>
 			</div>
 
 			<div className={`${styles.header__actions} ${styles.headerActions}`}>

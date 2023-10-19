@@ -26,6 +26,12 @@ export const CommentApi = (instance: AxiosInstance) => ({
 		})
 		return data
 	},
+	async getCommentsByUserId(userId: number) {
+		const { data } = await instance.get<CommentItem[]>('/comments', {
+			params: { userId }
+		})
+		return data
+	},
 	async remove(id: number) {
 		return instance.delete('/comments/' + id)
 	}
