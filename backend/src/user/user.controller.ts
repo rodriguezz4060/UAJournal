@@ -17,6 +17,7 @@ import { UpdateUserDto } from './dto/update-user.dto'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { SearchUserDto } from './dto/searchg-user.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { GetUserByIdDto } from './dto/get-user-by-id.dto'
 
 @Controller('users')
 export class UserController {
@@ -38,6 +39,16 @@ export class UserController {
 	async update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
 		await this.userService.update(+req.user.id, updateUserDto)
 		return this.userService.findById(req.user.id)
+	}
+
+	@Get(':id')
+	getUserById(@Param() params: GetUserByIdDto) {
+		return this.userService.getUserById(params.id)
+	}
+
+	@Get(':id/posts')
+	getUserPosts(@Param('id') id: string) {
+		return this.userService.getUserPosts(parseInt(id))
 	}
 
 	@UseGuards(JwtAuthGuard)

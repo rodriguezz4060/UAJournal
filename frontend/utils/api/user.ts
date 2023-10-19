@@ -1,4 +1,4 @@
-import { CreateUserDto, LoginDto, ResponseUser } from './types'
+import { CreateUserDto, LoginDto, PostItem, ResponseUser } from './types'
 import { AxiosInstance } from 'axios'
 
 export const UserApi = (instance: AxiosInstance) => ({
@@ -22,6 +22,14 @@ export const UserApi = (instance: AxiosInstance) => ({
 	},
 	async getMe() {
 		const { data } = await instance.get<ResponseUser>('/users/me')
+		return data
+	},
+	async getUserById(id: string) {
+		const { data } = await instance.get<ResponseUser>(`/users/${id}`)
+		return data
+	},
+	async getUserPosts(userId: string) {
+		const { data } = await instance.get<PostItem[]>(`/users/${userId}/posts`)
 		return data
 	}
 })

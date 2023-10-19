@@ -8,6 +8,7 @@ import { LoginUserDto } from './dto/login-user.dto'
 import { SearchUserDto } from './dto/searchg-user.dto'
 import { CommentEntity } from '../comment/entities/comment.entity'
 import { AwsService } from 'src/aws/aws.service'
+import { PostEntity } from '../post/entities/post.entity'
 
 @Injectable()
 export class UserService {
@@ -37,6 +38,14 @@ export class UserService {
 			delete obj.comments
 			return obj
 		})
+	}
+
+	async getUserById(id: number) {
+		return this.repository.findOne(id)
+	}
+
+	async getUserPosts(userId: number) {
+		return this.repository.find({ where: { userId }, relations: ['posts'] })
 	}
 
 	findById(id: number) {

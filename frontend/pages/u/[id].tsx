@@ -109,6 +109,7 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 											.map(item => item.data.file.url)}
 										user={obj.user}
 										createdAt={obj.createdAt}
+										onRemove={handleRemovePost}
 									/>
 								))}
 							</div>

@@ -4,32 +4,23 @@ import {
 	SettingsOutlined as SettingsIcon,
 	TextsmsOutlined as MessageIcon
 } from '@material-ui/icons'
-import styles from './Porfile.module.scss'
-import { useAppSelector } from '../../redux/hooks'
-import { selectUserData } from '../../redux/slices/user'
-import { ResponseUser } from '../../utils/api/types'
+import styles from '../Porfile.module.scss'
+import { ResponseUser } from '../../../utils/api/types'
 
-interface UserInfoProps {}
+interface UsersProfileInfoProps {
+	user: ResponseUser
+}
 
-export const UserInfo: React.FC<UserInfoProps> = () => {
-	const userData = useAppSelector(selectUserData)
-
+export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 	return (
 		<div className={styles.headerWithActions}>
 			<div className={styles.header__title}>
 				<div className={styles.headerTitle}>
-					<div className={styles.headerTitle_main}>{userData?.fullName}</div>
+					<div className={styles.headerTitle_main}>{user.fullName}</div>
 				</div>
 			</div>
 			<div className={styles.header__description}>
-				<div className={styles.headerDescription}>
-					{userData?.description}
-					<div className={styles.headerDescription__edit}>
-						<Link href='#' className={styles.linkInline}>
-							Изменить описание
-						</Link>
-					</div>
-				</div>
+				<div className={styles.headerDescription}>{user.description}</div>
 			</div>
 
 			<div className={`${styles.header__actions} ${styles.headerActions}`}>

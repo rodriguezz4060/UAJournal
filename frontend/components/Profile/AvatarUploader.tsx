@@ -34,12 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface AvatarUploaderProps {
 	headerCoverUrl: string | null
 	headerCoverPosition: string | null
-	fullName: string
 }
 
 const AvatarUploader = ({
 	headerCoverUrl,
-	fullName,
 	headerCoverPosition
 }: AvatarUploaderProps) => {
 	const userData = useAppSelector(selectUserData)
@@ -155,7 +153,7 @@ const AvatarUploader = ({
 							>
 								<Avatar
 									style={{ width: 120, height: 120, borderRadius: 6 }}
-									src={userData?.avatarUrl ? userData?.avatarUrl : fullName[0]}
+									src={userData?.avatarUrl}
 									aria-controls='avatar-menu'
 									aria-haspopup='true'
 								/>
