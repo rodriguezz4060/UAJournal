@@ -48,22 +48,27 @@ export const PostActions: NextPage<PostActionsProps> = ({ postId }) => {
   }
 
   const handleVote = (value: number) => {
+    const newRating = ratings + value - voted
+
     if (voted === value) {
-      dispatch(setPostRating(ratings - value))
+      dispatch(setPostRating(newRating))
       setVoted(0)
-    } else if (voted === -value) {
-      dispatch(setPostRating(ratings + value))
-      setVoted(value)
     } else {
-      dispatch(setPostRating(ratings + value))
+      dispatch(setPostRating(newRating))
       setVoted(value)
     }
+
+    setTimeout(() => {
+      sendRatingToServer(postId, newRating)
+    }, 100)
   }
 
   return (
+
     <div
       className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
     >
+
       <div className={styles.contentFooter__item}>
         <IconButton
           className={`${styles.buttonSvg} ${styles.comments_counter}`}
