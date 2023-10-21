@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { TextField, InputAdornment, IconButton } from '@material-ui/core'
 import axios from 'axios'
 import { parseCookies } from 'nookies'
@@ -9,7 +9,6 @@ import avatarStyles from '../Porfile.module.scss'
 import styles from './Settings.module.scss'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import React from 'react'
 
 interface GeneralProps {}
 

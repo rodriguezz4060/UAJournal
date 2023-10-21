@@ -38,6 +38,7 @@ export type PostItem = {
 	code: string
 	images?: string[]
 	user: ResponseUser
+	rating: number
 	createdAt: string
 	updatedAt: string
 }

@@ -3,12 +3,14 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import { userReducer } from './slices/user'
 import { menuReducer } from './slices/menuSlice'
+import { postReducer } from './slices/postSlice'
 
 export function makeStore() {
 	return configureStore({
 		reducer: {
 			user: userReducer,
-			menu: menuReducer
+			menu: menuReducer,
+			post: postReducer
 		}
 	})
 }
