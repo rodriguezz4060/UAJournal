@@ -94,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 	const router = useRouter()
 
 	const handleLogout = () => {
-		destroyCookie(null, 'rtoken')
+		destroyCookie(null, 'rtoken', 'authToken')
 		router.push('/')
 	}
 
