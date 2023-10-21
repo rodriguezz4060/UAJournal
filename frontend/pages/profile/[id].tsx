@@ -14,7 +14,21 @@ import { useState } from 'react'
 import { Post } from '../../components/Post'
 import { UsersProfilePost } from '../../components/Profile/UsersProfile/UsersProfilePost'
 import { useUserComments } from '../../hooks/useUserComments'
-import { Comment } from '../../components/Comment'
+import { CommentProfile } from '../../components/Profile/CommentProfile'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+	paper: {
+		padding: '15px',
+		marginBottom: '20px',
+		borderRadius: '10px',
+		boxShadow: '0 2px 4px rgba(0,0,0,.06)',
+		transition: 'box-shadow 0.3s ease-in-out',
+		'&:hover': {
+			boxShadow: '0 4px 8px rgba(0,0,0,.12)'
+		}
+	}
+})
 
 interface ProfilePage {
 	posts: PostItem[]
@@ -22,6 +36,7 @@ interface ProfilePage {
 }
 
 const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
+	const classes = useStyles()
 	const router = useRouter()
 	const { id } = router.query
 	const [selectedTab, setSelectedTab] = useState(0)
@@ -41,6 +56,9 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 
 	const filteredComments = userComments.filter(
 		comment => comment.user.id === user.id
+	)
+	const sortedComments = filteredComments.sort(
+		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
 	)
 
 	return (
@@ -128,18 +146,16 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 								<div className='d-flex align-start'>
 									{selectedTab === 1 && (
 										<div className='mr-20 flex'>
-											{filteredComments.map(comment => (
-												<Paper
-													className='pl-20 pr-20 pt-20 mb-30 br-10'
-													elevation={0}
-													style={{ borderRadius: 10 }}
-												>
-													<Comment
+											{sortedComments.map(comment => (
+												<Paper className={classes.paper} elevation={0}>
+													<CommentProfile
 														id={comment.id}
 														user={user}
 														text={comment.text}
 														createdAt={comment.createdAt}
 														currentUserId={comment.user.id}
+														post={comment.post}
+														currentUserId={userData?.id}
 													/>
 												</Paper>
 											))}
@@ -245,17 +261,15 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 									{selectedTab === 1 && (
 										<div className='mr-20 flex'>
 											{filteredComments.map(comment => (
-												<Paper
-													className='pl-20 pr-20 pt-20 mb-30 br-10'
-													elevation={0}
-													style={{ borderRadius: 10 }}
-												>
-													<Comment
+												<Paper className={classes.paper} elevation={0}>
+													<CommentProfile
 														id={comment.id}
 														user={user}
 														text={comment.text}
 														createdAt={comment.createdAt}
 														currentUserId={comment.user.id}
+														post={comment.post}
+														currentUserId={userData?.id}
 													/>
 												</Paper>
 											))}

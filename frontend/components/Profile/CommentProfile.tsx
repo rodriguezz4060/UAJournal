@@ -4,34 +4,36 @@ import {
 	IconButton,
 	MenuItem,
 	Menu,
-	Avatar
+	Avatar,
+	Link
 } from '@material-ui/core'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
+import styles from './CommentProfile.module.scss'
 
-import styles from './Comment.module.scss'
 import { ResponseUser } from '../../utils/api/types'
 import { Api } from '../../utils/api'
-
 import moment from 'moment'
 import 'moment/locale/ru'
 moment.locale('ru')
 
-interface CommentPostProps {
+interface CommentProfileProps {
 	id: number
 	user: ResponseUser
 	text: string
 	createdAt: string
 	currentUserId: number
 	onRemove: (id: number) => void
+	post: string
 }
 
-export const Comment: React.FC<CommentPostProps> = ({
+export const CommentProfile: React.FC<CommentProfileProps> = ({
 	id,
 	user,
 	text,
 	createdAt,
 	currentUserId,
-	onRemove
+	onRemove,
+	post
 }) => {
 	const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -59,27 +61,43 @@ export const Comment: React.FC<CommentPostProps> = ({
 
 	return (
 		<div className={styles.comment}>
-			<div className={styles.userInfo}>
-				{user.avatarUrl !== 'NULL' ? (
-					<div
-						className={styles.userAvatar}
-						style={{
-							backgroundImage: `url(${user.avatarUrl})`
-						}}
-					></div>
-				) : (
-					<Avatar className={styles.userAvatar} src={user.fullName[0]} />
-				)}
-				<b>{user.fullName}</b>
-				<span>
-					<span>{moment(createdAt).fromNow()}</span>
+			<div>
+				<Link
+					href={`/news/${post.id}`}
+					className={styles.profile_comment_favorite__title}
+				>
+					<span className={styles.postTitle}>{post.title}</span>
+				</Link>
+			</div>
+			<div className={styles.profile_comment_favorite__header}>
+				<Link href={`/profile/${user.id}`}>
+					{user.avatarUrl !== 'NULL' ? (
+						<div
+							className={styles.profile_comment_favorite__user__image}
+							style={{
+								backgroundImage: `url(${user.avatarUrl})`
+							}}
+						></div>
+					) : (
+						<Avatar
+							className={styles.profile_comment_favorite__user__image}
+							src={user.fullName[0]}
+						/>
+					)}
+					<p className={styles.profile_comment_favorite__user__name}>
+						{user.fullName}
+					</p>
+				</Link>
+				<span className={styles.profile_comment_favorite__date}>
+					{moment(createdAt).fromNow()}
 				</span>
 			</div>
 			<Typography className={styles.text}>{text}</Typography>
+
+			<span className={styles.replyBtn}>Ответить</span>
 			{user.id === currentUserId && (
 				<>
-					<span className={styles.replyBtn}>Ответить</span>
-					<IconButton onClick={handleClick}>
+					<IconButton onClick={handleClick} className={styles.buttonSvg}>
 						<MoreIcon />
 					</IconButton>
 					<Menu
