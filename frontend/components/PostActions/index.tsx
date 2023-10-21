@@ -7,102 +7,108 @@ import styles from './PostActions.module.scss'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import { NextPage } from 'next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { setPostRating } from '../../redux/slices/postSlice'
 
 interface PostActionsProps {
-	rating: number
-	postId: number
+  postId: number
 }
 
-export const PostActions: NextPage<PostActionsProps> = ({ rating, postId }) => {
-	const [ratings, setRating] = useState(0)
-	const [voted, setVoted] = useState(0)
+export const PostActions: NextPage<PostActionsProps> = ({ postId }) => {
 
-	const handleVote = (value: number) => {
-		if (voted === value) {
-			setRating(ratings - value)
-			setVoted(0)
-		} else if (voted === -value) {
-			setRating(ratings + 2 * value)
-			setVoted(value)
-		} else {
-			setRating(ratings + value)
-			setVoted(value)
-		}
-	}
-	const sendRatingToServer = async (postId, rating) => {
-		try {
-			const response = await fetch(
-				`http://localhost:7777/posts/${postId}/rating`,
-				{
-					method: 'PATCH',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ rating })
-				}
-			)
+  const rating = useSelector((state) => state.post.rating)
+  const dispatch = useDispatch()
 
-			if (response.ok) {
-				console.log('Рейтинг успешно отправлен на сервер')
-				setRating(rating) // Обновление состояния рейтинга на сайте
-			} else {
-				console.log('Не удалось отправить рейтинг')
-			}
-		} catch (error) {
-			console.log('Ошибка при отправке рейтинга', error)
-		}
-	}
+  const [voted, setVoted] = useState(0)
+  const ratings = rating
 
-	return (
-		<div
-			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
-		>
-			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
-				>
-					<CommentsIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
-			</div>
-			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
-				>
-					<RepostIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
-			</div>
-			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
-				>
-					<FavoriteIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
-			</div>
-			<div
-				className={`${styles.contentFooter__item} ${styles.contentFooter__item__right}`}
-			>
-				<IconButton
-					className={`${styles.ratingUp} ${styles.ratingUp_counter}`}
-					onClick={() => {
-						handleVote(1)
-						sendRatingToServer(postId, rating + 1)
-					}}
-				>
-					<ArrowUpIcon style={{ width: 25, height: 25 }} />
-				</IconButton>
+  const sendRatingToServer = async (postId, rating) => {
+    try {
+      const response = await fetch(
+        `http://localhost:7777/posts/${postId}/rating`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ rating }),
+        },
+      )
 
-				{rating}
-				<IconButton
-					className={`${styles.ratingDown} ${styles.ratingDown_counter}`}
-					onClick={() => {
-						handleVote(-1)
-						sendRatingToServer(postId, rating - 1)
-					}}
-				>
-					<ArrowDownIcon style={{ width: 25, height: 25 }} />
-				</IconButton>
-			</div>
-		</div>
-	)
+      if (response.ok) {
+        console.log('Рейтинг успешно отправлен на сервер')
+        dispatch(setPostRating(rating))
+      } else {
+        console.log('Не удалось отправить рейтинг')
+      }
+    } catch (error) {
+      console.log('Ошибка при отправке рейтинга', error)
+    }
+  }
+
+  const handleVote = (value: number) => {
+    if (voted === value) {
+      dispatch(setPostRating(ratings - value))
+      setVoted(0)
+    } else if (voted === -value) {
+      dispatch(setPostRating(ratings + value))
+      setVoted(value)
+    } else {
+      dispatch(setPostRating(ratings + value))
+      setVoted(value)
+    }
+  }
+
+  return (
+    <div
+      className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
+    >
+      <div className={styles.contentFooter__item}>
+        <IconButton
+          className={`${styles.buttonSvg} ${styles.comments_counter}`}
+        >
+          <CommentsIcon style={{ width: 20, height: 20 }} />
+        </IconButton>
+      </div>
+      <div className={styles.contentFooter__item}>
+        <IconButton
+          className={`${styles.buttonSvg} ${styles.comments_counter}`}
+        >
+          <RepostIcon style={{ width: 20, height: 20 }} />
+        </IconButton>
+      </div>
+      <div className={styles.contentFooter__item}>
+        <IconButton
+          className={`${styles.buttonSvg} ${styles.comments_counter}`}
+        >
+          <FavoriteIcon style={{ width: 20, height: 20 }} />
+        </IconButton>
+      </div>
+      <div
+        className={`${styles.contentFooter__item} ${styles.contentFooter__item__right}`}
+      >
+        <IconButton
+          className={`${styles.ratingUp} ${styles.ratingUp_counter}`}
+          onClick={() => {
+            handleVote(1)
+            sendRatingToServer(postId, rating + 1)
+          }}
+        >
+          <ArrowUpIcon style={{ width: 25, height: 25 }} />
+        </IconButton>
+
+        {rating}
+        <IconButton
+          className={`${styles.ratingDown} ${styles.ratingDown_counter}`}
+          onClick={() => {
+            handleVote(-1)
+            sendRatingToServer(postId, rating - 1)
+          }}
+        >
+          <ArrowDownIcon style={{ width: 25, height: 25 }} />
+        </IconButton>
+      </div>
+    </div>
+  )
 }
