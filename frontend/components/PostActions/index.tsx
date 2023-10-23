@@ -7,23 +7,39 @@ import styles from './PostActions.module.scss'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import { NextPage } from 'next'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { updatePostRating } from '../../redux/slices/postSlice'
+import axios from 'axios'
+import { parseCookies } from 'nookies'
 
-interface PostActionsProps {}
+interface PostActionsProps {
+	rating: number
+	id: number
+}
 
-export const PostActions: NextPage<PostActionsProps> = ({}) => {
-	const dispatch = useDispatch()
-	const postRating = useSelector((state: RootState) => state.post.rating)
+export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
+	const [currentRating, setCurrentRating] = useState(rating)
 
-	const handleRatingUp = () => {
-		dispatch(updatePostRating(1))
+	const handleRatingChange = async increment => {
+		try {
+			const cookies = parseCookies()
+			const token = cookies.rtoken
+
+			const response = await axios.patch(
+				`http://localhost:7777/posts/${id}/rating`,
+				{
+					increment: increment
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				}
+			)
+			setCurrentRating(response.data.rating)
+		} catch (error) {
+			console.error(error)
+		}
 	}
 
-	const handleRatingDown = () => {
-		dispatch(updatePostRating(-1))
-	}
 	return (
 		<div
 			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
@@ -54,14 +70,14 @@ export const PostActions: NextPage<PostActionsProps> = ({}) => {
 			>
 				<IconButton
 					className={`${styles.ratingUp} ${styles.ratingUp_counter}`}
-					onClick={handleRatingUp}
+					onClick={() => handleRatingChange(1)}
 				>
 					<ArrowUpIcon style={{ width: 25, height: 25 }} />
 				</IconButton>
-				{postRating}
+				{rating}
 				<IconButton
 					className={`${styles.ratingDown} ${styles.ratingDown_counter}`}
-					onClick={handleRatingDown}
+					onClick={() => handleRatingChange(-1)}
 				>
 					<ArrowDownIcon style={{ width: 25, height: 25 }} />
 				</IconButton>

@@ -35,6 +35,8 @@ interface PostProps {
 	onRemove: (id: number) => void
 	user: ResponseUser
 	createdAt: string
+	rating: number
+	postId: number
 }
 
 export const Post: React.FC<PostProps> = ({
@@ -48,7 +50,9 @@ export const Post: React.FC<PostProps> = ({
 	createdAt,
 	incut,
 	quote,
-	caption
+	caption,
+	rating,
+	postId
 }) => {
 	const handleRemove = async () => {
 		const userData = useAppSelector(selectUserData)
@@ -167,7 +171,7 @@ export const Post: React.FC<PostProps> = ({
 					))}
 				</div>
 			)}
-			<PostActions postId={id} />
+			<PostActions id={id} rating={rating} />
 		</Paper>
 	)
 }
