@@ -10,7 +10,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PostEntity } from './entities/post.entity'
 import { SearchPostDto } from './dto/searchg-post.dto'
-import { User } from '../decorators/user.decorator'
 import { RatingEntity } from './entities/rating.entity'
 
 @Injectable()
@@ -32,25 +31,34 @@ export class PostService {
 			throw new NotFoundException('Пост не найден')
 		}
 
-		if (increment === 1 || increment === -1) {
-			const rating = await this.ratingRepository.findOne({
-				where: { postId, userId }
-			})
-			if (rating) {
-				throw new BadRequestException('Вы уже оценили этот пост')
-			}
+		const rating = await this.ratingRepository.findOne({
+			where: { postId, userId }
+		})
 
+		if (rating) {
+			if (rating.increment === increment) {
+				throw new BadRequestException(
+					'Вы уже оценили этот пост с таким же рейтингом'
+				)
+			}
+			post.rating -= rating.increment
+			await this.repository.save(post)
+			rating.increment = increment
+			await this.ratingRepository.save(rating)
 			post.rating += increment
 			await this.repository.save(post)
-
+		} else {
+			if (increment !== 1 && increment !== -1) {
+				throw new BadRequestException('Неверное значение инкремента рейтинга')
+			}
+			post.rating += increment
+			await this.repository.save(post)
 			const newRating = this.ratingRepository.create({
 				postId,
 				userId,
 				increment
 			})
 			await this.ratingRepository.save(newRating)
-		} else {
-			throw new BadRequestException('Неверное значение инкремента рейтинга')
 		}
 	}
 
