@@ -42,7 +42,9 @@ export type PostItem = {
 	createdAt: string
 	updatedAt: string
 }
-
+export type UpdateRatingDto = {
+	rating: number
+}
 export type CommentItem = {
 	id: number
 	text: string

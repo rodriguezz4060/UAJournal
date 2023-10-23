@@ -34,12 +34,13 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 					}
 				}
 			)
-			setCurrentRating(response.data.rating)
+			const updatedRating = response.data.rating
+			setCurrentRating(updatedRating)
 		} catch (error) {
 			console.error(error)
 		}
 	}
-
+	console.log(currentRating)
 	return (
 		<div
 			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
@@ -74,7 +75,7 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 				>
 					<ArrowUpIcon style={{ width: 25, height: 25 }} />
 				</IconButton>
-				{rating}
+				{currentRating}
 				<IconButton
 					className={`${styles.ratingDown} ${styles.ratingDown_counter}`}
 					onClick={() => handleRatingChange(-1)}

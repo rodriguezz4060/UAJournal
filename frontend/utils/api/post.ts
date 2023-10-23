@@ -16,13 +16,17 @@ type SearchPostDto = {
 	tag?: string
 }
 
+type UpdateRatingDto = {
+	rating: number
+}
+
 export const PostApi = (instance: AxiosInstance) => ({
 	async getAll() {
 		const { data } = await instance.get<PostItem[]>('/posts')
 		return data
 	},
 	async search(query: SearchPostDto) {
-		const { data } = await instance.get<{ items: PostItem[]; totla: number }>(
+		const { data } = await instance.get<{ items: PostItem[]; total: number }>(
 			'/posts/search',
 			{
 				params: query
@@ -48,10 +52,10 @@ export const PostApi = (instance: AxiosInstance) => ({
 		)
 		return data
 	},
-	async updateRating(id: number, rating: number) {
+	async updateRating(id: number, dto: UpdateRatingDto) {
 		const { data } = await instance.patch<{ data: PostItem }>(
 			`/posts/${id}/rating`,
-			{ rating }
+			dto
 		)
 		return data
 	},

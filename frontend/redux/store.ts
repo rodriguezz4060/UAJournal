@@ -3,7 +3,7 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import { userReducer } from './slices/user'
 import { menuReducer } from './slices/menuSlice'
-import postReducer from './slices/postSlice'
+import { postReducer } from './slices/ratingSlice'
 
 export function makeStore() {
 	return configureStore({
