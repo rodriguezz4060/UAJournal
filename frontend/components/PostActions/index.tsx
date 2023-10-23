@@ -36,11 +36,12 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 			)
 			const updatedRating = response.data.rating
 			setCurrentRating(updatedRating)
+			console.log('Updated rating:', updatedRating)
 		} catch (error) {
 			console.error(error)
 		}
 	}
-	console.log(currentRating)
+
 	return (
 		<div
 			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}

@@ -25,7 +25,7 @@ export class PostService {
 		postId: number,
 		increment: number,
 		userId: number
-	): Promise<number> {
+	): Promise<{ rating: number }> {
 		const post = await this.repository.findOne(postId)
 		if (!post) {
 			throw new NotFoundException('Пост не найден')
@@ -61,7 +61,8 @@ export class PostService {
 			await this.ratingRepository.save(newRating)
 		}
 
-		return post.rating
+		const updatedPost = await this.repository.findOne(postId) // Получение обновленного значения рейтинга из базы данных
+		return { rating: updatedPost.rating }
 	}
 
 	findAll() {
