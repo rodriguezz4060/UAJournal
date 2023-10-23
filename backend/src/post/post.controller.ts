@@ -37,9 +37,14 @@ export class PostController {
 		return this.postService.update(+id, updatePostDto, userId)
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@Patch(':id/rating')
-	async updateRating(@Param('id') id: number, @Body('rating') rating: number) {
-		return this.postService.updateRating(id, rating)
+	changeRating(
+		@User() userId: number,
+		@Param('id') id: string,
+		@Body('increment') increment: number
+	) {
+		return this.postService.changeRating(+id, increment, userId)
 	}
 
 	@UseGuards(JwtAuthGuard)

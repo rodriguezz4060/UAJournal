@@ -26,7 +26,6 @@ moment.locale('ru')
 interface PostProps {
 	title: string
 	id: number
-	rating: number
 	description: string
 	incut: string[]
 	quote: string[]
@@ -40,7 +39,6 @@ interface PostProps {
 
 export const Post: React.FC<PostProps> = ({
 	id,
-	rating,
 	title,
 	description,
 	images,
@@ -169,7 +167,7 @@ export const Post: React.FC<PostProps> = ({
 					))}
 				</div>
 			)}
-			<PostActions rating={rating} postId={id} />
+			<PostActions postId={id} />
 		</Paper>
 	)
 }

@@ -24,7 +24,6 @@ const Home: NextPage<HomeProps> = ({ posts, user }) => {
 				<Post
 					key={obj.id}
 					id={obj.id}
-					rating={obj.rating}
 					title={obj.title}
 					incut={obj.body
 						.filter(
