@@ -32,6 +32,7 @@ import { destroyCookie } from 'nookies'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { toggleMenu } from '../../redux/slices/menuSlice'
+import { ContactSupportOutlined } from '@material-ui/icons'
 
 interface HeaderProps {}
 
@@ -148,13 +149,13 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 				{userData ? (
 					<div className='d-flex align-center'>
 						<Link href={`/profile/${userData.id}`}>
-							{userData.avatarUrl !== 'NULL' ? (
+							{avatarUrl !== '' ? (
 								<div
 									className={styles.avatar}
 									style={{ backgroundImage: `url(${userData.avatarUrl})` }}
 								></div>
 							) : (
-								<Avatar className={styles.avatar} />
+								<Avatar className={styles.avatar} src={userData.fullName[0]} />
 							)}
 						</Link>
 						<div>
@@ -193,7 +194,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 										>
 											<div className={styles.user_card}>
 												<div>
-													{userData.avatarUrl !== 'NULL' ? (
+													{avatarUrl !== '' ? (
 														<div
 															className={styles.avatar}
 															style={{

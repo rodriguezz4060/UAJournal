@@ -7,12 +7,22 @@ import {
 import styles from './Porfile.module.scss'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
-import { ResponseUser } from '../../utils/api/types'
+
+import moment from 'moment'
+import 'moment/locale/ru'
+moment.locale('ru')
 
 interface UserInfoProps {}
 
 export const UserInfo: React.FC<UserInfoProps> = () => {
 	const userData = useAppSelector(selectUserData)
+
+	const ratingClassName =
+		userData?.rating > 0
+			? styles.numberChange__positive
+			: userData?.rating < 0
+			? styles.numberChange__negative
+			: ''
 
 	return (
 		<div className={styles.headerWithActions}>
@@ -53,17 +63,21 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 			<div className={styles.header__stats}>
 				<div className={styles.header__stat}>
 					<div className={styles.headerStat}>
-						<div
-							className={`${styles.numberChange} ${styles.numberChange__positive}`}
-						>
-							+208
+						<div className={`${styles.numberChange} ${ratingClassName}`}>
+							{userData?.rating > 0
+								? `+${userData?.rating}`
+								: userData?.rating < 0
+								? `-${Math.abs(userData?.rating)}`
+								: userData?.rating}
 						</div>
 					</div>
 					<Link href='/profile/#' className={styles.headerStat}>
 						2 подписчика
 					</Link>
 				</div>
-				<div className={styles.header__stat}>На проекте с 15 сен 2016</div>
+				<div className={styles.header__stat}>
+					На проекте с {moment(userData.createdAt).format('D MMM YYYY')}
+				</div>
 			</div>
 		</div>
 	)

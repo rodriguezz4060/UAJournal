@@ -22,6 +22,11 @@ export class UserEntity {
 	})
 	email: string
 
+	@Column({
+		default: 0
+	})
+	rating: number
+
 	@OneToMany(() => CommentEntity, comment => comment.user, {
 		eager: false,
 		nullable: true

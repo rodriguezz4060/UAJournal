@@ -6,7 +6,12 @@ import { Api } from '../../utils/api'
 import { Avatar, Paper, Tab, Tabs } from '@material-ui/core'
 import AvatarUploader from '../../components/Profile/AvatarUploader'
 import { UserInfo } from '../../components/Profile/UserInfo'
-import { CommentItem, PostItem, ResponseUser } from '../../utils/api/types'
+import {
+	CommentItem,
+	PostItem,
+	RatingItem,
+	ResponseUser
+} from '../../utils/api/types'
 import { NextPage } from 'next'
 import { UsersProfileInfo } from '../../components/Profile/UsersProfile/UsersProfileInfo'
 import UsersProfileAvatar from '../../components/Profile/UsersProfile/UsersProfileAvatar'
@@ -33,6 +38,7 @@ const useStyles = makeStyles({
 interface ProfilePage {
 	posts: PostItem[]
 	user: ResponseUser
+	postRating: RatingItem[]
 }
 
 const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
@@ -93,6 +99,8 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 										<Post
 											key={obj.id}
 											id={obj.id}
+											rating={obj.rating}
+											postId={obj.id}
 											title={obj.title}
 											incut={obj.body
 												.filter(

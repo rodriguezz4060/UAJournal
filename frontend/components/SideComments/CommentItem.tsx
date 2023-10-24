@@ -15,11 +15,12 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	text,
 	post
 }) => {
+	console.log('avatar', user.avatarUrl)
 	return (
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
 				<div className={styles.userInfo}>
-					{user.avatarUrl !== 'NULL' ? (
+					{user.avatarUrl !== null ? (
 						<div
 							className={styles.userAvatar}
 							style={{

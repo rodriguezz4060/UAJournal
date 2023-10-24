@@ -10,10 +10,6 @@ export class RatingService {
 		private readonly ratingRepository: Repository<RatingEntity>
 	) {}
 
-	async getAllRatings(): Promise<RatingEntity[]> {
-		return this.ratingRepository.find()
-	}
-
 	async findAll(postId: number) {
 		const qb = this.ratingRepository.createQueryBuilder('c')
 

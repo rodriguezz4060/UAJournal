@@ -47,7 +47,7 @@ export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 						<div
 							className={`${styles.numberChange} ${styles.numberChange__positive}`}
 						>
-							+208
+							{user?.rating}
 						</div>
 					</div>
 					<Link href='/profile/#' className={styles.headerStat}>

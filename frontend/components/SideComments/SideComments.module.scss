@@ -107,13 +107,13 @@
 }
 
 .userAvatar {
-	width: 26px;
-	height: 26px;
+	width: 26px !important;
+	height: 26px !important;
 	background-color: #dedede;
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 	background-position: 50% 50%;
-	border-radius: 6px;
+	border-radius: 6px !important;
 	position: relative;
 	overflow: hidden;
 	-ms-flex-negative: 0;

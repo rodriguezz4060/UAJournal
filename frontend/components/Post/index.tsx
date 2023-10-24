@@ -36,7 +36,6 @@ interface PostProps {
 	user: ResponseUser
 	createdAt: string
 	rating: number
-	postId: number
 }
 
 export const Post: React.FC<PostProps> = ({
@@ -51,8 +50,7 @@ export const Post: React.FC<PostProps> = ({
 	incut,
 	quote,
 	caption,
-	rating,
-	postId
+	rating
 }) => {
 	const handleRemove = async () => {
 		const userData = useAppSelector(selectUserData)
@@ -172,7 +170,7 @@ export const Post: React.FC<PostProps> = ({
 					))}
 				</div>
 			)}
-			<PostActions postId={id} rating={rating} user={user.id} />
+			<PostActions id={id} rating={rating} user={user.id} />
 		</Paper>
 	)
 }

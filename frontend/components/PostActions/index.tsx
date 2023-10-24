@@ -15,17 +15,16 @@ import { selectUserData } from '../../redux/slices/user'
 
 interface PostActionsProps {
 	rating: number
-	postId: number
+	id: number
 }
 
-export const PostActions: NextPage<PostActionsProps> = ({ rating, postId }) => {
+export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 	const [currentRating, setCurrentRating] = useState(rating)
 	const [userRatedUp, setUserRatedUp] = useState(false)
 	const [userRatedDown, setUserRatedDown] = useState(false)
 
 	const userData = useAppSelector(selectUserData)
-	const { postsRating, setPostsRating } = usePostRating(postId)
-	console.log(postsRating)
+	const { postsRating, setPostsRating } = usePostRating(id)
 
 	const handleRatingChange = async (increment: number) => {
 		try {
@@ -33,7 +32,7 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, postId }) => {
 			const token = cookies.rtoken
 
 			const response = await axios.patch(
-				`http://localhost:7777/posts/${postId}/rating`,
+				`http://localhost:7777/posts/${id}/rating`,
 				{
 					increment: increment
 				},

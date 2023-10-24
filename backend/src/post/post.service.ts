@@ -11,6 +11,7 @@ import { Repository } from 'typeorm'
 import { PostEntity } from './entities/post.entity'
 import { SearchPostDto } from './dto/searchg-post.dto'
 import { RatingEntity } from './entities/rating.entity'
+import { UserEntity } from 'src/user/entities/user.entity'
 
 @Injectable()
 export class PostService {
@@ -18,7 +19,9 @@ export class PostService {
 		@InjectRepository(PostEntity)
 		private repository: Repository<PostEntity>,
 		@InjectRepository(RatingEntity)
-		private ratingRepository: Repository<RatingEntity>
+		private ratingRepository: Repository<RatingEntity>,
+		@InjectRepository(UserEntity)
+		private userRepository: Repository<UserEntity>
 	) {}
 
 	async changeRating(
@@ -57,6 +60,17 @@ export class PostService {
 			})
 			await this.ratingRepository.save(newRating)
 		}
+
+		// Прибавить рейтинг автору поста
+		const ratings = await this.ratingRepository.find({
+			where: { post: { id: postId } }
+		})
+		const authorRating = ratings.reduce(
+			(total, rating) => total + rating.increment,
+			0
+		)
+		post.user.rating = authorRating
+		await this.userRepository.save(post.user)
 
 		const updatedPost = await this.repository.findOne(postId)
 		return { rating: updatedPost.rating }
