@@ -13,6 +13,7 @@
 	margin-top: 12px;
 	padding-bottom: 16px;
 }
+
 .islandA {
 	padding-left: 20px;
 	padding-right: 20px;
@@ -20,6 +21,7 @@
 
 .buttonSvg {
 	padding: 5px !important;
+
 	&:hover {
 		background-color: rgba(0, 102, 255, 0.12) !important;
 		border-radius: 100%;
@@ -44,6 +46,7 @@
 
 .ratingUp {
 	padding: 5px !important;
+
 	&:hover {
 		background-color: rgba(0, 255, 0, 0.12) !important;
 		border-radius: 100%;
@@ -58,6 +61,7 @@
 
 .ratingDown {
 	padding: 5px !important;
+
 	&:hover {
 		background-color: rgba(255, 0, 0, 0.12) !important;
 		border-radius: 100%;
@@ -68,4 +72,9 @@
 .ratingDown_counter:hover {
 	--text-color: #ce4040;
 	color: var(--text-color);
+}
+
+.userRated {
+	--text-color: red;
+	color: var(--text-color) !important;
 }

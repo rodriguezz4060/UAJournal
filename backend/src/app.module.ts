@@ -13,6 +13,7 @@ import { AwsController } from './aws/aws.controller'
 import { AwsModule } from './aws/aws.module'
 import { ConfigModule } from '@nestjs/config'
 import { RatingEntity } from './post/entities/rating.entity'
+import { RatingModule } from './rating/rating.module'
 
 @Module({
 	imports: [
@@ -31,7 +32,8 @@ import { RatingEntity } from './post/entities/rating.entity'
 		CommentModule,
 		AuthModule,
 		AwsModule,
-		ConfigModule.forRoot()
+		ConfigModule.forRoot(),
+		RatingModule
 	],
 	controllers: [AppController],
 	providers: [AppService]
