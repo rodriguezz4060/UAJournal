@@ -11,7 +11,6 @@ import { Repository } from 'typeorm'
 import { PostEntity } from './entities/post.entity'
 import { SearchPostDto } from './dto/searchg-post.dto'
 import { RatingEntity } from './entities/rating.entity'
-import { postRatingDto } from './dto/postRating.dto'
 
 @Injectable()
 export class PostService {

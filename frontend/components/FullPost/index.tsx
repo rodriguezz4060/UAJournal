@@ -7,7 +7,12 @@ import styles from './FullPost.module.scss'
 import { FullPostProps } from '.'
 import { Button, Paper, Typography } from '@material-ui/core'
 
-export const FullPost: React.FC<FullPostProps> = ({ title, blocks, user }) => {
+export const FullPost: React.FC<FullPostProps> = ({
+	title,
+	blocks,
+	user,
+	id
+}) => {
 	return (
 		<div>
 			<Paper elevation={0} className={styles.paper}>

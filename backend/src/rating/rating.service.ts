@@ -13,4 +13,24 @@ export class RatingService {
 	async getAllRatings(): Promise<RatingEntity[]> {
 		return this.ratingRepository.find()
 	}
+
+	async findAll(postId: number) {
+		const qb = this.ratingRepository.createQueryBuilder('c')
+
+		if (postId) {
+			qb.where('c.postId = :postId', { postId })
+		}
+
+		const arr = await qb
+			.leftJoinAndSelect('c.post', 'post')
+			.leftJoinAndSelect('c.user', 'user')
+			.getMany()
+
+		return arr.map(obj => {
+			return {
+				...obj,
+				post: { id: obj.post.id }
+			}
+		})
+	}
 }
