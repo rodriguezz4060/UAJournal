@@ -11,6 +11,7 @@ import { Repository } from 'typeorm'
 import { PostEntity } from './entities/post.entity'
 import { SearchPostDto } from './dto/searchg-post.dto'
 import { RatingEntity } from './entities/rating.entity'
+import { postRatingDto } from './dto/postRating.dto'
 
 @Injectable()
 export class PostService {
@@ -27,20 +28,18 @@ export class PostService {
 		userId: number
 	): Promise<{ rating: number }> {
 		const post = await this.repository.findOne(postId)
-		if (!post) {
-			throw new NotFoundException('Пост не найден')
-		}
+		if (!post) throw new NotFoundException('Пост не найден')
 
 		const rating = await this.ratingRepository.findOne({
-			where: { postId, userId }
+			where: { post: { id: postId }, user: { id: userId } },
+			relations: ['post', 'user']
 		})
 
 		if (rating) {
-			if (rating.increment === increment) {
+			if (rating.increment === increment)
 				throw new BadRequestException(
 					'Вы уже оценили этот пост с таким же рейтингом'
 				)
-			}
 			post.rating -= rating.increment
 			await this.repository.save(post)
 			rating.increment = increment
@@ -48,20 +47,19 @@ export class PostService {
 			post.rating += increment
 			await this.repository.save(post)
 		} else {
-			if (increment !== 1 && increment !== -1) {
+			if (increment !== 1 && increment !== -1)
 				throw new BadRequestException('Неверное значение инкремента рейтинга')
-			}
 			post.rating += increment
 			await this.repository.save(post)
 			const newRating = this.ratingRepository.create({
-				postId,
-				userId,
+				post: { id: postId },
+				user: { id: userId },
 				increment
 			})
 			await this.ratingRepository.save(newRating)
 		}
 
-		const updatedPost = await this.repository.findOne(postId) // Получение обновленного значения рейтинга из базы данных
+		const updatedPost = await this.repository.findOne(postId)
 		return { rating: updatedPost.rating }
 	}
 

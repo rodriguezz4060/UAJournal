@@ -7,6 +7,7 @@ import {
 	OneToMany
 } from 'typeorm'
 import { CommentEntity } from '../../comment/entities/comment.entity'
+import { RatingEntity } from 'src/post/entities/rating.entity'
 
 @Entity('users')
 export class UserEntity {
@@ -26,6 +27,12 @@ export class UserEntity {
 		nullable: true
 	})
 	comments: CommentEntity[]
+
+	@OneToMany(() => RatingEntity, postRating => postRating.user, {
+		eager: false,
+		nullable: true
+	})
+	postRating: RatingEntity[]
 
 	@Column({ nullable: true })
 	password?: string
