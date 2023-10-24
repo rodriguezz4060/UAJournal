@@ -7,6 +7,10 @@ import {
 import styles from '../Porfile.module.scss'
 import { ResponseUser } from '../../../utils/api/types'
 
+import moment from 'moment'
+import 'moment/locale/ru'
+moment.locale('ru')
+
 interface UsersProfileInfoProps {
 	user: ResponseUser
 }
@@ -54,7 +58,9 @@ export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 						2 подписчика
 					</Link>
 				</div>
-				<div className={styles.header__stat}>На проекте с 15 сен 2016</div>
+				<div className={styles.header__stat}>
+					На проекте с {moment(user.createdAt).format('D MMM YYYY')}
+				</div>
 			</div>
 		</div>
 	)

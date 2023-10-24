@@ -25,6 +25,7 @@ interface UsersProfilePostProps {
 	onRemove: (id: number) => void
 	user: ResponseUser
 	createdAt: string
+	rating: number
 }
 
 export const UsersProfilePost: React.FC<UsersProfilePostProps> = ({
@@ -37,7 +38,8 @@ export const UsersProfilePost: React.FC<UsersProfilePostProps> = ({
 	createdAt,
 	incut,
 	quote,
-	caption
+	caption,
+	rating
 }) => {
 	const router = useRouter()
 	const [anchorEl, setAnchorEl] = React.useState(null)
@@ -146,7 +148,7 @@ export const UsersProfilePost: React.FC<UsersProfilePostProps> = ({
 					))}
 				</div>
 			)}
-			<PostActions />
+			<PostActions id={id} rating={rating} user={user.id} />
 		</Paper>
 	)
 }

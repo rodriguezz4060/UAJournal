@@ -214,6 +214,8 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 										<UsersProfilePost
 											key={obj.id}
 											id={obj.id}
+											rating={obj.rating}
+											postId={obj.id}
 											title={obj.title}
 											incut={obj.body
 												.filter(
