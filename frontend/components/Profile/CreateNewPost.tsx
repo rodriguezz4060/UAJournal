@@ -1,0 +1,79 @@
+import React from 'react'
+import styles from './Porfile.module.scss'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUserData } from '../../redux/slices/user'
+import { Avatar, Link, Paper } from '@material-ui/core'
+import ImageIcon from '@material-ui/icons/ImageOutlined'
+import LinkIcon from '@material-ui/icons/Link'
+import { useRouter } from 'next/router'
+
+interface CreateNewPostProps {}
+
+export const CreateNewPost: React.FC<CreateNewPostProps> = () => {
+	const userData = useAppSelector(selectUserData)
+	const [avatarUrl, setAvatarUrl] = React.useState(userData?.avatarUrl || '')
+	console.log('news', avatarUrl)
+
+	const router = useRouter()
+
+	const handleButtonClick = () => {
+		router.push('/write')
+	}
+
+	return (
+		<div>
+			<Paper
+				className='pl-20 pr-20  mb-30'
+				elevation={0}
+				style={{ borderRadius: 10 }}
+			>
+				<div
+					className={`${styles.miniEditor} 
+					${styles.miniEditor} ${styles.island} 
+					${styles.islandBg} ${styles.islandRound}`}
+					onClick={handleButtonClick}
+				>
+					{avatarUrl !== '' ? (
+						<div
+							className={styles.miniEditor__avatar}
+							onClick={handleButtonClick}
+							style={{ backgroundImage: `url(${userData?.avatarUrl})` }}
+						></div>
+					) : (
+						<Avatar
+							onClick={handleButtonClick}
+							className={styles.miniEditor__avatar}
+							src={userData.fullName[0]}
+						/>
+					)}
+					<div
+						className={styles.miniEditor__placeholder}
+						onClick={handleButtonClick}
+					>
+						Новая запись
+					</div>
+
+					<div
+						className={styles.miniEditor__buttons}
+						onClick={handleButtonClick}
+					>
+						<div className={styles.miniEditor__button}>
+							<ImageIcon style={{ width: 20, height: 20 }} /> Фото и видео
+						</div>
+
+						<div
+							className={styles.miniEditor__button}
+							onClick={handleButtonClick}
+						>
+							<LinkIcon
+								className={styles.rotareSvg}
+								style={{ width: 20, height: 20 }}
+							/>
+							Ссылка
+						</div>
+					</div>
+				</div>
+			</Paper>
+		</div>
+	)
+}

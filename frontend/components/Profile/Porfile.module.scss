@@ -447,3 +447,81 @@
 .headerStat:not(:last-child) {
 	margin-right: 16px;
 }
+
+.miniEditor {
+	display: grid;
+	grid-template-columns: 30px 1fr;
+	grid-template-rows: 30px auto;
+	grid-gap: 10px 15px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.islandRound {
+	border-radius: 8px;
+}
+
+.miniEditor__avatar {
+	border-radius: 50%;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+}
+
+.miniEditor__placeholder {
+	color: #595959;
+	line-height: 30px;
+	cursor: text;
+}
+
+.miniEditor__buttons {
+	grid-column: span 2;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.miniEditor__button:first-child {
+	--icon-color: #0a1;
+}
+
+.miniEditor__button:nth-child(2) {
+	--icon-color: #27e;
+}
+
+.miniEditor__button:not(:last-child) {
+	margin-right: 8px;
+}
+
+.miniEditor__button {
+	--height: 30px;
+	--background-color: #f4f7f9;
+	height: var(--height);
+	border-radius: var(--height);
+	padding-left: 10px;
+	padding-right: 12px;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: baseline;
+	align-items: baseline;
+	cursor: pointer;
+	background-color: var(--background-color);
+	color: #595959;
+	font-size: 14px;
+	line-height: calc(var(--height) + 1px);
+}
+
+.miniEditor__button svg {
+	-ms-flex-item-align: center;
+	align-self: center;
+	margin-right: 6px;
+	color: var(--icon-color, #000);
+}
+.rotareSvg {
+	transform: rotate(310deg);
+}
+
+.miniEditor__button:hover {
+	--background-color: #eef2f6;
+}

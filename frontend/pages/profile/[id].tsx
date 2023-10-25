@@ -21,6 +21,7 @@ import { UsersProfilePost } from '../../components/Profile/UsersProfile/UsersPro
 import { useUserComments } from '../../hooks/useUserComments'
 import { CommentProfile } from '../../components/Profile/CommentProfile'
 import { makeStyles } from '@material-ui/core/styles'
+import { CreateNewPost } from '../../components/Profile/CreateNewPost'
 
 const useStyles = makeStyles({
 	paper: {
@@ -72,7 +73,11 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 			<MainLayout contentFullWidth>
 				{isOwnProfile ? (
 					<div>
-						<Paper className='pl-20 pr-20 pt-20 mb-30' elevation={0}>
+						<Paper
+							className='pl-20 pr-20 pt-20 mb-30'
+							elevation={0}
+							style={{ borderRadius: 10 }}
+						>
 							<div className='justify-between'>
 								<AvatarUploader
 									headerCoverUrl={userData.headerCoverUrl}
@@ -95,6 +100,7 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 						<div className='d-flex align-start'>
 							{selectedTab === 0 && (
 								<div className='mr-20 flex'>
+									<CreateNewPost />
 									{userPosts.map(obj => (
 										<Post
 											key={obj.id}
