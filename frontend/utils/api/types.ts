@@ -14,7 +14,7 @@ export type ResponseUser = {
 	avatarUrl?: string
 	headerCoverUrl?: string
 	headerCoverPosition?: string
-	description?: string
+	description: string
 	email: string
 	fullName: string
 	commentsCount?: number

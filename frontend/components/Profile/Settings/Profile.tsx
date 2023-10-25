@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface SettingsMainProps {}
 
 const Profile: React.FC<SettingsMainProps> = ({}) => {
+	const userData = useAppSelector(selectUserData)
 	const [error, setError] = useState('')
 	const [focused, setFocused] = useState(false)
 	const classes = useStyles()
@@ -45,7 +46,6 @@ const Profile: React.FC<SettingsMainProps> = ({}) => {
 	const [open, setOpen] = useState(false)
 	const anchorRef = useRef(null)
 
-	const userData = useAppSelector(selectUserData)
 	const [fullName, setFullName] = useState(userData.fullName)
 	const [description, setDescription] = useState(userData.description)
 	const [feed, setFeed] = useState(userData.feed)
@@ -184,9 +184,9 @@ const Profile: React.FC<SettingsMainProps> = ({}) => {
 							placeholder: 'Пара слов о себе',
 							inputProps: { maxLength: 160 },
 							endAdornment:
-								description.length <= 150 ? null : (
+								description?.length <= 150 ? null : (
 									<InputAdornment position='end'>
-										{160 - description.length}
+										{description !== null ? 160 - description.length : null}
 									</InputAdornment>
 								)
 						}}

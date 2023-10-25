@@ -12,6 +12,8 @@ import { parseCookies } from 'nookies'
 import { usePostRating } from '../../hooks/usePostRating'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
+import { useComments } from '../../hooks/useComments'
+import Link from 'next/link'
 
 interface PostActionsProps {
 	rating: number
@@ -25,6 +27,7 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 
 	const userData = useAppSelector(selectUserData)
 	const { postsRating, setPostsRating } = usePostRating(id)
+	const { comments, setComments } = useComments(id)
 
 	const handleRatingChange = async (increment: number) => {
 		try {
@@ -83,25 +86,55 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
 		>
 			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
+				<div
+					className={`${styles.comments_counter} 
+					${styles.comments_counter__num} 
+					${styles.comments_counter__nonzero}`}
 				>
-					<CommentsIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
+					<Link
+						className={`${styles.comments_counter__count}`}
+						href={`/news/${id}#comments`}
+					>
+						<IconButton className={`${styles.buttonSvg}`}>
+							<CommentsIcon style={{ width: 20, height: 20 }} />
+						</IconButton>
+						{comments.length === 0 ? (
+							<span className={styles.comments_counter__count__value}>
+								Обсудить
+							</span>
+						) : (
+							<span className={styles.comments_counter__count__value}>
+								{comments.length}
+							</span>
+						)}
+					</Link>
+				</div>
 			</div>
 			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
+				<div
+					className={`${styles.comments_counter} 
+					${styles.comments_counter__num} 
+					${styles.comments_counter__nonzero}`}
 				>
-					<RepostIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
+					<IconButton
+						className={`${styles.buttonSvg} ${styles.comments_counter}`}
+					>
+						<RepostIcon style={{ width: 20, height: 20 }} />
+					</IconButton>
+				</div>
 			</div>
 			<div className={styles.contentFooter__item}>
-				<IconButton
-					className={`${styles.buttonSvg} ${styles.comments_counter}`}
+				<div
+					className={`${styles.comments_counter} 
+					${styles.comments_counter__num} 
+					${styles.comments_counter__nonzero}`}
 				>
-					<FavoriteIcon style={{ width: 20, height: 20 }} />
-				</IconButton>
+					<IconButton
+						className={`${styles.buttonSvg} ${styles.comments_counter}`}
+					>
+						<FavoriteIcon style={{ width: 20, height: 20 }} />
+					</IconButton>
+				</div>
 			</div>
 			<div
 				className={`${styles.contentFooter__item} ${styles.contentFooter__item__right}`}
@@ -113,7 +146,12 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 				>
 					<ArrowUpIcon style={{ width: 25, height: 25 }} />
 				</IconButton>
-				{currentRating}
+				<span
+					className={`${styles.comments_counter__count__value} ${styles.likeButton}`}
+				>
+					{currentRating}
+				</span>
+
 				<IconButton
 					className={`${styles.ratingDown} ${styles.ratingDown_counter}
 					${userRatedDown ? styles.userRatedDown : ''}`}

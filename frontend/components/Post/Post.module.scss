@@ -1,3 +1,46 @@
+.contentImage {
+	--background-color: rgba(0, 0, 0, 0.08);
+	--offset-y: var(--offset, 0);
+	background-color: var(--background-color);
+	-ms-flex-pack: center;
+	justify-content: center;
+	padding: var(--offset-y) 0;
+
+	@media (min-width: 819px) {
+		.contentImage {
+			--offset: 0px;
+		}
+	}
+
+	@media (min-width: 260px) {
+		.contentImage {
+			--offset: 8px;
+		}
+	}
+}
+
+.menuForm {
+	border-radius: 8px !important;
+
+	ul {
+		padding-top: 2px;
+		padding-bottom: 4px;
+	}
+}
+
+.menu__item {
+	padding: 2px 3px;
+
+	li:hover {
+		border-radius: 8px !important;
+	}
+
+	svg {
+		margin-right: 12px;
+		font-size: 1.05rem;
+	}
+}
+
 .title {
 	font-weight: 500 !important;
 	font-size: 22px !important;
@@ -93,6 +136,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	object-fit: contain;
 
 	img,
 	video {

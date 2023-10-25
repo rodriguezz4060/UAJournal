@@ -11,126 +11,130 @@ export const FullPost: React.FC<FullPostProps> = ({
 	title,
 	blocks,
 	user,
-	id
+	id,
+	rating
 }) => {
 	return (
 		<div>
 			<Paper elevation={0} className={styles.paper}>
 				<div className={styles.container}>
 					<Typography className={styles.title}>{title}</Typography>
-					<div className={styles.text}>
-						{blocks.map(obj => {
-							if (obj.type === 'paragraph') {
-								return (
-									<div className={styles.figure}>
-										<div className={styles.paragraph}>
-											<Typography
-												key={obj.id}
-												dangerouslySetInnerHTML={{ __html: obj.data.text }}
-											/>
-										</div>
-									</div>
-								)
-							}
-							if (obj.type === 'quote') {
-								return (
-									<div className={styles.figure}>
-										<blockquote className={styles.block_quote}>
-											<div className={styles.quote__content}>
-												<QuoteIcon />
+					<div>
+						<div className={styles.text}>
+							{blocks.map(obj => {
+								if (obj.type === 'paragraph') {
+									return (
+										<div className={styles.figure}>
+											<div className={styles.paragraph}>
 												<Typography
 													key={obj.id}
-													className={styles.quote_text}
-													dangerouslySetInnerHTML={{ __html: obj.data.text }}
-												/>
-												<div
-													className={styles.quote_author}
-													dangerouslySetInnerHTML={{ __html: obj.data.caption }}
-												/>
-											</div>
-										</blockquote>
-									</div>
-								)
-							}
-							if (obj.type === 'list') {
-								return (
-									<div className={styles.figure}>
-										<div className={styles.list}>
-											<ul>
-												{obj.data.items.map((item, index) => (
-													<li key={index}>{item}</li>
-												))}
-											</ul>
-										</div>
-									</div>
-								)
-							}
-							if (obj.type === 'incut') {
-								return (
-									<div className={styles.figure}>
-										<div className={styles.block_incut}>
-											<div className={styles.content_incut}>
-												<Typography
-													key={obj.id}
-													className={styles.quote_text}
 													dangerouslySetInnerHTML={{ __html: obj.data.text }}
 												/>
 											</div>
 										</div>
-									</div>
-								)
-							}
-							if (obj.type === 'code') {
-								return (
-									<div className={styles.figure}>
-										<div className={styles.block_code}>{obj.data.code}</div>
-									</div>
-								)
-							}
-							if (obj.type === 'image') {
-								const imageClass =
-									obj.data.file.width < 640
-										? styles.small_image
-										: obj.data.file.width < 950
-										? styles.image
-										: styles.stretched_image
-
-								return (
-									<div className={styles.figure}>
-										<div className={imageClass}>
-											<img src={obj.data.file.url} alt={obj.data.caption} />
-											<div className={styles.image_caption}>
-												{obj.data.caption}
+									)
+								}
+								if (obj.type === 'quote') {
+									return (
+										<div className={styles.figure}>
+											<blockquote className={styles.block_quote}>
+												<div className={styles.quote__content}>
+													<QuoteIcon />
+													<Typography
+														key={obj.id}
+														className={styles.quote_text}
+														dangerouslySetInnerHTML={{ __html: obj.data.text }}
+													/>
+													<div
+														className={styles.quote_author}
+														dangerouslySetInnerHTML={{
+															__html: obj.data.caption
+														}}
+													/>
+												</div>
+											</blockquote>
+										</div>
+									)
+								}
+								if (obj.type === 'list') {
+									return (
+										<div className={styles.figure}>
+											<div className={styles.list}>
+												<ul>
+													{obj.data.items.map((item, index) => (
+														<li key={index}>{item}</li>
+													))}
+												</ul>
 											</div>
 										</div>
-									</div>
-								)
-							}
-							if (obj.type === 'video') {
-								const videoClass =
-									obj.data.file.width < 640
-										? styles.small_image
-										: obj.data.file.width < 950
-										? styles.image
-										: styles.stretched_image
-								return (
-									<div className={styles.figure}>
-										<div className={videoClass}>
-											<video controls>
-												<source src={obj.data.file.url} type='video/mp4' />
-											</video>
-											<div className={styles.video_caption}>
-												{obj.data.caption}
+									)
+								}
+								if (obj.type === 'incut') {
+									return (
+										<div className={styles.figure}>
+											<div className={styles.block_incut}>
+												<div className={styles.content_incut}>
+													<Typography
+														key={obj.id}
+														className={styles.quote_text}
+														dangerouslySetInnerHTML={{ __html: obj.data.text }}
+													/>
+												</div>
 											</div>
 										</div>
-									</div>
-								)
-							}
-							return null
-						})}
+									)
+								}
+								if (obj.type === 'code') {
+									return (
+										<div className={styles.figure}>
+											<div className={styles.block_code}>{obj.data.code}</div>
+										</div>
+									)
+								}
+								if (obj.type === 'image') {
+									const imageClass =
+										obj.data.file.width < 640
+											? styles.small_image
+											: obj.data.file.width < 1000
+											? styles.image
+											: styles.stretched_image
 
+									return (
+										<div className={styles.figure}>
+											<div className={imageClass}>
+												<img src={obj.data.file.url} alt={obj.data.caption} />
+												<div className={styles.image_caption}>
+													{obj.data.caption}
+												</div>
+											</div>
+										</div>
+									)
+								}
+								if (obj.type === 'video') {
+									const videoClass =
+										obj.data.file.width < 640
+											? styles.small_image
+											: obj.data.file.width < 950
+											? styles.image
+											: styles.stretched_image
+									return (
+										<div className={styles.figure}>
+											<div className={videoClass}>
+												<video controls>
+													<source src={obj.data.file.url} type='video/mp4' />
+												</video>
+												<div className={styles.video_caption}>
+													{obj.data.caption}
+												</div>
+											</div>
+										</div>
+									)
+								}
+								return null
+							})}
+						</div>
 						<div className={styles.PostActions}>
-							<PostActions />
+							<PostActions id={id} rating={rating} />
 						</div>
 						<div className='d-flex justify-between align-center mt-30 mb-30'>
 							<div className={styles.userInfo}>

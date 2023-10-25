@@ -18,8 +18,11 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
 				title={post.title}
 				blocks={post.body}
 				user={post.user}
+				rating={post.rating}
 			/>
-			<PostComments postId={post.id} />
+			<div id='comments'>
+				<PostComments postId={post.id} />
+			</div>
 		</MainLayout>
 	)
 }

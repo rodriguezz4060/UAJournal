@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import {
 	Avatar,
+	ClickAwayListener,
+	Grow,
 	IconButton,
 	Menu,
 	MenuItem,
+	MenuList,
 	Paper,
+	Popper,
 	Typography
 } from '@material-ui/core'
 import { useRouter } from 'next/router'
@@ -22,6 +26,18 @@ import { selectUserData } from '../../redux/slices/user'
 import moment from 'moment'
 import 'moment/locale/ru'
 moment.locale('ru')
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			display: 'flex'
+		},
+		paper: {
+			marginRight: theme.spacing(2)
+		}
+	})
+)
 
 interface PostProps {
 	title: string
@@ -52,6 +68,9 @@ export const Post: React.FC<PostProps> = ({
 	caption,
 	rating
 }) => {
+	const classes = useStyles()
+	const [open, setOpen] = React.useState(false)
+	const anchorRef = React.useRef<HTMLButtonElement>(null)
 	const handleRemove = async () => {
 		const userData = useAppSelector(selectUserData)
 
@@ -63,6 +82,38 @@ export const Post: React.FC<PostProps> = ({
 		}
 	}
 
+	const handleToggle = () => {
+		setOpen(prevOpen => !prevOpen)
+	}
+
+	const handleClose = (event: React.MouseEvent<EventTarget>) => {
+		if (
+			anchorRef.current &&
+			anchorRef.current.contains(event.target as HTMLElement)
+		) {
+			return
+		}
+
+		setOpen(false)
+	}
+
+	function handleListKeyDown(event: React.KeyboardEvent) {
+		if (event.key === 'Tab') {
+			event.preventDefault()
+			setOpen(false)
+		}
+	}
+
+	// return focus to the button when we transitioned from !open -> open
+	const prevOpen = React.useRef(open)
+	React.useEffect(() => {
+		if (prevOpen.current === true && open === false) {
+			anchorRef.current!.focus()
+		}
+
+		prevOpen.current = open
+	}, [open])
+
 	const router = useRouter()
 	const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -70,13 +121,12 @@ export const Post: React.FC<PostProps> = ({
 		setAnchorEl(event.currentTarget)
 	}
 
-	const handleClose = () => {
-		setAnchorEl(null)
-	}
+	// const handleClose = () => {
+	// 	setAnchorEl(null)
+	// }
 
 	const handleEdit = () => {
 		router.push(`/write/${id}`)
-		handleClose()
 	}
 
 	return (
@@ -95,21 +145,53 @@ export const Post: React.FC<PostProps> = ({
 						</div>
 					</div>
 					<div className={styles.userInfoControl}>
-						<IconButton onClick={handleClick}>
+						<IconButton
+							ref={anchorRef}
+							aria-controls={open ? 'menu-list-grow' : undefined}
+							aria-haspopup='true'
+							onClick={handleToggle}
+						>
 							<MoreIcon />
 						</IconButton>
 
-						<Menu
-							anchorEl={anchorEl}
-							elevation={2}
-							open={Boolean(anchorEl)}
-							onClose={handleClose}
-							keepMounted
-							disableScrollLock={true}
+						<Popper
+							open={open}
+							anchorEl={anchorRef.current}
+							role={undefined}
+							transition
+							disablePortal
 						>
-							<MenuItem onClick={handleRemove}>Удалить</MenuItem>
-							<MenuItem onClick={handleEdit}>Редактировать</MenuItem>
-						</Menu>
+							{({ TransitionProps, placement }) => (
+								<Grow
+									{...TransitionProps}
+									style={{
+										transformOrigin:
+											placement === 'bottom' ? 'center top' : 'center bottom'
+									}}
+								>
+									<Paper className={styles.menuForm}>
+										<ClickAwayListener onClickAway={handleClose}>
+											<div className={styles.menu__item}>
+												<MenuList
+													autoFocusItem={open}
+													id='menu-list-grow'
+													onKeyDown={handleListKeyDown}
+												>
+													<div className={styles.menu__item}>
+														<MenuItem onClick={handleRemove}>Удалить</MenuItem>
+													</div>
+													<div className={styles.menu__item}>
+														<MenuItem onClick={handleEdit}>
+															Редактировать
+														</MenuItem>
+													</div>
+												</MenuList>
+											</div>
+										</ClickAwayListener>
+									</Paper>
+								</Grow>
+							)}
+						</Popper>
 					</div>
 				</div>
 			</div>
@@ -119,9 +201,9 @@ export const Post: React.FC<PostProps> = ({
 				</div>
 			</div>
 			{images.length > 0 && (
-				<div className={styles.imagePost}>
+				<div className={`${styles.imagePost} ${styles.contentImage}`}>
 					{images.map((image, index) => (
-						<div className={styles.figure}>
+						<div>
 							<img key={index} src={image} alt={`Image ${index + 1}`} />
 						</div>
 					))}

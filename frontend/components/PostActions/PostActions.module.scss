@@ -21,21 +21,56 @@
 
 .buttonSvg {
 	padding: 5px !important;
-
-	&:hover {
-		background-color: rgba(0, 102, 255, 0.12) !important;
-		border-radius: 100%;
-		z-index: 1;
-	}
 }
 
 .contentFooter__item:not(:last-child) {
 	margin-right: 20px;
 }
 
+.comments_counter {
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	vertical-align: top;
+	color: #595959;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	&:hover {
+		.buttonSvg {
+			background-color: rgba(0, 102, 255, 0.12) !important;
+			border-radius: 100%;
+			z-index: 1;
+			--text-color: #68a2f3;
+			color: var(--text-color);
+		}
+	}
+}
+
+.likeButton {
+	color: #595959;
+}
+
 .comments_counter:hover {
 	--text-color: #68a2f3;
 	color: var(--text-color);
+}
+
+.comments_counter__count__value {
+	line-height: 22px;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.comments_counter__count {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.comments_counter__num .comments_counter__count__value,
+.comments_counter__mall .comments_counter__count__value {
+	margin-left: 1px;
 }
 
 .contentFooter__item__right {
