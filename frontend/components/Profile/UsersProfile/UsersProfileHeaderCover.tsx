@@ -11,7 +11,9 @@ const UsersProfileHeaderCover = ({ user }: HeaderCoverProps) => {
 	return (
 		<div>
 			<div
-				className={`${styles.headerCover} ${styles.header__cover} `}
+				className={`${styles.headerCover} ${styles.header__cover} ${
+					!user?.headerCoverUrl && styles.headerCoverNoImage
+				}`}
 				style={{
 					backgroundImage: `url(${user?.headerCoverUrl})`,
 					backgroundPosition: `${user?.headerCoverPosition}`

@@ -125,7 +125,7 @@ const AvatarUploader = ({
 				{`
           :root {
             --wrapper-padding-top: 40px;
-            --max-width-container: 900px
+            --max-width-container: 960px
           }
         `}
 			</style>

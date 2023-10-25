@@ -24,7 +24,25 @@ export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 				</div>
 			</div>
 			<div className={styles.header__description}>
-				<div className={styles.headerDescription}>{user?.description}</div>
+				<div className={styles.headerDescription}>
+					{user?.description && (
+						<div
+							dangerouslySetInnerHTML={{
+								__html: user.description
+									.replace(
+										/(https?:\/\/[^\s]+)/g,
+										(match, url) =>
+											`<a href="${url}" target="_blank">${url}</a>`
+									)
+									.replace(
+										/(^|\s)([a-zA-Z0-9]+\.([a-zA-Z]{2,}\/[^\s]+))/g,
+										(match, space, url) =>
+											`${space}<a href="https://${url}" target="_blank">${url}</a>`
+									)
+							}}
+						/>
+					)}
+				</div>
 			</div>
 
 			<div className={`${styles.header__actions} ${styles.headerActions}`}>

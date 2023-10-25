@@ -158,6 +158,11 @@
 	position: relative;
 }
 
+.headerCoverNoImage {
+	height: 130px;
+	background-color: #fff;
+}
+
 .headerCoverManage {
 	display: -ms-flexbox;
 	display: flex;
@@ -228,12 +233,18 @@
 }
 
 .headerDescription {
-	font-size: 15px;
+	font-size: 16px;
 	line-height: 24px;
 	font-weight: 400;
 	lines-limit: 2;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
+
+	a {
+		color: #3766a9;
+		border-bottom: 1px solid #bed0ea;
+		cursor: pointer;
+	}
 }
 
 .headerDescription__edit {
@@ -243,6 +254,7 @@
 .linkInline {
 	color: #3766a9 !important;
 	cursor: pointer;
+	border-bottom: none !important;
 
 	&:hover {
 		color: #cd192e !important;

@@ -33,15 +33,30 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 			</div>
 			<div className={styles.header__description}>
 				<div className={styles.headerDescription}>
-					{userData?.description}
+					{userData?.description && (
+						<div
+							dangerouslySetInnerHTML={{
+								__html: userData.description
+									.replace(
+										/(https?:\/\/[^\s]+)/g,
+										(match, url) =>
+											`<a href="${url}" target="_blank">${url}</a>`
+									)
+									.replace(
+										/(^|\s)([a-zA-Z0-9]+\.([a-zA-Z]{2,}\/[^\s]+))/g,
+										(match, space, url) =>
+											`${space}<a href="https://${url}" target="_blank">${url}</a>`
+									)
+							}}
+						/>
+					)}
 					<div className={styles.headerDescription__edit}>
-						<Link href='#' className={styles.linkInline}>
+						<Link href='/profile/settings' className={styles.linkInline}>
 							Изменить описание
 						</Link>
 					</div>
 				</div>
 			</div>
-
 			<div className={`${styles.header__actions} ${styles.headerActions}`}>
 				<Link
 					href='/profile/settings'
