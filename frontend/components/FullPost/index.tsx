@@ -158,7 +158,7 @@ export const FullPost: React.FC<FullPostProps> = ({
                   alt='Avatar'
                 />
                 <b>{user.fullName}</b>
-                <span>+{user.commentsCount * 2}</span>
+                <span>+{user.rating}</span>
               </div>
               <div>
                 <Button variant='contained' className='mr-15'>
