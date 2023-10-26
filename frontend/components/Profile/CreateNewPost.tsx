@@ -36,35 +36,22 @@ export const CreateNewPost: React.FC<CreateNewPostProps> = () => {
 					{avatarUrl !== '' ? (
 						<div
 							className={styles.miniEditor__avatar}
-							onClick={handleButtonClick}
 							style={{ backgroundImage: `url(${userData?.avatarUrl})` }}
 						></div>
 					) : (
 						<Avatar
-							onClick={handleButtonClick}
 							className={styles.miniEditor__avatar}
 							src={userData.fullName[0]}
 						/>
 					)}
-					<div
-						className={styles.miniEditor__placeholder}
-						onClick={handleButtonClick}
-					>
-						Новая запись
-					</div>
+					<div className={styles.miniEditor__placeholder}>Новая запись</div>
 
-					<div
-						className={styles.miniEditor__buttons}
-						onClick={handleButtonClick}
-					>
+					<div className={styles.miniEditor__buttons}>
 						<div className={styles.miniEditor__button}>
 							<ImageIcon style={{ width: 20, height: 20 }} /> Фото и видео
 						</div>
 
-						<div
-							className={styles.miniEditor__button}
-							onClick={handleButtonClick}
-						>
+						<div className={styles.miniEditor__button}>
 							<LinkIcon
 								className={styles.rotareSvg}
 								style={{ width: 20, height: 20 }}
