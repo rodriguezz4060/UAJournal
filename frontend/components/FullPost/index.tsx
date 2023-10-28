@@ -4,10 +4,13 @@ import MessageIcon from '@material-ui/icons/TextsmsOutlined'
 import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
 import QuoteIcon from '@material-ui/icons/FormatQuote'
 import styles from './FullPost.module.scss'
+import buttonStyles from '../Profile/Porfile.module.scss'
 import { FullPostProps } from '.'
-import { Button, Paper, Typography } from '@material-ui/core'
+import { Avatar, Button, Link, Paper, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import SimpleGallery from '../PhotoSwipe'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUserData } from '../../redux/slices/user'
 
 export const FullPost: React.FC<FullPostProps> = ({
 	title,
@@ -16,9 +19,29 @@ export const FullPost: React.FC<FullPostProps> = ({
 	id,
 	rating
 }) => {
+	const userData = useAppSelector(selectUserData)
+	const [buttonVisible, setButtonVisible] = React.useState(false)
+
+	const ratingClassName =
+		user?.rating > 0
+			? styles.numberChange__positive
+			: user?.rating < 0
+			? styles.numberChange__negative
+			: ''
+
+	React.useEffect(() => {
+		if (buttonVisible && userData) {
+			setButtonVisible(false)
+		}
+	}, [buttonVisible, userData])
+
 	return (
 		<div>
-			<Paper elevation={0} className={styles.paper}>
+			<Paper
+				elevation={0}
+				className={styles.paper}
+				style={{ borderRadius: 10 }}
+			>
 				<div className={styles.container}>
 					<Typography className={styles.title}>{title}</Typography>
 					<div>
@@ -147,23 +170,87 @@ export const FullPost: React.FC<FullPostProps> = ({
 						<div className={styles.PostActions}>
 							<PostActions id={id} rating={rating} />
 						</div>
-						<div className='d-flex justify-between align-center mt-30 mb-30'>
-							<div className={styles.userInfo}>
-								<img
-									src='https://leonardo.osnova.io/104b03b4-5173-fd9f-2af9-b458dddc4a23/-/scale_crop/108x108/-/format/webp/'
-									alt='Avatar'
-								/>
-								<b>{user.fullName}</b>
-								<span>+{user.rating}</span>
-							</div>
-							<div>
-								<Button variant='contained' className='mr-15'>
-									<MessageIcon />
-								</Button>
-								<Button variant='contained'>
-									<UserAddIcon />
-									<b className='ml-10'>Подписаться</b>
-								</Button>
+						<div className={styles.subsiteCardEntry}>
+							<div className={styles.islandB}>
+								<div className={styles.subsiteard}>
+									<div className={styles.subsiteCard__main}>
+										<Link href={`/profile/${user.id}`}>
+											{user.avatarUrl !== null ? (
+												<div
+													className={styles.subsiteCard__avatar}
+													style={{
+														backgroundImage: `url(${user.avatarUrl})`
+													}}
+												></div>
+											) : (
+												<Avatar
+													className={styles.userAvatar}
+													src={user.fullName[0]}
+												/>
+											)}
+										</Link>
+										<div className={styles.subsiteCard__authorInfo}>
+											<div className={styles.subsiteCardTitle}>
+												<Link
+													href={`/profile/${user.id}`}
+													className={`${styles.subsiteCardTitle__item__name} ${styles.subsiteCardTitle__item}`}
+												>
+													{user.fullName}
+												</Link>
+												<div
+													className={`${styles.subsiteCardTitle__item__karma} 
+													${styles.subsiteCardTitle__item} ${ratingClassName}`}
+												>
+													{user?.rating > 0
+														? `+${user?.rating}`
+														: user?.rating < 0
+														? `-${Math.abs(user?.rating)}`
+														: user?.rating}
+												</div>
+											</div>
+
+											{user?.description && (
+												<div
+													className={styles.subsiteCard__description}
+													dangerouslySetInnerHTML={{
+														__html: user.description
+															.replace(
+																/(https?:\/\/[^\s]+)/g,
+																(match, url) =>
+																	`<a href="${url}" target="_blank">${url}</a>`
+															)
+															.replace(
+																/(^|\s)([a-zA-Z0-9]+\.([a-zA-Z]{2,}\/[^\s]+))/g,
+																(match, space, url) =>
+																	`${space}<a href="https://${url}" target="_blank">${url}</a>`
+															)
+													}}
+												/>
+											)}
+										</div>
+									</div>
+									{userData && user.id === userData.id ? null : (
+										<div className={styles.subsiteCard__actions}>
+											<button
+												className={`${styles.subsiteCard__messenger} ${buttonStyles.button} ${buttonStyles.buttonDefault} ${buttonStyles.buttonSize_default}`}
+											>
+												<div className={buttonStyles.button__icon}>
+													<MessageIcon />
+												</div>
+											</button>
+											<button
+												className={`${buttonStyles.button}  ${buttonStyles.buttonDefault}`}
+											>
+												<div className={buttonStyles.button__icon}>
+													<UserAddIcon className={buttonStyles.svgMessage} />
+												</div>
+												<span className={buttonStyles.button__lable}>
+													Подписаться
+												</span>
+											</button>
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
