@@ -1,6 +1,6 @@
 .paper {
-	margin-top: -20px;
-	padding: 30px 0;
+	margin-top: -30px;
+	padding: 20px 0;
 
 	p {
 		margin-bottom: 15px;
@@ -72,6 +72,13 @@
 	--offset: 8px;
 }
 
+.islandC {
+	max-width: 640px !important;
+	margin: 0 auto !important;
+	padding-top: 15px;
+	padding-bottom: 13px;
+}
+
 .images {
 	--background-color: rgba(0, 0, 0, 0.08);
 	--offset-y: var(--offset, 0);
@@ -108,7 +115,6 @@
 	font-weight: 500 !important;
 	line-height: 30px !important;
 	word-wrap: break-word !important;
-	margin-top: 12px !important;
 	margin-bottom: 12px !important;
 }
 

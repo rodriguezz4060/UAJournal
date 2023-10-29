@@ -19,6 +19,7 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
 				blocks={post.body}
 				user={post.user}
 				rating={post.rating}
+				createdAt={post.createdAt}
 			/>
 			<div id='comments'>
 				<PostComments postId={post.id} />

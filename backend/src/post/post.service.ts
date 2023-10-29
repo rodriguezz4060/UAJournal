@@ -188,6 +188,7 @@ export class PostService {
 		if (find.user.id !== userId) {
 			throw new ForbiddenException('Нет доступа к этой статье!')
 		}
+		await this.ratingRepository.delete({ post: { id } }) // Удалить связанные оценки поста
 
 		return this.repository.delete(id)
 	}

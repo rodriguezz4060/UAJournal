@@ -11,16 +11,17 @@ import Image from 'next/image'
 import SimpleGallery from '../PhotoSwipe'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
+import { HeaderUser } from '../HeaderPostUserInfo'
 
 export const FullPost: React.FC<FullPostProps> = ({
 	title,
 	blocks,
 	user,
 	id,
-	rating
+	rating,
+	createdAt
 }) => {
 	const userData = useAppSelector(selectUserData)
-	const [buttonVisible, setButtonVisible] = React.useState(false)
 
 	const ratingClassName =
 		user?.rating > 0
@@ -28,7 +29,7 @@ export const FullPost: React.FC<FullPostProps> = ({
 			: user?.rating < 0
 			? styles.numberChange__negative
 			: ''
-
+	const [buttonVisible, setButtonVisible] = React.useState(false)
 	React.useEffect(() => {
 		if (buttonVisible && userData) {
 			setButtonVisible(false)
@@ -42,6 +43,14 @@ export const FullPost: React.FC<FullPostProps> = ({
 				className={styles.paper}
 				style={{ borderRadius: 10 }}
 			>
+				<div className={styles.islandC}>
+					<HeaderUser
+						showTime={true}
+						id={id}
+						createdAt={createdAt}
+						user={user}
+					/>
+				</div>
 				<div className={styles.container}>
 					<Typography className={styles.title}>{title}</Typography>
 					<div>

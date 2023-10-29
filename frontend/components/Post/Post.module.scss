@@ -76,60 +76,11 @@
 }
 
 .userInfoContent {
-	margin-bottom: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 	flex-wrap: nowrap;
-	padding-top: 16px;
-	margin-bottom: 10px;
-	height: 40px;
-}
-
-.userInfoContent {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.userInfoControl {
-	border-radius: 8px !important;
-}
-
-.userInfoControl {
-	margin-left: auto;
-}
-
-.userInfo {
-	display: flex;
-	align-items: center;
-
-	b {
-		font-weight: 500;
-		font-size: 15px;
-		margin-left: 30px;
-	}
-
-	span {
-		font-size: 12px;
-		opacity: 0.8;
-		margin-left: 10px;
-	}
-}
-
-.userAvatar {
-	width: 24px !important;
-	height: 24px !important;
-	border-radius: 30px !important;
-	border-radius: 6px !important;
-	margin-right: 8px !important;
-	overflow: hidden !important;
-	background-size: 100% auto !important;
-	background-repeat: no-repeat !important;
-	position: absolute !important;
-}
-
-.itemControls {
-	display: flex;
+	padding-top: 15px;
+	margin-bottom: 15px;
 }
 
 .imagePost {

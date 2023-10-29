@@ -46,7 +46,12 @@ export default function SimpleGallery(props) {
 							target='_blank'
 							rel='noreferrer'
 						>
-							<img src={image.thumbnailURL} alt='' style={{ maxWidth }} />
+							<img
+								src={image.thumbnailURL}
+								alt=''
+								style={{ maxWidth }}
+								loading='lazy'
+							/>
 						</a>
 					</div>
 				)
