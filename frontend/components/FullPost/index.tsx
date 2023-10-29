@@ -19,7 +19,8 @@ export const FullPost: React.FC<FullPostProps> = ({
 	user,
 	id,
 	rating,
-	createdAt
+	createdAt,
+	onRemove
 }) => {
 	const userData = useAppSelector(selectUserData)
 
@@ -49,6 +50,7 @@ export const FullPost: React.FC<FullPostProps> = ({
 						id={id}
 						createdAt={createdAt}
 						user={user}
+						onRemove={onRemove}
 					/>
 				</div>
 				<div className={styles.container}>

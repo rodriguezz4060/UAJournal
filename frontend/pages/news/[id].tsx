@@ -5,12 +5,24 @@ import { PostComments } from '../../components/PostComments'
 import { GetServerSideProps, NextPage } from 'next'
 import { Api } from '../../utils/api'
 import { PostItem } from '../../utils/api/types'
+import { useRouter } from 'next/router'
 
 interface FullPostPageProps {
 	post: PostItem
 }
 
 const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
+	const [postList, setPostList] = React.useState([post])
+
+	const router = useRouter()
+	const handleRemovePost = (postId: number) => {
+		const updatedList = postList.filter(post => post.id !== postId)
+		setPostList(updatedList)
+		if (router.pathname.includes('/news/')) {
+			router.push('/')
+		}
+	}
+
 	return (
 		<MainLayout className='mb-50' contentFullWidth>
 			<FullPost
@@ -20,6 +32,7 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
 				user={post.user}
 				rating={post.rating}
 				createdAt={post.createdAt}
+				onRemove={handleRemovePost}
 			/>
 			<div id='comments'>
 				<PostComments postId={post.id} />
