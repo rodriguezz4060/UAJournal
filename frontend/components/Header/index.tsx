@@ -155,7 +155,9 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 									style={{ backgroundImage: `url(${userData.avatarUrl})` }}
 								></div>
 							) : (
-								<Avatar className={styles.avatar} src={userData.fullName[0]} />
+								<Avatar className={styles.avatar}>
+									{userData.fullName[0]}
+								</Avatar>
 							)}
 						</Link>
 						<div>
@@ -202,7 +204,9 @@ export const Header: React.FC<HeaderProps> = ({}) => {
 															}}
 														></div>
 													) : (
-														<Avatar className={styles.avatar} />
+														<Avatar className={styles.avatar}>
+															{userData.fullName[0]}
+														</Avatar>
 													)}
 												</div>
 												<span className={styles.user_card__text}>

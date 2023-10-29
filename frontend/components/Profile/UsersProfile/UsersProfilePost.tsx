@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../redux/hooks'
 import { selectUserData } from '../../../redux/slices/user'
 import { Api } from '../../../utils/api'
 import { PostActions } from '../../PostActions'
+import { HeaderUser } from '../../HeaderPostUserInfo'
 
 interface UsersProfilePostProps {
 	title: string
@@ -62,32 +63,12 @@ export const UsersProfilePost: React.FC<UsersProfilePostProps> = ({
 			<div className={styles.postContent}>
 				<div className={styles.userInfoContent}>
 					<div className={styles.userInfo}>
-						<Avatar
-							className={styles.userAvatar}
-							src={user.avatarUrl ? user.avatarUrl : user.fullName[0]}
+						<HeaderUser
+							showTime={false}
+							id={id}
+							createdAt={createdAt}
+							user={user}
 						/>
-						<b>{user.fullName}</b>
-
-						<div>
-							<span>{moment(createdAt).fromNow()}</span>
-						</div>
-					</div>
-					<div className={styles.userInfoControl}>
-						<IconButton onClick={handleClick}>
-							<MoreIcon />
-						</IconButton>
-
-						<Menu
-							anchorEl={anchorEl}
-							elevation={2}
-							open={Boolean(anchorEl)}
-							onClose={handleClose}
-							keepMounted
-							disableScrollLock={true}
-						>
-							<MenuItem>Удалить</MenuItem>
-							<MenuItem>Редактировать</MenuItem>
-						</Menu>
 					</div>
 				</div>
 			</div>

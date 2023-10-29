@@ -5,6 +5,7 @@ import {
 	ClickAwayListener,
 	Grow,
 	IconButton,
+	Link,
 	MenuItem,
 	MenuList,
 	Paper,
@@ -17,11 +18,11 @@ import { ResponseUser } from '../../utils/api/types'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 
 import moment from 'moment'
 import 'moment/locale/ru'
 moment.locale('ru')
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -132,11 +133,17 @@ export const HeaderUser: React.FC<HeaderUserProps> = ({
 		<div className={styles.postContent}>
 			<div className={styles.userInfoContent}>
 				<div className={styles.userInfo}>
-					<Avatar
-						className={styles.userAvatar}
-						src={user.avatarUrl ? user.avatarUrl : user.fullName[0]}
-					/>
-					<b>{user.fullName}</b>
+					<Link className={styles.profileLink} href={`/profile/${user.id}`}>
+						{user.avatarUrl !== null ? (
+							<Avatar className={styles.userAvatar} src={user.avatarUrl} />
+						) : (
+							<Avatar className={`${styles.userAvatar}`}>
+								{user.fullName[0]}
+							</Avatar>
+						)}
+
+						<b>{user.fullName}</b>
+					</Link>
 
 					<div>
 						<span>{displayTime}</span>

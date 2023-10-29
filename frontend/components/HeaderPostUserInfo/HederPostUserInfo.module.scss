@@ -30,15 +30,35 @@
 }
 
 .userAvatar {
-	width: 22px !important;
-	height: 22px !important;
-	border-radius: 30px !important;
+	--size: 22px !important;
+	width: var(--size) !important;
+	height: var(--size) !important;
 	border-radius: 6px !important;
 	margin-right: 8px !important;
+	-ms-flex-negative: 0 !important;
+	flex-shrink: 0 !important;
 	overflow: hidden !important;
 	background-size: 100% auto !important;
 	background-repeat: no-repeat !important;
+	image-rendering: -webkit-optimize-contrast !important;
 	position: absolute !important;
+}
+
+.userAvatar::after {
+	content: '';
+	border-radius: inherit;
+	-webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.userAvatar img {
+	--size: 22px;
+	display: block;
+	width: var(--size);
+	height: var(--size);
 }
 
 .itemControls {
@@ -69,5 +89,12 @@
 	}
 	&:active {
 		box-shadow: none !important;
+	}
+}
+
+.profileLink {
+	color: #000 !important;
+	&:hover {
+		border-bottom: none;
 	}
 }

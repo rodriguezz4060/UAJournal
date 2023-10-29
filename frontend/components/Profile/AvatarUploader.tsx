@@ -151,12 +151,19 @@ const AvatarUploader = ({
 								aria-haspopup='true'
 								onClick={handleToggle}
 							>
-								<Avatar
-									style={{ width: 120, height: 120, borderRadius: 6 }}
-									src={userData?.avatarUrl}
-									aria-controls='avatar-menu'
-									aria-haspopup='true'
-								/>
+								{userData?.avatarUrl !== null ? (
+									<Avatar
+										className={styles.headerAvatar__media}
+										src={userData?.avatarUrl}
+										aria-controls='avatar-menu'
+										aria-haspopup='true'
+									/>
+								) : (
+									<Avatar className={styles.headerAvatar__media}>
+										{userData.fullName[0]}
+									</Avatar>
+								)}
+
 								<div className={styles.headerAvatarManage}>
 									<AddPhotoIcon />
 								</div>

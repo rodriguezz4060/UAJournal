@@ -27,12 +27,16 @@ const UsersProfileAvatar = ({ user }: AvatarUploaderProps) => {
 				<div className={styles.header__avatar}>
 					<div className={styles.headerAvatar}>
 						<div className={styles.headerAvatar__media}>
-							<Avatar
-								style={{ width: 120, height: 120, borderRadius: 6 }}
-								src={user?.avatarUrl}
-								aria-controls='avatar-menu'
-								aria-haspopup='true'
-							/>
+							{user.avatarUrl !== null ? (
+								<Avatar
+									className={styles.headerAvatar__media}
+									src={user.avatarUrl}
+								/>
+							) : (
+								<Avatar className={styles.headerAvatar__media}>
+									{user.fullName[0]}
+								</Avatar>
+							)}
 						</div>
 					</div>
 				</div>

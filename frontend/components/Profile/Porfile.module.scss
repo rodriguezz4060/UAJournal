@@ -21,7 +21,7 @@
 }
 
 .headerAvatar {
-	--size: 112px;
+	--size: 112px !important;
 	--border-width: 4px;
 	position: relative;
 	z-index: 1;
@@ -38,9 +38,9 @@
 
 .headerAvatar__media {
 	position: relative;
-	border-radius: 6px;
-	width: var(--size);
-	height: var(--size);
+	border-radius: 6px !important;
+	width: var(--size) !important;
+	height: var(--size) !important;
 	background-color: #dedede;
 	overflow: hidden;
 	-webkit-box-shadow: 0 0 0 var(--border-width) #fff,
@@ -49,6 +49,7 @@
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 	cursor: pointer;
+	font-size: 2.5em !important;
 
 	&:after {
 		content: '';
@@ -466,6 +467,8 @@
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: cover;
+	width: 30px !important;
+	height: 30px !important;
 }
 
 .miniEditor__placeholder {
@@ -495,10 +498,10 @@
 }
 
 .miniEditor__button {
-	--height: 30px;
+	--height: 30px !important;
 	--background-color: #f4f7f9;
-	height: var(--height);
-	border-radius: var(--height);
+	height: var(--height) !important;
+	border-radius: var(--height) !important;
 	padding-left: 10px;
 	padding-right: 12px;
 	display: -ms-flexbox;

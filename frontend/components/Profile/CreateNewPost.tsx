@@ -39,10 +39,9 @@ export const CreateNewPost: React.FC<CreateNewPostProps> = () => {
 							style={{ backgroundImage: `url(${userData?.avatarUrl})` }}
 						></div>
 					) : (
-						<Avatar
-							className={styles.miniEditor__avatar}
-							src={userData.fullName[0]}
-						/>
+						<Avatar className={styles.miniEditor__avatar}>
+							{userData?.fullName[0]}
+						</Avatar>
 					)}
 					<div className={styles.miniEditor__placeholder}>Новая запись</div>
 
