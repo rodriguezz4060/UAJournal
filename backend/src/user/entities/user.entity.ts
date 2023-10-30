@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { CommentEntity } from '../../comment/entities/comment.entity'
 import { RatingEntity } from 'src/post/entities/rating.entity'
+import { FollowingEntity } from './following.entity'
 
 @Entity('users')
 export class UserEntity {
@@ -21,6 +22,9 @@ export class UserEntity {
 		unique: true
 	})
 	email: string
+
+	@OneToMany(() => FollowingEntity, following => following.followingUser)
+	following: FollowingEntity[]
 
 	@Column({
 		default: 0

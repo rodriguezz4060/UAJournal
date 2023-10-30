@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -9,13 +13,16 @@ import { SearchUserDto } from './dto/searchg-user.dto'
 import { CommentEntity } from '../comment/entities/comment.entity'
 import { AwsService } from 'src/aws/aws.service'
 import { PostEntity } from '../post/entities/post.entity'
+import { FollowingEntity } from './entities/following.entity'
 
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectRepository(UserEntity)
 		private repository: Repository<UserEntity>,
-		private awsService: AwsService
+		private awsService: AwsService,
+		@InjectRepository(FollowingEntity)
+		private followingRepository: Repository<FollowingEntity>
 	) {}
 
 	create(dto: CreateUserDto) {
@@ -117,6 +124,42 @@ export class UserService {
 			console.error('Ошибка удаления обложки:', error)
 			throw new Error('Ошибка удаления обложки')
 		}
+	}
+
+	async followUser(
+		currentUserId: number,
+		userToFollowId: number
+	): Promise<void> {
+		if (currentUserId !== userToFollowId) {
+			const existingFollowing = await this.followingRepository.findOne({
+				where: {
+					followingUser: { id: currentUserId },
+					followUser: { id: userToFollowId }
+				}
+			})
+
+			if (existingFollowing) {
+				throw new BadRequestException('You are already following this user')
+			}
+
+			const following = new FollowingEntity()
+			following.followingUser = await this.repository.findOne(currentUserId)
+			following.followUser = await this.repository.findOne(userToFollowId)
+
+			await this.followingRepository.save(following)
+		} else {
+			throw new BadRequestException('You cannot follow yourself')
+		}
+	}
+
+	async unfollowUser(
+		currentUserId: number,
+		userToUnfollowId: number
+	): Promise<void> {
+		await this.followingRepository.delete({
+			followingUser: { id: currentUserId },
+			followUser: { id: userToUnfollowId }
+		})
 	}
 
 	async search(dto: SearchUserDto) {

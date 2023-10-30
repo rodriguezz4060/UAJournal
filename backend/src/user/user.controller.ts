@@ -10,7 +10,9 @@ import {
 	Request,
 	Query,
 	UseInterceptors,
-	UploadedFile
+	UploadedFile,
+	NotFoundException,
+	BadRequestException
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/update-user.dto'
@@ -42,8 +44,49 @@ export class UserController {
 	}
 
 	@Get(':id')
-	getUserById(@Param() params: GetUserByIdDto) {
-		return this.userService.getUserById(params.id)
+	async getUserById(@Param('id') id: string) {
+		const userId = parseInt(id)
+		const user = await this.userService.getUserById(userId)
+		if (!user) {
+			throw new NotFoundException('User not found')
+		}
+		return user
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post(':id/follow')
+	async followUser(@Request() req, @Param('id') id: string) {
+		const currentUserId = req.user.id
+		const userIdToFollow = parseInt(id)
+
+		if (currentUserId !== userIdToFollow) {
+			const userToFollow = await this.userService.getUserById(userIdToFollow)
+			if (!userToFollow) {
+				throw new NotFoundException('User not found')
+			}
+
+			try {
+				await this.userService.followUser(currentUserId, userIdToFollow)
+				return 'Successfully followed user'
+			} catch (error) {
+				throw new BadRequestException('You are already following this user')
+			}
+		} else {
+			throw new BadRequestException('You cannot follow yourself')
+		}
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Delete(':id/unfollow')
+	async unfollowUser(@Request() req, @Param('id') id: number) {
+		const currentUserId = req.user.id
+
+		try {
+			await this.userService.unfollowUser(currentUserId, id)
+			return 'Successfully unfollowed user'
+		} catch (error) {
+			throw new NotFoundException('User not found')
+		}
 	}
 
 	@Get(':id/posts')

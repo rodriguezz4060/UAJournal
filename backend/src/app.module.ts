@@ -14,6 +14,7 @@ import { AwsModule } from './aws/aws.module'
 import { ConfigModule } from '@nestjs/config'
 import { RatingEntity } from './post/entities/rating.entity'
 import { RatingModule } from './rating/rating.module'
+import { FollowingEntity } from './user/entities/following.entity'
 
 @Module({
 	imports: [
@@ -24,7 +25,13 @@ import { RatingModule } from './rating/rating.module'
 			username: 'gen_user',
 			password: 'Myangels9bb',
 			database: 'default_db',
-			entities: [UserEntity, PostEntity, CommentEntity, RatingEntity],
+			entities: [
+				UserEntity,
+				PostEntity,
+				CommentEntity,
+				RatingEntity,
+				FollowingEntity
+			],
 			synchronize: true
 		}),
 		UserModule,
