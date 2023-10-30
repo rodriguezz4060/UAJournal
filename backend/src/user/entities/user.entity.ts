@@ -26,6 +26,9 @@ export class UserEntity {
 	@OneToMany(() => FollowingEntity, following => following.followingUser)
 	following: FollowingEntity[]
 
+	@OneToMany(() => FollowingEntity, following => following.followUser)
+	followers: FollowingEntity[]
+
 	@Column({
 		default: 0
 	})

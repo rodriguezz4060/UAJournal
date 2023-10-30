@@ -63,3 +63,10 @@ export type RatingItem = {
 	user: ResponseUser
 	increment: number
 }
+
+export type FollowItem = {
+	id: number
+	user: ResponseUser
+	following: string[]
+	followers: string[]
+}

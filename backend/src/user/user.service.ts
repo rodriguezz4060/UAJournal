@@ -162,6 +162,26 @@ export class UserService {
 		})
 	}
 
+	async getUserFollowing(userId: number) {
+		const followeing = await this.followingRepository.find({
+			where: {
+				followingUser: { id: userId }
+			},
+			relations: ['followUser']
+		})
+		return followeing.map(follower => follower.followUser)
+	}
+
+	async getUserFollowers(userId: number) {
+		const followers = await this.followingRepository.find({
+			where: {
+				followUser: { id: userId }
+			},
+			relations: ['followingUser']
+		})
+		return followers.map(follower => follower.followingUser)
+	}
+
 	async search(dto: SearchUserDto) {
 		const qb = this.repository.createQueryBuilder('u')
 

@@ -12,7 +12,6 @@ interface CreateNewPostProps {}
 export const CreateNewPost: React.FC<CreateNewPostProps> = () => {
 	const userData = useAppSelector(selectUserData)
 	const [avatarUrl, setAvatarUrl] = React.useState(userData?.avatarUrl || '')
-	console.log('news', avatarUrl)
 
 	const router = useRouter()
 

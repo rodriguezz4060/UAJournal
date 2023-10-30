@@ -9,6 +9,6 @@ export class FollowingEntity {
 	@ManyToOne(() => UserEntity, user => user.following)
 	followingUser: UserEntity
 
-	@ManyToOne(() => UserEntity, user => user.following, { onDelete: 'CASCADE' })
+	@ManyToOne(() => UserEntity, user => user.following)
 	followUser: UserEntity
 }

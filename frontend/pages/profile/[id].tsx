@@ -8,6 +8,7 @@ import AvatarUploader from '../../components/Profile/AvatarUploader'
 import { UserInfo } from '../../components/Profile/UserInfo'
 import {
 	CommentItem,
+	FollowItem,
 	PostItem,
 	RatingItem,
 	ResponseUser
@@ -22,6 +23,7 @@ import { useUserComments } from '../../hooks/useUserComments'
 import { CommentProfile } from '../../components/Profile/CommentProfile'
 import { makeStyles } from '@material-ui/core/styles'
 import { CreateNewPost } from '../../components/Profile/CreateNewPost'
+import { FollowApi } from '../../utils/api/follows'
 
 const useStyles = makeStyles({
 	paper: {
@@ -40,9 +42,16 @@ interface ProfilePage {
 	posts: PostItem[]
 	user: ResponseUser
 	postRating: RatingItem[]
+	followers: FollowItem[]
+	following: FollowItem[]
 }
 
-const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
+const ProfilePage: NextPage<ProfilePage> = ({
+	user,
+	posts,
+	followers,
+	following
+}) => {
 	const classes = useStyles()
 	const router = useRouter()
 	const { id } = router.query
@@ -183,15 +192,17 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 								elevation={0}
 							>
 								<b>Подписчики</b>
+
+								{followers.map(item => (
+									<li key={item.id}>{item.fullName}</li>
+								))}
+
+								<b>Подписки</b>
+
 								<div className='d-flex mt-15'>
-									<Avatar
-										className='mr-10'
-										src='https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/'
-									/>
-									<Avatar
-										className='mr-10'
-										src='https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/'
-									/>
+									{following.map(item => (
+										<Avatar key={item.id}>{item.fullName[0]} </Avatar>
+									))}
 								</div>
 							</Paper>
 						</div>
@@ -299,15 +310,17 @@ const ProfilePage: NextPage<ProfilePage> = ({ user, posts }) => {
 								elevation={0}
 							>
 								<b>Подписчики</b>
+
+								{followers.map(item => (
+									<li key={item.id}>{item.fullName}</li>
+								))}
+
+								<b>Подписки</b>
+
 								<div className='d-flex mt-15'>
-									<Avatar
-										className='mr-10'
-										src='https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/'
-									/>
-									<Avatar
-										className='mr-10'
-										src='https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/'
-									/>
+									{following.map(item => (
+										<Avatar key={item.id}>{item.fullName[0]} </Avatar>
+									))}
 								</div>
 							</Paper>
 						</div>
@@ -327,11 +340,16 @@ export const getServerSideProps = async ctx => {
 		const posts = await api.post.getAll()
 		const userComments = await api.comment.getCommentsByUserId(id)
 
+		const following = await api.follow.getUserFollowing(id)
+		const followers = await api.follow.getUserFollowers(id)
+
 		return {
 			props: {
 				posts,
 				user: userData,
-				userComments
+				userComments,
+				followers: [...followers],
+				following: [...following]
 			}
 		}
 	} catch (err) {
@@ -341,7 +359,9 @@ export const getServerSideProps = async ctx => {
 		props: {
 			posts: null,
 			user: null,
-			userComments: null
+			userComments: null,
+			followers: [],
+			following: []
 		}
 	}
 }

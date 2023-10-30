@@ -15,7 +15,6 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	text,
 	post
 }) => {
-	console.log('avatar', user.avatarUrl)
 	return (
 		<div className={styles.commentBlock}>
 			<div className={styles.commentItem}>
