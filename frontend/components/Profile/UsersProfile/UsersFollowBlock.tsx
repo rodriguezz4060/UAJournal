@@ -1,34 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar } from '@material-ui/core'
-import { useSelector } from 'react-redux'
-import { selectFollowers } from '../../../redux/slices/usersFollowersSlice'
+import { useUserFollowers } from '../../../hooks/useFollows'
+import { ResponseUser } from '../../../utils/api/types'
+import { selectFollowers, updateFollowers } from '../../../redux/slices/usersFollowersSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface UsersFollowInfoProps {
-	following: string[]
-	followers: string[]
-	userId: number
-	avatar: string
+  following: string[]
+  followers: string[]
+  userId: ResponseUser
 }
 
 export const UsersFollowInfo: React.FC<UsersFollowInfoProps> = ({
-	following,
-	userId,
-	avatar
-}) => {
-	const followers = useSelector(selectFollowers)
+                                                                  following,
+                                                                  followers,
+                                                                  userId,
 
-	return (
-		<>
-			<b>Подписчики</b>
-			{followers.map(item => (
-				<Avatar key={item.id} src={avatar} />
-			))}
-			<b>Подписки</b>
-			<div className='d-flex mt-15'>
-				{following.map(item => (
-					<Avatar key={item.id}>{item.fullName[0]}</Avatar>
-				))}
-			</div>
-		</>
-	)
+                                                                }) => {
+  return (
+    <>
+      <div className='d-flex mt-15'><b>Подписчики</b>
+        {followers.map(item => (
+
+          <Avatar key={item.id} src={item.avatarUrl} />
+        ))}</div>
+      <b>Подписки</b>
+      <div className='d-flex mt-15'>
+        {following.map(item => (
+          <Avatar key={item.id}>{item.fullName[0]}</Avatar>
+        ))}
+      </div>
+    </>
+  )
 }

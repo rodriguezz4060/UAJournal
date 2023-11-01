@@ -2,14 +2,15 @@ import { FollowItem } from './types'
 import { AxiosInstance } from 'axios'
 
 export const FollowApi = (instance: AxiosInstance) => ({
-  async getUserFollowing(id: string) {
+  async getUserFollowing(id: number) {
     const { data } = await instance.get<FollowItem[]>(`/users/${id}/following`)
     return data
   },
-  async getUserFollowers(id: string) {
+  async getUserFollowers(id: number) {
     const { data } = await instance.get<FollowItem[]>(`/users/${id}/followers`)
     return data
   },
+
   async followUser(id: number) {
     const { data } = await instance.post(`/users/${id}/follow`)
     return data
