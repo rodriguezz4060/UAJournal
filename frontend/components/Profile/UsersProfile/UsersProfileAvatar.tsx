@@ -27,7 +27,7 @@ const UsersProfileAvatar = ({ user }: AvatarUploaderProps) => {
 				<div className={styles.header__avatar}>
 					<div className={styles.headerAvatar}>
 						<div className={styles.headerAvatar__media}>
-							{user.avatarUrl !== null ? (
+							{user.avatarUrl !== '' ? (
 								<Avatar
 									className={styles.headerAvatar__media}
 									src={user.avatarUrl}

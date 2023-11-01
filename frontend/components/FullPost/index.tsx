@@ -186,7 +186,7 @@ export const FullPost: React.FC<FullPostProps> = ({
 								<div className={styles.subsiteard}>
 									<div className={styles.subsiteCard__main}>
 										<Link href={`/profile/${user.id}`}>
-											{user.avatarUrl !== null ? (
+											{user.avatarUrl !== '' ? (
 												<div
 													className={styles.subsiteCard__avatar}
 													style={{

@@ -52,16 +52,16 @@ export class UserEntity {
 	@Column({ nullable: true, default: 'popular' })
 	feed?: string
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: '' })
 	description?: string
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: '' })
 	avatarUrl?: string
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: '' })
 	headerCoverUrl?: string
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: '' })
 	headerCoverPosition?: string
 
 	@CreateDateColumn({ type: 'timestamp' })

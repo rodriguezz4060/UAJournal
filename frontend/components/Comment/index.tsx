@@ -60,7 +60,7 @@ export const Comment: React.FC<CommentPostProps> = ({
 	return (
 		<div className={styles.comment}>
 			<div className={styles.userInfo}>
-				{user.avatarUrl !== 'NULL' ? (
+				{user.avatarUrl !== '' ? (
 					<div
 						className={styles.userAvatar}
 						style={{

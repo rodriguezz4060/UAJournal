@@ -24,11 +24,11 @@ export const UserApi = (instance: AxiosInstance) => ({
 		const { data } = await instance.get<ResponseUser>('/users/me')
 		return data
 	},
-	async getUserById(id: string) {
+	async getUserById(id: number) {
 		const { data } = await instance.get<ResponseUser>(`/users/${id}`)
 		return data
 	},
-	async getUserPosts(userId: string) {
+	async getUserPosts(userId: number) {
 		const { data } = await instance.get<PostItem[]>(`/users/${userId}/posts`)
 		return data
 	}

@@ -23,7 +23,6 @@ import { useUserComments } from '../../hooks/useUserComments'
 import { CommentProfile } from '../../components/Profile/CommentProfile'
 import { makeStyles } from '@material-ui/core/styles'
 import { CreateNewPost } from '../../components/Profile/CreateNewPost'
-import { FollowApi } from '../../utils/api/follows'
 
 const useStyles = makeStyles({
 	paper: {
@@ -55,12 +54,13 @@ const ProfilePage: NextPage<ProfilePage> = ({
 	const classes = useStyles()
 	const router = useRouter()
 	const { id } = router.query
+	const isValidId = id !== null && id !== 'null'
+
 	const [selectedTab, setSelectedTab] = useState(0)
+	const [postList, setPostList] = useState(posts)
 
 	const userData = useSelector(selectUserData)
 	const userPosts = posts.filter(post => post.user.id === user.id)
-	const [postList, setPostList] = useState(posts)
-
 	const isOwnProfile = userData && id && Number(id) === userData.id
 
 	const { userComments } = useUserComments(Number(id))
@@ -165,6 +165,7 @@ const ProfilePage: NextPage<ProfilePage> = ({
 									))}
 								</div>
 							)}
+
 							<div>
 								<div className='d-flex align-start'>
 									{selectedTab === 1 && (
@@ -335,6 +336,9 @@ export const getServerSideProps = async ctx => {
 	try {
 		const api = Api(ctx)
 		const { id } = ctx.query
+		console.log('---')
+		console.log(ctx.query)
+		console.log('===')
 		const userData = await api.user.getUserById(id)
 
 		const posts = await api.post.getAll()

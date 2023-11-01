@@ -53,6 +53,28 @@ export class UserController {
 		return user
 	}
 
+	@Get(':id/following')
+	async getUserFollowing(@Param('id') id: string) {
+		const userId = parseInt(id)
+		const user = await this.userService.getUserById(userId)
+		if (!user) {
+			throw new NotFoundException('User not found')
+		}
+		const following = await this.userService.getUserFollowing(userId)
+		return following
+	}
+
+	@Get(':id/followers')
+	async getUserFollowers(@Param('id') id: string) {
+		const userId = parseInt(id)
+		const user = await this.userService.getUserById(userId)
+		if (!user) {
+			throw new NotFoundException('User not found')
+		}
+		const followers = await this.userService.getUserFollowers(userId)
+		return followers
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Post(':id/follow')
 	async followUser(@Request() req, @Param('id') id: string) {
@@ -74,28 +96,6 @@ export class UserController {
 		} else {
 			throw new BadRequestException('You cannot follow yourself')
 		}
-	}
-
-	@Get(':id/following')
-	async getUserFollowing(@Param('id') id: string) {
-		const userId = parseInt(id)
-		const user = await this.userService.getUserById(userId)
-		if (!user) {
-			throw new NotFoundException('User not found')
-		}
-		const following = await this.userService.getUserFollowing(userId)
-		return following
-	}
-
-	@Get(':id/followers')
-	async getUserFollowers(@Param('id') id: string) {
-		const userId = parseInt(id)
-		const user = await this.userService.getUserById(userId)
-		if (!user) {
-			throw new NotFoundException('User not found')
-		}
-		const followers = await this.userService.getUserFollowers(userId)
-		return followers
 	}
 
 	@UseGuards(JwtAuthGuard)

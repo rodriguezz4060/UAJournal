@@ -71,7 +71,7 @@ export const CommentProfile: React.FC<CommentProfileProps> = ({
 			</div>
 			<div className={styles.profile_comment_favorite__header}>
 				<Link href={`/profile/${user.id}`}>
-					{user.avatarUrl !== 'NULL' ? (
+					{user.avatarUrl !== '' ? (
 						<div
 							className={styles.profile_comment_favorite__user__image}
 							style={{

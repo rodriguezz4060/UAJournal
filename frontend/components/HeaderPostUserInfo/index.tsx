@@ -134,7 +134,7 @@ export const HeaderUser: React.FC<HeaderUserProps> = ({
 			<div className={styles.userInfoContent}>
 				<div className={styles.userInfo}>
 					<Link className={styles.profileLink} href={`/profile/${user.id}`}>
-						{user.avatarUrl !== null ? (
+						{user.avatarUrl !== '' ? (
 							<Avatar className={styles.userAvatar} src={user.avatarUrl} />
 						) : (
 							<Avatar className={`${styles.userAvatar}`}>

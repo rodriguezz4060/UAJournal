@@ -11,10 +11,10 @@ export type CreateUserDto = {
 
 export type ResponseUser = {
 	id: number
-	avatarUrl?: string
-	headerCoverUrl?: string
-	headerCoverPosition?: string
-	description: string
+	avatarUrl?: null | string
+	headerCoverUrl?: null | string
+	headerCoverPosition?: null | string
+	description: null | string
 	email: string
 	fullName: string
 	commentsCount?: number
