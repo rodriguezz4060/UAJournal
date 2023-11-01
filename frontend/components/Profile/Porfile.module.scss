@@ -528,3 +528,17 @@
 .miniEditor__button:hover {
 	--background-color: #eef2f6;
 }
+
+.button__subscribed {
+	margin-left: 8px;
+}
+
+.svgsubscribed {
+	color: #2ea83a !important;
+	height: 18px !important;
+}
+
+.svgUnfollow {
+	color: #e52e3a;
+	transform: rotate(45deg);
+}

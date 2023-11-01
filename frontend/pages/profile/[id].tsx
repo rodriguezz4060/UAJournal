@@ -23,6 +23,7 @@ import { useUserComments } from '../../hooks/useUserComments'
 import { CommentProfile } from '../../components/Profile/CommentProfile'
 import { makeStyles } from '@material-ui/core/styles'
 import { CreateNewPost } from '../../components/Profile/CreateNewPost'
+import { UsersFollowInfo } from '../../components/Profile/UsersProfile/UsersFollowBlock'
 
 const useStyles = makeStyles({
 	paper: {
@@ -211,7 +212,7 @@ const ProfilePage: NextPage<ProfilePage> = ({
 					<div>
 						<Paper className='pl-20 pr-20 pt-20 mb-30' elevation={0}>
 							<UsersProfileAvatar user={user} />
-							<UsersProfileInfo user={user} />
+							<UsersProfileInfo user={user} followers={followers} />
 							<Tabs
 								className='mt-20'
 								value={selectedTab}
@@ -309,19 +310,12 @@ const ProfilePage: NextPage<ProfilePage> = ({
 								className='p-20 mb-20'
 								elevation={0}
 							>
-								<b>Подписчики</b>
-
-								{followers.map(item => (
-									<li key={item.id}>{item.fullName}</li>
-								))}
-
-								<b>Подписки</b>
-
-								<div className='d-flex mt-15'>
-									{following.map(item => (
-										<Avatar key={item.id}>{item.fullName[0]} </Avatar>
-									))}
-								</div>
+								<UsersFollowInfo
+									following={following}
+									followers={followers}
+									userId={user.id}
+									avatar={user.avatarUrl}
+								/>
 							</Paper>
 						</div>
 					</div>

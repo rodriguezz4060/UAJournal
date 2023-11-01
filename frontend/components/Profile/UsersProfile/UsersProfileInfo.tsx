@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import {
 	SettingsOutlined as SettingsIcon,
@@ -6,16 +6,74 @@ import {
 } from '@material-ui/icons'
 import styles from '../Porfile.module.scss'
 import { ResponseUser } from '../../../utils/api/types'
+import FollowIcon from '@material-ui/icons/PersonAddOutlined'
+import AddIcon from '@material-ui/icons/AddOutlined'
+import CheckIcon from '@material-ui/icons/CheckOutlined'
 
 import moment from 'moment'
 import 'moment/locale/ru'
+import { followUser, unfollowUser } from '../../../utils/api/follow'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUserData } from '../../../redux/slices/user'
+import { updateFollowers } from '../../../redux/slices/usersFollowersSlice'
 moment.locale('ru')
 
 interface UsersProfileInfoProps {
 	user: ResponseUser
+	followers: string[]
 }
 
-export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
+export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({
+	user,
+	followers
+}) => {
+	const userData = useSelector(selectUserData)
+	const [isFollowing, setIsFollowing] = useState(
+		followers.some(item => item.followUserId === userData?.userId)
+	)
+
+	const dispatch = useDispatch()
+
+	const handleFollowUnfollow = async () => {
+		if (isFollowing) {
+			// Выполнить отписку пользователя
+			const success = await unfollowUser(user.id)
+			if (success) {
+				setIsFollowing(false)
+				const updatedFollowers = followers.filter(
+					item => item.followUserId !== userData?.userId
+				)
+				dispatch(updateFollowers(updatedFollowers))
+			}
+		} else {
+			// Выполнить подписку пользователя
+			const isAlreadyFollowing = followers.some(
+				item => item.followUserId === userData?.userId
+			)
+			if (!isAlreadyFollowing) {
+				const success = await followUser(user.id)
+				if (success) {
+					setIsFollowing(true)
+					const updatedFollowers = [
+						...followers,
+						{ followUserId: userData?.userId }
+					]
+					dispatch(updateFollowers(updatedFollowers))
+				}
+			}
+		}
+	}
+
+	const [isHovered, setIsHovered] = useState(false)
+
+	const handleMouseEnter = () => {
+		setIsHovered(true)
+	}
+
+	const handleMouseLeave = () => {
+		setIsHovered(false)
+	}
+
 	return (
 		<div className={styles.headerWithActions}>
 			<div className={styles.header__title}>
@@ -46,22 +104,41 @@ export const UsersProfileInfo: React.FC<UsersProfileInfoProps> = ({ user }) => {
 			</div>
 
 			<div className={`${styles.header__actions} ${styles.headerActions}`}>
-				<Link
-					href='/profile/settings'
-					className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default}`}
-				>
-					<div className={styles.button__icon}>
-						<SettingsIcon />
-					</div>
-				</Link>
 				<button
-					className={`${styles.button} ${styles.buttonBlue} ${styles.buttonSize_default}`}
+					className={`${styles.button} ${styles.buttonDefault} ${styles.buttonSize_default}`}
 				>
 					<div className={styles.button__icon}>
 						<MessageIcon className={styles.svgMessage} />
 					</div>
 					<span className={styles.button__lable}>Написать</span>
 				</button>
+
+				{isFollowing ? (
+					<button
+						onClick={handleFollowUnfollow}
+						onMouseEnter={handleMouseEnter}
+						onMouseLeave={handleMouseLeave}
+						className={`${styles.button} ${styles.buttonDefault} ${styles.button__subscribed}`}
+					>
+						<div className={styles.button__icon}>
+							{isHovered ? (
+								<AddIcon className={styles.svgUnfollow} />
+							) : (
+								<CheckIcon className={styles.svgsubscribed} />
+							)}
+						</div>
+					</button>
+				) : (
+					<button
+						onClick={handleFollowUnfollow}
+						className={`${styles.button} ${styles.buttonBlue} ${styles.buttonSize_default}`}
+					>
+						<div className={styles.button__icon}>
+							<FollowIcon className={styles.svgMessage} />
+						</div>
+						<span className={styles.button__lable}>Подписаться</span>
+					</button>
+				)}
 			</div>
 			<div className={styles.header__stats}>
 				<div className={styles.header__stat}>
