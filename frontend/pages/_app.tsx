@@ -12,44 +12,44 @@ import { setPostData } from '../redux/slices/ratingSlice'
 import { number } from 'yup'
 
 function App({ Component, pageProps }: AppProps) {
-	return (
-		<>
-			<MuiThemeProvider theme={theme}>
-				<Header />
-				<Component {...pageProps} />
-				<NextNProgress />
-			</MuiThemeProvider>
-		</>
-	)
+  return (
+    <>
+      <MuiThemeProvider theme={theme}>
+        <Header />
+        <Component {...pageProps} />
+        <NextNProgress />
+      </MuiThemeProvider>
+    </>
+  )
 }
 
 App.getInitialProps = wrapper.getInitialAppProps(
-	store =>
-		async ({ ctx, Component }) => {
-			try {
-				const userData = await Api(ctx).user.getMe()
+  store =>
+    async ({ ctx, Component }) => {
+      try {
+        const userData = await Api(ctx).user.getMe()
 
-				store.dispatch(setUserData(userData))
-			} catch (err) {
-				if (ctx.asPath === '/write') {
-					if (ctx.res) {
-						ctx.res.writeHead(302, {
-							Location: '/403'
-						})
-					}
-					if (ctx.res) {
-						ctx.res.end()
-					}
-				}
-				console.log(err)
-			}
+        store.dispatch(setUserData(userData))
+      } catch (err) {
+        if (ctx.asPath === '/write') {
+          if (ctx.res) {
+            ctx.res.writeHead(302, {
+              Location: '/403',
+            })
+          }
+          if (ctx.res) {
+            ctx.res.end()
+          }
+        }
+        console.log(err)
+      }
 
-			return {
-				pageProps: Component.getInitialProps
-					? await Component.getInitialProps({ ...ctx, store })
-					: {}
-			}
-		}
+      return {
+        pageProps: Component.getInitialProps
+          ? await Component.getInitialProps({ ...ctx, store })
+          : {},
+      }
+    },
 )
 
 export default wrapper.withRedux(App)
