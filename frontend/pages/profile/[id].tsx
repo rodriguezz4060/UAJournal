@@ -54,7 +54,6 @@ const ProfilePage: NextPage<ProfilePage> = ({
 	const classes = useStyles()
 	const router = useRouter()
 	const { id } = router.query
-	const isValidId = id !== null && id !== 'null'
 
 	const [selectedTab, setSelectedTab] = useState(0)
 	const [postList, setPostList] = useState(posts)
