@@ -64,8 +64,8 @@ export const UsersProfilePost: React.FC<UsersProfilePostProps> = ({
 			{images.length > 0 && (
 				<div className={styles.imagePost}>
 					{images.map((image, index) => (
-						<div className={styles.figure}>
-							<img key={index} src={image} alt={`Image ${index + 1}`} />
+						<div key={index} className={styles.figure}>
+							<img src={image} alt={`Image ${index + 1}`} />
 						</div>
 					))}
 				</div>

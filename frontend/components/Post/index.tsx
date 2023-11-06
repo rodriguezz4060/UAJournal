@@ -91,8 +91,8 @@ export const Post: React.FC<PostProps> = ({
 			{images.length > 0 && (
 				<div className={`${styles.imagePost} ${styles.contentImage}`}>
 					{images.map((image, index) => (
-						<div>
-							<img key={index} src={image} alt={`Image ${index + 1}`} />
+						<div key={index}>
+							<img src={image} alt={`Image ${index + 1}`} />
 						</div>
 					))}
 				</div>
