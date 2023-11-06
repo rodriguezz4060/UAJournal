@@ -542,3 +542,126 @@
 	color: #e52e3a;
 	transform: rotate(45deg);
 }
+
+.island:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+.island {
+	--island-offset-x: 20px;
+	--offset-x: var(--island-offset-x, 20px);
+	padding: 15px var(--offset-x) 16px;
+	font-size: 16px;
+	line-height: 1.5em;
+}
+
+.islandBg {
+	background-color: #fff;
+}
+
+.islandRound {
+	border-radius: 8px;
+}
+
+.follow__header {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: baseline;
+	align-items: baseline;
+	margin-top: -3px;
+	margin-bottom: 6px;
+}
+
+.follow__header:not(:last-child) {
+	margin-bottom: 16px;
+}
+
+.follow_title {
+	font-size: 16px;
+	line-height: 1.5em;
+	font-weight: 500;
+}
+
+.follow_title:not(:last-child) {
+	margin-right: 8px;
+}
+
+.follow_counter {
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+	font-size: 14px;
+	line-height: 1.43em;
+	color: #595959;
+	white-space: nowrap;
+}
+
+.list {
+	--image-size: 24px;
+	--image-radius: 6px;
+	--grid-gap: 16px;
+}
+
+.list__images {
+	--image-size: 32px;
+	--image-radius: 8px;
+	--grid-gap: 12px;
+}
+
+.list__images .list__content {
+	grid-template-columns: repeat(auto-fill, var(--image-size));
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.list__content {
+	display: grid;
+	grid-gap: var(--grid-gap);
+}
+
+.list__item {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	min-width: 0;
+	word-break: break-word;
+}
+
+.list__image {
+	-ms-flex-negative: 0 !important;
+	flex-shrink: 0 !important;
+	width: var(--image-size) !important;
+	height: var(--image-size) !important;
+	border-radius: var(--image-radius) !important;
+	-webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+	-moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+	background-position: 50% 50% !important;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.list_more {
+	color: #3766a9;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	margin-top: 16px;
+	margin-bottom: -4px;
+	display: block;
+}
+
+.list__default .followLable {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.list__image:not(:last-child) {
+	margin-right: 12px;
+}
+
+a.list__item:hover {
+	color: #3766a9;
+}

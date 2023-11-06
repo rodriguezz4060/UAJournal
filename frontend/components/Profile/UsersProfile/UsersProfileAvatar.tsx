@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Avatar } from '@material-ui/core'
 import styles from '../Porfile.module.scss'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import { useAppSelector } from '../../../redux/hooks'
-import { selectUserData, setUserData } from '../../../redux/slices/user'
 import UsersProfileHeaderCover from './UsersProfileHeaderCover'
 import { ResponseUser } from '../../../utils/api/types'
 

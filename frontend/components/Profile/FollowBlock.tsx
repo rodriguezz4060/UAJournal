@@ -1,16 +1,16 @@
 import React from 'react'
-import { Avatar, Paper } from '@material-ui/core'
-import { ResponseUser } from '../../../utils/api/types'
-import styles from '../Porfile.module.scss'
+import { Avatar } from '@material-ui/core'
+import { ResponseUser } from '../../utils/api/types'
+import styles from './Porfile.module.scss'
 import Link from 'next/link'
 
-interface UsersFollowInfoProps {
+interface FollowInfoProps {
 	following: number[]
 	followers: number[]
 	userId: ResponseUser
 }
 
-export const UsersFollowInfo: React.FC<UsersFollowInfoProps> = ({
+export const FollowInfo: React.FC<FollowInfoProps> = ({
 	following,
 	followers,
 	userId
@@ -44,7 +44,7 @@ export const UsersFollowInfo: React.FC<UsersFollowInfoProps> = ({
 						))}
 					</div>
 					<Link
-						href={`http://localhost:3000/profile/2`}
+						href={`http://localhost:3000/profile/1`}
 						className={styles.list_more}
 					>
 						Показать всех
@@ -83,7 +83,7 @@ export const UsersFollowInfo: React.FC<UsersFollowInfoProps> = ({
 						))}
 					</div>
 					<Link
-						href={`http://localhost:3000/profile/2`}
+						href={`http://localhost:3000/profile/1`}
 						className={styles.list_more}
 					>
 						Показать все

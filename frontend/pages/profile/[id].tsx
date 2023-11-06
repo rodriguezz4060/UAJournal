@@ -25,6 +25,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { CreateNewPost } from '../../components/Profile/CreateNewPost'
 import { UsersFollowInfo } from '../../components/Profile/UsersProfile/UsersFollowBlock'
 import { selectFollowers } from '../../redux/slices/usersFollowersSlice'
+import { FollowInfo } from '../../components/Profile/FollowBlock'
 
 const useStyles = makeStyles({
 	paper: {
@@ -110,11 +111,12 @@ const ProfilePage: NextPage<ProfilePage> = ({
 								<Tab label='Закладки' />
 							</Tabs>
 						</Paper>
-						<div className='d-flex align-start'>
-							{selectedTab === 0 && (
-								<div className='mr-20 flex'>
-									<CreateNewPost />
+						<div className='contentProfileSidebar ProfilePage'>
+							<div className='ProfilePage__content'>
+								{selectedTab === 0 && (
 									<div>
+										<CreateNewPost />
+
 										{userPosts.map(obj => (
 											<Post
 												key={obj.id}
@@ -169,49 +171,34 @@ const ProfilePage: NextPage<ProfilePage> = ({
 											/>
 										))}
 									</div>
-								</div>
-							)}
-
-							<div>
-								<div className='d-flex align-start'>
-									{selectedTab === 1 && (
-										<div className='mr-20 flex'>
-											{sortedComments.map(comment => (
-												<Paper className={classes.paper} elevation={0}>
-													<CommentProfile
-														id={comment.id}
-														user={user}
-														text={comment.text}
-														createdAt={comment.createdAt}
-														currentUserId={comment.user.id}
-														post={comment.post}
-														currentUserId={userData?.id}
-													/>
-												</Paper>
-											))}
-										</div>
-									)}
-								</div>
+								)}
+								{selectedTab === 1 && (
+									<div className='ProfilePage__content'>
+										{sortedComments.map(comment => (
+											<Paper className={classes.paper} elevation={0}>
+												<CommentProfile
+													id={comment.id}
+													user={user}
+													text={comment.text}
+													createdAt={comment.createdAt}
+													currentUserId={comment.user.id}
+													post={comment.post}
+													currentUserId={userData?.id}
+												/>
+											</Paper>
+										))}
+									</div>
+								)}
 							</div>
-							<Paper
-								style={{ width: 300, borderRadius: 10 }}
-								className='p-20 mb-20'
-								elevation={0}
-							>
-								<b>Подписчики</b>
-
-								{followers.map(item => (
-									<li key={item.id}>{item.fullName}</li>
-								))}
-
-								<b>Подписки</b>
-
-								<div className='d-flex mt-15'>
-									{following.map(item => (
-										<Avatar key={item.id}>{item.fullName[0]} </Avatar>
-									))}
-								</div>
-							</Paper>
+							<div className=' ProfilePage__sideBar'>
+								<FollowInfo
+									following={following}
+									followers={followers}
+									user={userData}
+									userId={user.id}
+									setUserFollowers={setUserFollowers}
+								/>
+							</div>
 						</div>
 					</div>
 				) : (
@@ -236,9 +223,9 @@ const ProfilePage: NextPage<ProfilePage> = ({
 								<Tab label='Закладки' />
 							</Tabs>
 						</Paper>
-						<div className='d-flex align-start'>
-							{selectedTab === 0 && (
-								<div className='mr-20 flex'>
+						<div className='contentProfileSidebar ProfilePage'>
+							<div className='ProfilePage__content'>
+								{selectedTab === 0 && (
 									<div>
 										{userPosts.map(obj => (
 											<UsersProfilePost
@@ -295,10 +282,9 @@ const ProfilePage: NextPage<ProfilePage> = ({
 											/>
 										))}
 									</div>
-								</div>
-							)}
-							<div>
-								<div className='d-flex align-start'>
+								)}
+
+								<div className='ProfilePage__content'>
 									{selectedTab === 1 && (
 										<div className='mr-20 flex'>
 											{filteredComments.map(comment => (
@@ -318,11 +304,7 @@ const ProfilePage: NextPage<ProfilePage> = ({
 									)}
 								</div>
 							</div>
-							<Paper
-								style={{ width: 300, borderRadius: 10 }}
-								className='p-20 mb-20'
-								elevation={0}
-							>
+							<div className=' ProfilePage__sideBar'>
 								<UsersFollowInfo
 									following={following}
 									followers={followers}
@@ -330,7 +312,7 @@ const ProfilePage: NextPage<ProfilePage> = ({
 									userId={user.id}
 									setUserFollowers={setUserFollowers}
 								/>
-							</Paper>
+							</div>
 						</div>
 					</div>
 				)}

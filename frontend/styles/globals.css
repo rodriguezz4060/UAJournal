@@ -237,3 +237,21 @@ form {
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.25);
 	}
 }
+
+.contentProfileSidebar {
+	grid-template-columns: 1fr 300px;
+}
+
+.ProfilePage {
+	--page-sidebar-offset-top: 0;
+	display: grid;
+	grid-gap: 32px 20px;
+}
+
+.ProfilePage__content {
+	grid-column: 1;
+}
+
+.ProfilePage__sideBar {
+	grid-column: 2;
+}
