@@ -5,7 +5,7 @@ import QuoteIcon from '@material-ui/icons/FormatQuote'
 import styles from './FullPost.module.scss'
 import buttonStyles from '../Profile/Porfile.module.scss'
 import { FullPostProps } from '.'
-import { Avatar, Link, Paper, Typography } from '@material-ui/core'
+import { Avatar, Paper, Typography } from '@material-ui/core'
 import FollowIcon from '@material-ui/icons/PersonAddOutlined'
 import AddIcon from '@material-ui/icons/AddOutlined'
 import CheckIcon from '@material-ui/icons/CheckOutlined'
@@ -16,6 +16,7 @@ import { HeaderUser } from '../HeaderPostUserInfo'
 import { useDispatch } from 'react-redux'
 import { followUser, unfollowUser } from '../../utils/api/follow'
 import { updateFollowers } from '../../redux/slices/usersFollowersSlice'
+import Link from 'next/link'
 
 export const FullPost: React.FC<FullPostProps> = ({
 	title,

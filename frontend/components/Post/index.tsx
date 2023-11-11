@@ -1,17 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import {
-	Avatar,
-	ClickAwayListener,
-	Grow,
-	IconButton,
-	Menu,
-	MenuItem,
-	MenuList,
-	Paper,
-	Popper,
-	Typography
-} from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import styles from './Post.module.scss'
 import quotecss from '../FullPost/FullPost.module.scss'

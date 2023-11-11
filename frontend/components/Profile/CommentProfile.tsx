@@ -1,11 +1,11 @@
 import React from 'react'
+import Link from 'next/link'
 import {
 	Typography,
 	IconButton,
 	MenuItem,
 	Menu,
-	Avatar,
-	Link
+	Avatar
 } from '@material-ui/core'
 import MoreIcon from '@material-ui/icons/MoreHorizOutlined'
 import styles from './CommentProfile.module.scss'
