@@ -10,12 +10,16 @@ import { selectUserData } from '../../redux/slices/user'
 
 import moment from 'moment'
 import 'moment/locale/ru'
+import { FollowItem } from '../../utils/api/types'
 moment.locale('ru')
 
-interface UserInfoProps {}
+interface UserInfoProps {
+	followers: FollowItem
+}
 
-export const UserInfo: React.FC<UserInfoProps> = () => {
+export const UserInfo: React.FC<UserInfoProps> = ({ followers }) => {
 	const userData = useAppSelector(selectUserData)
+	const followersCount = followers.length
 
 	const ratingClassName =
 		userData?.rating > 0
@@ -23,6 +27,18 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 			: userData?.rating < 0
 			? styles.numberChange__negative
 			: ''
+
+	let followersText = ''
+
+	if (followersCount === 0) {
+		followersText = '0 подписчиков'
+	} else if (followersCount === 1) {
+		followersText = '1 подписчик'
+	} else if (followersCount >= 2 && followersCount <= 4) {
+		followersText = `${followersCount} подписчика`
+	} else {
+		followersText = `${followersCount} подписчиков`
+	}
 
 	return (
 		<div className={styles.headerWithActions}>
@@ -87,7 +103,7 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
 						</div>
 					</div>
 					<Link href='/profile/#' className={styles.headerStat}>
-						2 подписчика
+						{followersText}
 					</Link>
 				</div>
 				<div className={styles.header__stat}>

@@ -98,7 +98,7 @@ const ProfilePage: NextPage<ProfilePage> = ({
 									headerCoverPosition={userData.headerCoverPosition}
 								/>
 							</div>
-							<UserInfo />
+							<UserInfo followers={followers} />
 							<Tabs
 								className='mt-20'
 								value={selectedTab}

@@ -22,7 +22,7 @@ export const CreateNewPost: React.FC<CreateNewPostProps> = () => {
 	return (
 		<div>
 			<Paper
-				className='pl-20 pr-20  mb-30'
+				className=' pr-20  mb-30'
 				elevation={0}
 				style={{ borderRadius: 10 }}
 			>
