@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { PostActions } from '../PostActions'
 import MessageIcon from '@material-ui/icons/TextsmsOutlined'
-import UserAddIcon from '@material-ui/icons/PersonAddOutlined'
 import QuoteIcon from '@material-ui/icons/FormatQuote'
 import styles from './FullPost.module.scss'
 import buttonStyles from '../Profile/Porfile.module.scss'
 import { FullPostProps } from '.'
-import { Avatar, Button, Link, Paper, Typography } from '@material-ui/core'
-import Image from 'next/image'
+import { Avatar, Link, Paper, Typography } from '@material-ui/core'
+import FollowIcon from '@material-ui/icons/PersonAddOutlined'
+import AddIcon from '@material-ui/icons/AddOutlined'
+import CheckIcon from '@material-ui/icons/CheckOutlined'
 import SimpleGallery from '../PhotoSwipe'
 import { useAppSelector } from '../../redux/hooks'
 import { selectUserData } from '../../redux/slices/user'
 import { HeaderUser } from '../HeaderPostUserInfo'
+import { useDispatch } from 'react-redux'
+import { followUser, unfollowUser } from '../../utils/api/follow'
+import { updateFollowers } from '../../redux/slices/usersFollowersSlice'
 
 export const FullPost: React.FC<FullPostProps> = ({
 	title,
@@ -20,9 +24,15 @@ export const FullPost: React.FC<FullPostProps> = ({
 	id,
 	rating,
 	createdAt,
-	onRemove
+	onRemove,
+	followers
 }) => {
 	const userData = useAppSelector(selectUserData)
+	const dispatch = useDispatch()
+
+	const [isFollowing, setIsFollowing] = useState(
+		followers.some(item => item.id === userData?.id)
+	)
 
 	const ratingClassName =
 		user?.rating > 0
@@ -36,6 +46,46 @@ export const FullPost: React.FC<FullPostProps> = ({
 			setButtonVisible(false)
 		}
 	}, [buttonVisible, userData])
+
+	const handleFollowUnfollow = async () => {
+		if (isFollowing) {
+			// Выполнить отписку пользователя
+			const success = await unfollowUser(user.id)
+			if (success) {
+				setIsFollowing(false)
+				const updatedFollowers = followers.filter(
+					item => item.id !== userData?.id
+				)
+				dispatch(updateFollowers(updatedFollowers))
+			}
+		} else {
+			// Выполнить подписку пользователя
+			const isAlreadyFollowing = followers.some(
+				item => item.id === userData?.id
+			)
+			if (!isAlreadyFollowing) {
+				const success = await followUser(user.id)
+				if (success) {
+					setIsFollowing(true)
+					const updatedFollowers = [
+						...followers,
+						{ followUserId: userData?.id }
+					]
+					dispatch(updateFollowers(updatedFollowers))
+				}
+			}
+		}
+	}
+
+	const [isHovered, setIsHovered] = useState(false)
+
+	const handleMouseEnter = () => {
+		setIsHovered(true)
+	}
+
+	const handleMouseLeave = () => {
+		setIsHovered(false)
+	}
 
 	return (
 		<div>
@@ -249,16 +299,37 @@ export const FullPost: React.FC<FullPostProps> = ({
 													<MessageIcon />
 												</div>
 											</button>
-											<button
-												className={`${buttonStyles.button}  ${buttonStyles.buttonDefault}`}
-											>
-												<div className={buttonStyles.button__icon}>
-													<UserAddIcon className={buttonStyles.svgMessage} />
-												</div>
-												<span className={buttonStyles.button__lable}>
-													Подписаться
-												</span>
-											</button>
+
+											{isFollowing ? (
+												<button
+													onClick={handleFollowUnfollow}
+													onMouseEnter={handleMouseEnter}
+													onMouseLeave={handleMouseLeave}
+													className={`${buttonStyles.button} ${buttonStyles.buttonDefault} ${buttonStyles.button__subscribed}`}
+												>
+													<div className={buttonStyles.button__icon}>
+														{isHovered ? (
+															<AddIcon className={buttonStyles.svgUnfollow} />
+														) : (
+															<CheckIcon
+																className={buttonStyles.svgsubscribed}
+															/>
+														)}
+													</div>
+												</button>
+											) : (
+												<button
+													onClick={handleFollowUnfollow}
+													className={`${buttonStyles.button} ${buttonStyles.buttonDefault} ${buttonStyles.buttonSize_default}`}
+												>
+													<div className={buttonStyles.button__icon}>
+														<FollowIcon className={buttonStyles.svgMessage} />
+													</div>
+													<span className={buttonStyles.button__lable}>
+														Подписаться
+													</span>
+												</button>
+											)}
 										</div>
 									)}
 								</div>

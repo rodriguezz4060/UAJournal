@@ -1,19 +1,18 @@
+import { NextPage } from 'next'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { MainLayout } from '../../layouts/MainLayout'
 import { selectUserData } from '../../redux/slices/user'
 import { Api } from '../../utils/api'
-import { Avatar, Paper, Tab, Tabs } from '@material-ui/core'
+import { Paper, Tab, Tabs } from '@material-ui/core'
 import AvatarUploader from '../../components/Profile/AvatarUploader'
 import { UserInfo } from '../../components/Profile/UserInfo'
 import {
-	CommentItem,
 	FollowItem,
 	PostItem,
 	RatingItem,
 	ResponseUser
 } from '../../utils/api/types'
-import { NextPage } from 'next'
 import { UsersProfileInfo } from '../../components/Profile/UsersProfile/UsersProfileInfo'
 import UsersProfileAvatar from '../../components/Profile/UsersProfile/UsersProfileAvatar'
 import { useState } from 'react'

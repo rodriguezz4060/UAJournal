@@ -1,20 +1,22 @@
 import { MainLayout } from '../../layouts/MainLayout'
 import { FullPost } from '../../components/FullPost/'
-import React from 'react'
+import React, { useState } from 'react'
 import { PostComments } from '../../components/PostComments'
 import { GetServerSideProps, NextPage } from 'next'
 import { Api } from '../../utils/api'
-import { PostItem } from '../../utils/api/types'
+import { FollowItem, PostItem } from '../../utils/api/types'
 import { useRouter } from 'next/router'
 
 interface FullPostPageProps {
 	post: PostItem
+	followers: FollowItem[]
 }
 
-const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
+const FullPostPage: NextPage<FullPostPageProps> = ({ post, followers }) => {
+	const router = useRouter()
+
 	const [postList, setPostList] = React.useState([post])
 
-	const router = useRouter()
 	const handleRemovePost = (postId: number) => {
 		const updatedList = postList.filter(post => post.id !== postId)
 		setPostList(updatedList)
@@ -33,6 +35,7 @@ const FullPostPage: NextPage<FullPostPageProps> = ({ post }) => {
 				rating={post.rating}
 				createdAt={post.createdAt}
 				onRemove={handleRemovePost}
+				followers={followers}
 			/>
 			<div id='comments'>
 				<PostComments postId={post.id} />
@@ -46,9 +49,12 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 		const id = ctx.params?.id
 		const post = await Api(ctx).post.getOne(+id)
 
+		const followers = await Api(ctx).follow.getUserFollowers(id)
+
 		return {
 			props: {
-				post
+				post,
+				followers: []
 			}
 		}
 	} catch (err) {
