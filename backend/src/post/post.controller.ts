@@ -47,6 +47,19 @@ export class PostController {
 		return this.postService.changeRating(+id, increment, userId)
 	}
 
+	@Get(':authorId/ratings/:month/:year')
+	async findAllRatingsByAuthorAndMonth(
+		@Param('authorId') authorId: number,
+		@Param('month') month: number,
+		@Param('year') year: number
+	) {
+		return this.postService.findAllRatingsByAuthorAndMonth(
+			authorId,
+			month,
+			year
+		)
+	}
+
 	@UseGuards(JwtAuthGuard)
 	@Delete(':id')
 	remove(@User() userId: number, @Param('id') id: string) {

@@ -3,7 +3,8 @@ import {
 	Column,
 	PrimaryGeneratedColumn,
 	ManyToOne,
-	JoinColumn
+	JoinColumn,
+	CreateDateColumn
 } from 'typeorm'
 import { UserEntity } from 'src/user/entities/user.entity'
 import { PostEntity } from './post.entity'
@@ -27,4 +28,7 @@ export class RatingEntity {
 
 	@Column()
 	increment: number
+
+	@CreateDateColumn({ type: 'timestamp' })
+	date: Date
 }

@@ -7,7 +7,7 @@ import {
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Between, QueryRunner, Repository, SelectQueryBuilder } from 'typeorm'
 import { PostEntity } from './entities/post.entity'
 import { SearchPostDto } from './dto/searchg-post.dto'
 import { RatingEntity } from './entities/rating.entity'
@@ -37,6 +37,8 @@ export class PostService {
 			relations: ['post', 'user']
 		})
 
+		const currentDate = new Date() // Текущая дата
+
 		if (rating) {
 			if (rating.increment === increment)
 				throw new BadRequestException(
@@ -45,6 +47,7 @@ export class PostService {
 			post.rating -= rating.increment
 			await this.repository.save(post)
 			rating.increment = increment
+			rating.date = currentDate // Обновите дату рейтинга
 			await this.ratingRepository.save(rating)
 			post.rating += increment
 			await this.repository.save(post)
@@ -56,24 +59,51 @@ export class PostService {
 			const newRating = this.ratingRepository.create({
 				post: { id: postId },
 				user: { id: userId },
-				increment
+				increment,
+				date: currentDate // Установите текущую дату для нового рейтинга
 			})
 			await this.ratingRepository.save(newRating)
 		}
 
 		// Прибавить рейтинг автору поста
-		const ratings = await this.ratingRepository.find({
-			where: { post: { id: postId } }
+		const authorRatings = await this.ratingRepository.find({
+			where: { user: { id: userId } },
+			relations: ['post']
 		})
-		const authorRating = ratings.reduce(
-			(total, rating) => total + rating.increment,
+
+		const authorRating = authorRatings.reduce(
+			(total, rating) => total + rating.post.rating,
 			0
 		)
+
 		post.user.rating = authorRating
 		await this.userRepository.save(post.user)
 
 		const updatedPost = await this.repository.findOne(postId)
 		return { rating: updatedPost.rating }
+	}
+
+	async findAllRatingsByAuthorAndMonth(
+		authorId: number,
+		month: number,
+		year: number
+	): Promise<number> {
+		const startDate = new Date(year, month - 1, 1) // Начало месяца
+		const endDate = new Date(year, month, 0) // Конец месяца
+
+		const ratings = await this.ratingRepository.find({
+			where: {
+				date: Between(startDate, endDate),
+				post: { user: { id: authorId } }
+			},
+			relations: ['post', 'user']
+		})
+
+		const totalRating = ratings.reduce(
+			(sum, rating) => sum + rating.increment,
+			0
+		)
+		return totalRating
 	}
 
 	findAll() {

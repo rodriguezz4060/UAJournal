@@ -19,6 +19,7 @@ export type ResponseUser = {
 	fullName: string
 	commentsCount?: number
 	rating: number
+	follow: FollowItem[]
 	token: string
 	createdAt: string
 	updatedAt: string
@@ -40,7 +41,6 @@ export type PostItem = {
 	images?: string[]
 	user: ResponseUser
 	postRating: RatingItem
-	followers: FollowItem
 	rating: number
 	createdAt: string
 	updatedAt: string
@@ -63,6 +63,7 @@ export type RatingItem = {
 	post: PostItem
 	user: ResponseUser
 	increment: number
+	date: string
 }
 
 export type FollowItem = {

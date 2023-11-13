@@ -41,6 +41,7 @@ export const FullPost: React.FC<FullPostProps> = ({
 			: user?.rating < 0
 			? styles.numberChange__negative
 			: ''
+
 	const [buttonVisible, setButtonVisible] = React.useState(false)
 	React.useEffect(() => {
 		if (buttonVisible && userData) {

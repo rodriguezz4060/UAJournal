@@ -1,24 +1,14 @@
-import {
-	Paper,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableRow,
-	Typography,
-	Tabs,
-	Tab,
-	makeStyles
-} from '@material-ui/core'
+import { Paper, Typography, makeStyles } from '@material-ui/core'
 import { NextPage } from 'next'
 import { MainLayout } from '../../layouts/MainLayout'
-import { ResponseUser } from '../../utils/api/types'
+import { FollowItem, ResponseUser } from '../../utils/api/types'
 import TabsRating from '../../components/RatingPage/TabsRating'
-import { FollowButton } from '../../components/FollowButton'
 import { Api } from '../../utils/api'
+import UsersRatingAll from '../../components/RatingPage/UsersRatingAll'
 
 interface AllRatingPageProps {
 	users: ResponseUser[]
+	followers: FollowItem[]
 }
 
 const useStyles = makeStyles({
@@ -27,7 +17,7 @@ const useStyles = makeStyles({
 	}
 })
 
-const AllRating: NextPage<AllRatingPageProps> = ({ users }) => {
+const AllRating: NextPage<AllRatingPageProps> = ({ users, followers }) => {
 	const classes = useStyles()
 
 	return (
@@ -49,6 +39,8 @@ const AllRating: NextPage<AllRatingPageProps> = ({ users }) => {
 				</Typography>
 				<TabsRating />
 			</Paper>
+
+			<UsersRatingAll users={users} followers={followers} />
 		</MainLayout>
 	)
 }
@@ -56,6 +48,10 @@ const AllRating: NextPage<AllRatingPageProps> = ({ users }) => {
 export const getServerSideProps = async () => {
 	try {
 		const users = await Api().user.getAll()
+
+		const followers = await Promise.all(
+			users.map(user => Api().follow.getUserFollowing(user.id))
+		)
 		return {
 			props: {
 				users

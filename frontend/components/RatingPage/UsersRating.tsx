@@ -1,19 +1,14 @@
-import {
-	Avatar,
-	Link,
-	Paper,
-	TableBody,
-	TableCell,
-	TableRow,
-	makeStyles
-} from '@material-ui/core'
+import { Paper, makeStyles } from '@material-ui/core'
 import { NextPage } from 'next'
-import { ResponseUser } from '../../utils/api/types'
-import { FollowButton } from '../FollowButton'
+import { FollowItem, ResponseUser } from '../../utils/api/types'
 import styles from './RatingPage.module.scss'
+import { useEffect, useState } from 'react'
+import React from 'react'
+import UsersRatingTable from './UsersRatingTable'
 
 interface UsersRatingPageProps {
 	users: ResponseUser[]
+	followers: FollowItem[]
 }
 
 const useStyles = makeStyles({
@@ -22,15 +17,39 @@ const useStyles = makeStyles({
 	}
 })
 
-const UsersRating: NextPage<UsersRatingPageProps> = ({ users }) => {
+const UsersRating: NextPage<UsersRatingPageProps> = ({ users, followers }) => {
 	const classes = useStyles()
 
-	const sortedUsers = users.sort((a, b) => b.rating - a.rating)
+	const [filteredUserList, setFilteredUserList] = useState(users)
+
+	useEffect(() => {
+		const fetchRating = async () => {
+			const updatedUserList = await Promise.all(
+				filteredUserList.map(async user => {
+					const response = await fetch(
+						`http://localhost:7777/posts/${user.id}/ratings/${
+							new Date().getMonth() + 1
+						}/${new Date().getFullYear()}`
+					)
+					const data = await response.json()
+					return {
+						...user,
+						monthlyRating: data
+					}
+				})
+			)
+			// Сортировка списка пользователей по рейтингу от наибольшего к наименьшему
+			updatedUserList.sort((a, b) => b.monthlyRating - a.monthlyRating)
+			setFilteredUserList(updatedUserList)
+		}
+
+		fetchRating()
+	}, [filteredUserList])
 
 	return (
 		<Paper className={`${classes.paper} ${styles.table}`} elevation={0}>
 			<div
-				className={`${styles.table__row} ${styles.table__row__header} ${styles.islandA} `}
+				className={`${styles.table__row} ${styles.table__row__header} ${styles.islandA}`}
 			>
 				<div className={styles.table__cell}>
 					<strong>Пользователи</strong>
@@ -40,37 +59,17 @@ const UsersRating: NextPage<UsersRatingPageProps> = ({ users }) => {
 				</div>
 				<div className={styles.table__cell}></div>
 			</div>
-			<div className={styles.table__content}>
-				{sortedUsers.map((obj, index) => (
-					<div className={`${styles.table__row} ${styles.islandA}`}>
-						<div className={styles.table__cell}>
-							<Link href={`/profile/${obj.id}`} className={styles.subsite}>
-								<span className={styles.subsite__rank}>
-									<small>{index + 1}</small>
-								</span>
-
-								<Avatar
-									className={styles.subsite__avatar}
-									src={obj.avatarUrl}
-								/>
-								<div className={styles.subsite__name}>
-									<strong>{obj.fullName}</strong>
-								</div>
-							</Link>
-						</div>
-						<div className={styles.table__cell}>
-							<small>
-								<span>{obj.rating}</span>
-							</small>
-						</div>
-						<div className={styles.table__cell}>
-							<small>
-								<span>{obj.rating}</span>
-							</small>
-						</div>
-					</div>
-				))}
-			</div>
+			{filteredUserList.map((obj, index) => (
+				<UsersRatingTable
+					key={obj.id}
+					index={index}
+					userId={obj.id}
+					fullName={obj.fullName}
+					avatarUrl={obj.avatarUrl}
+					monthlyRating={obj.monthlyRating}
+					followers={followers}
+				/>
+			))}
 		</Paper>
 	)
 }
