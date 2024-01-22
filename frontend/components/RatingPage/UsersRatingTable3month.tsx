@@ -26,7 +26,7 @@ interface UsersRatingTablePageProps {
 	monthlyRating: number
 }
 
-const UsersRatingTable: NextPage<UsersRatingTablePageProps> = ({
+const UsersRatingTable3month: NextPage<UsersRatingTablePageProps> = ({
 	userId,
 	fullName,
 	avatarUrl,
@@ -41,19 +41,19 @@ const UsersRatingTable: NextPage<UsersRatingTablePageProps> = ({
 
 	const [totalRating, setTotalRating] = useState(0)
 
-	// useEffect(() => {
-	// 	const fetchRating = async () => {
-	// 		const response = await fetch(
-	// 			`http://localhost:7777/posts/${userId}/ratings/${
-	// 				new Date().getMonth() + 1
-	// 			}/${new Date().getFullYear()}`
-	// 		)
-	// 		const data = await response.json()
-	// 		setTotalRating(data)
-	// 	}
+	useEffect(() => {
+		const fetchRating = async () => {
+			const response = await fetch(
+				`http://localhost:7777/posts/${userId}/ratings/${
+					new Date().getMonth() - 2
+				}/${new Date().getFullYear()}`
+			)
+			const data = await response.json()
+			setTotalRating(data)
+		}
 
-	// 	fetchRating()
-	// }, [userId])
+		fetchRating()
+	}, [userId])
 
 	const [buttonVisible, setButtonVisible] = React.useState(false)
 	React.useEffect(() => {
@@ -161,4 +161,4 @@ const UsersRatingTable: NextPage<UsersRatingTablePageProps> = ({
 	)
 }
 
-export default UsersRatingTable
+export default UsersRatingTable3month

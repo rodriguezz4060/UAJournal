@@ -12,13 +12,15 @@ import {
 } from '@material-ui/core'
 import { NextPage } from 'next'
 import { MainLayout } from '../../layouts/MainLayout'
-import { ResponseUser } from '../../utils/api/types'
+import { FollowItem, ResponseUser } from '../../utils/api/types'
 import TabsRating from '../../components/RatingPage/TabsRating'
 import { FollowButton } from '../../components/FollowButton'
 import { Api } from '../../utils/api'
+import UsersRating3month from '../../components/RatingPage/UsersRating3month'
 
 interface treeMonthRatingPageProps {
 	users: ResponseUser[]
+	followers: FollowItem[]
 }
 
 const useStyles = makeStyles({
@@ -27,7 +29,10 @@ const useStyles = makeStyles({
 	}
 })
 
-const treeMonthRating: NextPage<treeMonthRatingPageProps> = ({ users }) => {
+const treeMonthRating: NextPage<treeMonthRatingPageProps> = ({
+	users,
+	followers
+}) => {
 	const classes = useStyles()
 
 	return (
@@ -49,6 +54,7 @@ const treeMonthRating: NextPage<treeMonthRatingPageProps> = ({ users }) => {
 				</Typography>
 				<TabsRating />
 			</Paper>
+			<UsersRating3month users={users} followers={followers} />
 		</MainLayout>
 	)
 }
