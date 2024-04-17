@@ -6,6 +6,7 @@ import FavoriteIcon from '@material-ui/icons/BookmarkBorderOutlined'
 import styles from './PostActions.module.scss'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import ShareIcon from '@material-ui/icons/Share'
 import { NextPage } from 'next'
 import axios from 'axios'
 import { parseCookies } from 'nookies'
@@ -81,6 +82,30 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 		}
 	}, [userHasRated, userIncrement])
 
+	const handleShare = () => {
+		// Получаем текущий URL страницы
+		const currentUrl = window.location.href
+
+		// Добавляем 'news/postid' к текущему URL
+		const postUrl = `${currentUrl}news/${id}`
+
+		if (navigator.share) {
+			navigator
+				.share({
+					title: 'Поделиться постом',
+					url: postUrl // Используем полный URL поста
+				})
+				.then(() => console.log('Успешно поделились'))
+				.catch(error => console.error('Ошибка при поделии:', error))
+		} else {
+			// Если браузер не поддерживает Web Share API, можно использовать другие стратегии, например, копирование URL в буфер обмена
+			navigator.clipboard
+				.writeText(postUrl)
+				.then(() => alert('Ссылка скопирована в буфер обмена'))
+				.catch(error => console.error('Ошибка при копировании:', error))
+		}
+	}
+
 	return (
 		<div
 			className={`${styles.contentFooter} ${styles.contentFooter__short} ${styles.islandA}`}
@@ -133,6 +158,20 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 						className={`${styles.buttonSvg} ${styles.comments_counter}`}
 					>
 						<FavoriteIcon style={{ width: 20, height: 20 }} />
+					</IconButton>
+				</div>
+			</div>
+			<div className={styles.contentFooter__item}>
+				<div
+					className={`${styles.comments_counter} 
+					${styles.comments_counter__num} 
+					${styles.comments_counter__nonzero}`}
+				>
+					<IconButton
+						className={`${styles.buttonSvg} ${styles.comments_counter}`}
+						onClick={handleShare}
+					>
+						<ShareIcon style={{ width: 20, height: 20 }} />
 					</IconButton>
 				</div>
 			</div>
