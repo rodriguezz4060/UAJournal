@@ -17,11 +17,19 @@ import { useDispatch } from 'react-redux'
 import { followUser, unfollowUser } from '../../utils/api/follow'
 import { updateFollowers } from '../../redux/slices/usersFollowersSlice'
 import Link from 'next/link'
+import { FollowItem } from '../../utils/api/types'
+import { NextPage } from 'next'
+import { useUserFollowing } from '../../hooks/useFollowing'
 
-export const FullPost: React.FC<FullPostProps> = ({
+interface FullPost {
+	followers: FollowItem[]
+}
+
+export const FullPost: NextPage<FullPostProps> = ({
 	title,
 	blocks,
 	user,
+	userId,
 	id,
 	rating,
 	createdAt,
@@ -29,18 +37,9 @@ export const FullPost: React.FC<FullPostProps> = ({
 	followers
 }) => {
 	const userData = useAppSelector(selectUserData)
+	const { userFollowing } = useUserFollowing(userData?.id)
+
 	const dispatch = useDispatch()
-
-	const [isFollowing, setIsFollowing] = useState(
-		followers.some(item => item.id === userData?.id)
-	)
-
-	const ratingClassName =
-		user?.rating > 0
-			? styles.numberChange__positive
-			: user?.rating < 0
-			? styles.numberChange__negative
-			: ''
 
 	const [buttonVisible, setButtonVisible] = React.useState(false)
 	React.useEffect(() => {
@@ -49,16 +48,24 @@ export const FullPost: React.FC<FullPostProps> = ({
 		}
 	}, [buttonVisible, userData])
 
+	const [isFollowing, setIsFollowing] = useState(
+		userFollowing?.some(item => item.id === userId)
+	)
+
+	useEffect(() => {
+		setIsFollowing(userFollowing?.some(item => item.id === userId))
+	}, [userFollowing, userId])
+
 	const handleFollowUnfollow = async () => {
 		if (isFollowing) {
 			// Выполнить отписку пользователя
-			const success = await unfollowUser(user.id)
+			const success = await unfollowUser(userId)
 			if (success) {
-				setIsFollowing(false)
 				const updatedFollowers = followers.filter(
 					item => item.id !== userData?.id
 				)
 				dispatch(updateFollowers(updatedFollowers))
+				setIsFollowing(false)
 			}
 		} else {
 			// Выполнить подписку пользователя
@@ -66,18 +73,25 @@ export const FullPost: React.FC<FullPostProps> = ({
 				item => item.id === userData?.id
 			)
 			if (!isAlreadyFollowing) {
-				const success = await followUser(user.id)
+				const success = await followUser(userId)
 				if (success) {
-					setIsFollowing(true)
 					const updatedFollowers = [
 						...followers,
 						{ followUserId: userData?.id }
 					]
 					dispatch(updateFollowers(updatedFollowers))
+					setIsFollowing(true)
 				}
 			}
 		}
 	}
+
+	const ratingClassName =
+		user?.rating > 0
+			? styles.numberChange__positive
+			: user?.rating < 0
+			? styles.numberChange__negative
+			: ''
 
 	const [isHovered, setIsHovered] = useState(false)
 

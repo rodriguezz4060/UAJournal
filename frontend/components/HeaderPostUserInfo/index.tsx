@@ -166,6 +166,9 @@ export const HeaderUser: React.FC<HeaderUserProps> = ({
 							role={undefined}
 							transition
 							disablePortal
+							style={{
+								zIndex: 1
+							}}
 						>
 							{({ TransitionProps, placement }) => (
 								<Grow

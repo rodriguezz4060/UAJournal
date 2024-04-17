@@ -20,11 +20,11 @@ import { FollowingEntity } from './user/entities/following.entity'
 	imports: [
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			host: '94.241.173.93',
+			host: '127.0.0.1',
 			port: 5432,
-			username: 'gen_user',
+			username: 'postgres',
 			password: 'Myangels9bb',
-			database: 'default_db',
+			database: 'postgres',
 			entities: [
 				UserEntity,
 				PostEntity,
