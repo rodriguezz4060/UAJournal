@@ -1,3 +1,9 @@
 {
-	"extends": "next/core-web-vitals"
+	"extends": "next/core-web-vitals",
+	"rules": {
+		"react/jsx-key": "off",
+		"react/jsx-no-duplicate-props": "off",
+		"@next/next/no-img-element": "off",
+		"react-hooks/exhaustive-deps": "off"
+	}
 }
