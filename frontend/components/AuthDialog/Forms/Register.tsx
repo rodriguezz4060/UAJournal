@@ -16,17 +16,13 @@ interface LoginFormProps {
 	onOpenLogin: () => void
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({
+export const RegisterForm: React.FC<LoginFormProps> = ({
 	onOpenRegister,
 	onOpenLogin
 }) => {
-	React.useEffect(() => {
-		onOpenRegister()
-	}, [onOpenRegister])
-
 	const dispatch = useAppDispatch()
 	const [errorMessage, setErrorMessage] = React.useState('')
-	const form = useForm<CreateUserDto>({
+	const form = useForm({
 		mode: 'onChange',
 		resolver: yupResolver(RegisterFormSchema)
 	})
@@ -40,12 +36,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 			})
 			setErrorMessage('')
 			dispatch(setUserData(data))
-		} catch (err: any) {
+		} catch (err) {
 			console.warn('Register error', err)
 			if (err.response) {
 				setErrorMessage(err.response.data.message)
-			} else {
-				setErrorMessage('Произошла ошибка при регистрации.')
 			}
 		}
 	}
@@ -53,18 +47,19 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 	return (
 		<div>
 			<FormProvider {...form}>
+				<FormField name='fullName' label='Имя и Фамилия' />
+				<FormField name='email' label='Почта' />
+				<FormField name='password' label='Пароль' />
+				{errorMessage && (
+					<Alert severity='error' className='mb-20'>
+						{errorMessage}
+					</Alert>
+				)}
 				<form onSubmit={form.handleSubmit(onSubmit)}>
-					<FormField name='fullName' label='Имя и Фамилия' />
-					<FormField name='email' label='Почта' />
-					<FormField name='password' label='Пароль' />
-					{errorMessage && (
-						<Alert severity='error' className='mb-20'>
-							{errorMessage}
-						</Alert>
-					)}
 					<div className='d-flex align-center justify-between'>
 						<Button
 							disabled={!form.formState.isValid || form.formState.isSubmitting}
+							onClick={onOpenRegister}
 							type='submit'
 							color='primary'
 							variant='contained'
