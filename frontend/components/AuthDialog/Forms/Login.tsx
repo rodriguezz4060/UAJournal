@@ -34,7 +34,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 			dispatch(setUserData(data))
 		} catch (err) {
 			console.warn('Register error', err)
-			if (err.response) {
+			if (err instanceof Error && err.response) {
 				setErrorMessage(err.response.data.message)
 			}
 		}
