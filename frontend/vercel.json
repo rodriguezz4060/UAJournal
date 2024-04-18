@@ -1,5 +1,5 @@
 {
 	"version": 2,
-	"cleanUrls": true,
-	"redirects": [{ "source": "/", "destination": "/index" }]
+	"public": true,
+	"routes": [{ "src": "/(.*)", "dest": "/" }]
 }
