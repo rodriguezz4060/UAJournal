@@ -32,9 +32,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 			})
 			setErrorMessage('')
 			dispatch(setUserData(data))
-		} catch (err) {
+		} catch (err: any) {
+			// Используем any для обхода проверки типа
 			console.warn('Register error', err)
-			if (err instanceof Error && err.response) {
+			if (err.response) {
 				setErrorMessage(err.response.data.message)
 			}
 		}
