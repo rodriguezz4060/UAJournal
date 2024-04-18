@@ -1,9 +1,6 @@
 {
 	"version": 2,
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@vercel/next.js"
-		}
-	]
+	"cleanUrls": true,
+	"regions": ["sfo1", "bru1"],
+	"redirects": [{ "source": "/", "destination": "/index" }]
 }
