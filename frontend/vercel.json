@@ -1,6 +1,5 @@
 {
 	"version": 2,
 	"cleanUrls": true,
-	"regions": ["sfo1", "bru1"],
 	"redirects": [{ "source": "/", "destination": "/index" }]
 }
