@@ -15,10 +15,19 @@ interface LoginFormProps {
 	onOpenRegister: () => void
 }
 
+// Предполагаем, что интерфейс ApiError описывает ошибку, возвращаемую сервером
+interface ApiError {
+	response: {
+		data: {
+			message: string
+		}
+	}
+}
+
 export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 	const dispatch = useAppDispatch()
 	const [errorMessage, setErrorMessage] = React.useState('')
-	const form = useForm({
+	const form = useForm<LoginDto>({
 		mode: 'onChange',
 		resolver: yupResolver(LoginFormSchema)
 	})
@@ -32,11 +41,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onOpenRegister }) => {
 			})
 			setErrorMessage('')
 			dispatch(setUserData(data))
-		} catch (err: any) {
-			// Используем any для обхода проверки типа
+		} catch (err) {
+			// Теперь мы можем безопасно обращаться к err.response.data.message
 			console.warn('Register error', err)
-			if (err.response) {
-				setErrorMessage(err.response.data.message)
+			if ((err as ApiError).response) {
+				setErrorMessage((err as ApiError).response.data.message)
+			} else {
+				setErrorMessage('Произошла ошибка при входе в систему.')
 			}
 		}
 	}
