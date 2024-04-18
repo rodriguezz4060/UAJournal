@@ -37,7 +37,7 @@ export default function SimpleGallery(props) {
 				}
 
 				return (
-					<div className={styles.islanA}>
+					<div className={styles.islanA} key={props.galleryID + '-' + index}>
 						<a
 							href={image.largeURL}
 							data-pswp-width={image.width}
@@ -50,6 +50,7 @@ export default function SimpleGallery(props) {
 								src={image.thumbnailURL}
 								alt=''
 								style={{ maxWidth }}
+								key={props.galleryID + '-' + index}
 								loading='lazy'
 							/>
 						</a>

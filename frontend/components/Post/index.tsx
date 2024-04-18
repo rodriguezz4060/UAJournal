@@ -14,6 +14,7 @@ moment.locale('ru')
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { HeaderUser } from '../HeaderPostUserInfo'
 import SimpleGallery from '../PhotoSwipe'
+import RepostEditor from './RepostEditor'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -57,6 +58,12 @@ export const Post: React.FC<PostProps> = ({
 }) => {
 	const classes = useStyles()
 
+	const handleRepost = () => {
+		// Здесь должна быть логика для репоста поста
+		// Например, отправка запроса на сервер
+		console.log(`Репост поста с id ${id}`)
+	}
+
 	return (
 		<div>
 			<Paper elevation={0} classes={{ root: styles.paper }}>
@@ -98,7 +105,7 @@ export const Post: React.FC<PostProps> = ({
 									: stylesMedia.islandB
 
 							return (
-								<div className={stylesMedia.figure}>
+								<div className={stylesMedia.figure} key={index}>
 									<div className={imageStyle}>
 										<div className={stylesMedia.images}>
 											<SimpleGallery
@@ -125,7 +132,7 @@ export const Post: React.FC<PostProps> = ({
 				{video.length > 0 && (
 					<div className={styles.figure}>
 						<div className={styles.imagePost}>
-							<video controls>
+							<video key={index} controls>
 								<source src={video} type='video/mp4' />
 							</video>
 						</div>
@@ -165,7 +172,13 @@ export const Post: React.FC<PostProps> = ({
 						))}
 					</div>
 				)}
-				<PostActions id={id} rating={rating} user={user.id} />
+				<PostActions
+					id={id}
+					rating={rating}
+					user={user.id}
+					postUrl={id}
+					onRepost={handleRepost}
+				/>
 			</Paper>
 		</div>
 	)

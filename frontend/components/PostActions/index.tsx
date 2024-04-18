@@ -19,9 +19,14 @@ import Link from 'next/link'
 interface PostActionsProps {
 	rating: number
 	id: number
+	onRepost: () => void
 }
 
-export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
+export const PostActions: NextPage<PostActionsProps> = ({
+	rating,
+	id,
+	onRepost
+}) => {
 	const [currentRating, setCurrentRating] = useState(rating)
 	const [userRatedUp, setUserRatedUp] = useState(false)
 	const [userRatedDown, setUserRatedDown] = useState(false)
@@ -142,12 +147,14 @@ export const PostActions: NextPage<PostActionsProps> = ({ rating, id }) => {
 					${styles.comments_counter__nonzero}`}
 				>
 					<IconButton
+						onClick={onRepost}
 						className={`${styles.buttonSvg} ${styles.comments_counter}`}
 					>
 						<RepostIcon style={{ width: 20, height: 20 }} />
 					</IconButton>
 				</div>
 			</div>
+
 			<div className={styles.contentFooter__item}>
 				<div
 					className={`${styles.comments_counter} 
